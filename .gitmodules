@@ -1,0 +1,3 @@
+[submodule "electron-dist"]
+	path = electron-dist
+	url = https://github.com/hayase-app/electron-dist

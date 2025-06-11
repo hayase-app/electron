@@ -1,0 +1,90 @@
+appId: com.github.hayase-app
+productName: Hayase
+directories:
+  buildResources: build
+files:
+  - '!**/.vscode/*'
+  - '!src/*'
+  - '!electron.vite.config.{js,ts,mjs,cjs}'
+  - '!{.eslintignore,.eslintrc.js,.prettierignore,.prettierrc.yaml,dev-app-update.yml,CHANGELOG.md,README.md}'
+  - '!{.env,.env.*,.npmrc,pnpm-lock.yaml}'
+  - '!{tsconfig.json,tsconfig.node.json,tsconfig.web.json}'
+  - '!node_modules/**/*.{mk,a,o,h}'
+  - '!eslint.config.mjs'
+  - '!electron-dist/*'
+  - '!resources/*'
+asarUnpack:
+  - resources/**
+  - '**/*.node'
+win:
+  executableName: Hayase
+  target:
+    - target: nsis
+      arch:
+        - x64
+  # signAndEditExecutable: true
+  # verifyUpdateCodeSignature: true
+  artifactName: ${os}-${name}-${version}-installer.${ext}
+nsis:
+  artifactName: ${os}-${name}-${version}-installer.${ext}
+  shortcutName: ${productName}
+  uninstallDisplayName: ${productName}
+  createDesktopShortcut: always
+  oneClick: false
+  perMachine: true
+  allowToChangeInstallationDirectory: true
+mac:
+  artifactName: ${os}-${name}-${version}-mac.${ext}
+  entitlementsInherit: build/entitlements.mac.plist
+  defaultArch: universal
+  singleArchFiles: node_modules/+(register-scheme|utp-native|fs-native-extensions)/**
+  category: public.app-category.video
+  darkModeSupport: true
+  hardenedRuntime: true
+  extendInfo:
+    - NSCameraUsageDescription: Application requests access to the device's camera.
+    - NSMicrophoneUsageDescription: Application requests access to the device's microphone.
+    - NSDocumentsFolderUsageDescription: Application requests access to the user's Documents folder.
+    - NSDownloadsFolderUsageDescription: Application requests access to the user's Downloads folder.
+  notarize: false
+  target:
+    - target: dmg
+      arch:
+        - universal
+linux:
+  artifactName: ${os}-${name}-${version}-linux.${ext}
+  target:
+    - target: deb
+      arch:
+        - x64
+    # - target: pacman
+    #   arch:
+    #     - x64
+    # - target: rpm
+    #   arch:
+    #     - x64
+    - target: AppImage
+      arch:
+        - x64
+  maintainer: ThaUnknown
+  category: AudioVideo;Video
+  desktop:
+    Type: "Application"
+    Encoding: "UTF-8"
+    Name: "Hayase"
+    Comment: "Bittorrent streaming software for cats"
+    Keywords: "anime"
+    Terminal: "false"
+    MimeType: "x-scheme-handler/hayase;"
+npmRebuild: false
+publish:
+  provider: github
+  owner: hayase-app
+  repo: electron
+electronDist: electron-dist
+protocols:
+  - name: hayase
+    schemes:
+      - hayase
+electronLanguages:
+  - en-US
