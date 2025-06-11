@@ -1,4 +1,4 @@
-appId: com.github.hayase-app
+appId: com.github.thaunknown.miru
 productName: Hayase
 directories:
   buildResources: build

@@ -1,3 +1,10 @@
 {
-  "recommendations": ["dbaeumer.vscode-eslint"]
+  "recommendations": [
+    "usernamehw.errorlens",
+    "dbaeumer.vscode-eslint",
+    "bierner.comment-tagged-templates",
+    "YoavBls.pretty-ts-errors",
+    "Gruntfuggly.todo-tree",
+    "bradlc.vscode-tailwindcss"
+  ]
 }
