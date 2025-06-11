@@ -182,7 +182,7 @@ export default class IPC {
 
   updateProgress () {
     autoUpdater.on('download-progress', (progress) => {
-      this.app.mainWindow.webContents.send('navigate', progress.percent)
+      this.app.mainWindow.webContents.send('update-progress', progress.percent)
     })
   }
 
