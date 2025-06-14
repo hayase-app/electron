@@ -39,7 +39,8 @@ jobs:
 
       - name: Build and Publish
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.MIRU_SUBMODULES_PAT }}
+          GH_TOKEN: ${{ secrets.MIRU_SUBMODULES_PAT }}
           # CSC_LINK: ${{ secrets.APPLE_SIGNING_CERT }}
           # API_KEY: ${{ secrets.APPLE_API_KEY }}
           # APPLE_API_KEY: apple.p8
