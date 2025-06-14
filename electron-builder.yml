@@ -80,7 +80,7 @@ npmRebuild: false
 publish:
   provider: github
   owner: hayase-app
-  repo: electron
+  repo: ui
 electronDist: electron-dist
 protocols:
   - name: hayase
