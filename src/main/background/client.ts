@@ -322,6 +322,11 @@ export default class TorrentClient {
     return await this[store].list()
   }
 
+  errors (cb: (errors: Error) => void) {
+    this[client].on('error', err => cb(err))
+    process.on('uncaughtException', err => cb(err))
+  }
+
   torrents () {
     return this[client].torrents.map(t => this.makeStats(t))
   }

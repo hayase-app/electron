@@ -55,6 +55,7 @@ const native: Partial<Native> = {
   attachments: async (hash, id) => await (await torrent).attachments.attachments(hash, id),
   tracks: async (hash, id) => await (await torrent).attachments.tracks(hash, id),
   subtitles: async (hash, id, cb) => await (await torrent).attachments.subtitle(hash, id, proxy(cb)),
+  errors: async (cb) => await (await torrent).errors(proxy(cb)),
   chapters: async (hash, id) => await (await torrent).attachments.chapters(hash, id),
   torrentStats: async (hash) => await (await torrent).torrentStats(hash),
   torrents: async () => await (await torrent).torrents(),

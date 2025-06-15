@@ -52,14 +52,14 @@ export default class Discord {
         activity: {
           type: 3,
           name: 'Hayase',
-          state: this.session?.description ?? 'In Menu',
-          details: this.session?.title ?? 'Browsing...',
+          state: this.allowDiscordDetails ? this.session?.description ?? 'Streaming anime torrents! 🍿' : 'Streaming anime torrents! 🍿',
+          details: this.allowDiscordDetails ? this.session?.title ?? 'Looking around...' : 'Looking around...',
           timestamps: {
-            start: this.position ? Date.now() - position : undefined,
-            end: this.position && this.playback === 'playing' ? Date.now() + (duration - position) : undefined
+            start: this.allowDiscordDetails && this.position ? Date.now() - position : undefined,
+            end: this.allowDiscordDetails && this.position && this.playback === 'playing' ? Date.now() + (duration - position) : undefined
           },
           assets: {
-            large_image: this.session?.image,
+            large_image: this.allowDiscordDetails && this.session?.image ? this.session.image : 'logo',
             large_text: 'https://github.com/ThaUnknown/miru'
           },
           buttons: [
