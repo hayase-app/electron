@@ -96,4 +96,5 @@ export interface Native {
   isApp: boolean
   version: () => Promise<string>
   navigate: (cb: (data: { target: string, value: string | undefined }) => void) => Promise<void>
+  defaultTransparency: () => boolean
 }

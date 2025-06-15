@@ -1,13 +1,17 @@
 import { join } from 'node:path'
 import { readFileSync } from 'node:fs'
 import { writeFile } from 'node:fs/promises'
+import { release } from 'node:os'
 
 import { app } from 'electron'
+
+const isNewWindows = process.platform === 'win32' && Number(release().split('.').pop()) >= 22621
+
 const DEFAULTS = {
   angle: 'default',
   player: '',
   torrentPath: '',
-  transparency: true,
+  transparency: !isNewWindows,
   torrentSettings: {
     torrentPersist: false,
     torrentDHT: false,

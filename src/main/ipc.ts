@@ -75,7 +75,7 @@ export default class IPC {
   }
 
   setZoom (scale: number) {
-    this.app.mainWindow.webContents.setZoomFactor(Number(scale) || 1)
+    this.app.mainWindow.webContents.setZoomFactor(Math.min(2.5, Math.max(Number(scale) || 1, 0.3)))
   }
 
   async selectPlayer () {

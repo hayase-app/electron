@@ -2,7 +2,7 @@ import { join } from 'node:path'
 import process from 'node:process'
 
 import { electronApp, is } from '@electron-toolkit/utils'
-import { BrowserWindow, MessageChannelMain, app, dialog, ipcMain, powerMonitor, shell, utilityProcess, Tray, Menu, protocol } from 'electron' // type NativeImage, Notification, nativeImage,
+import { BrowserWindow, MessageChannelMain, app, dialog, ipcMain, powerMonitor, shell, utilityProcess, Tray, Menu, protocol, nativeImage } from 'electron' // type NativeImage, Notification, nativeImage,
 import electronShutdownHandler from '@paymoapp/electron-shutdown-handler'
 import log from 'electron-log/main'
 import { autoUpdater } from 'electron-updater'
@@ -43,9 +43,10 @@ export default class App {
     resizable: true,
     maximizable: true,
     fullscreenable: true,
+    roundedCorners: false,
     show: false,
     title: 'Hayase',
-    ...(process.platform === 'linux' ? { icon } : {}),
+    icon,
     webPreferences: {
       preload: join(__dirname, '../preload/index.js'),
       sandbox: true,
@@ -60,7 +61,7 @@ export default class App {
   updater = new Updater()
   discord = new Discord()
   ipc = new IPC(this, this.torrentProcess, this.discord)
-  tray = new Tray(process.platform === 'win32' ? ico : icon)
+  tray = new Tray(process.platform === 'win32' ? ico : nativeImage.createFromPath(icon))
 
   constructor () {
     expose(this.ipc, ipcMain, this.mainWindow.webContents)

@@ -8,6 +8,8 @@ import type { Native } from '../types.d.ts'
 import type IPC from '../main/ipc.ts'
 import type TorrentClient from '../main/background/client.ts'
 
+const isNewWindows = process.platform === 'win32' && Number(process.getSystemVersion().split('.').pop()) >= 22621
+
 ipcRenderer.send('preload-done')
 
 const torrent = new Promise<Remote<TorrentClient>>(resolve => {
@@ -79,7 +81,8 @@ const native: Partial<Native> = {
   share: async (data) => {
     if (!data) return
     await navigator.clipboard.writeText(data.url ?? data.text ?? data.title!)
-  }
+  },
+  defaultTransparency: () => !isNewWindows
 }
 
 try {
