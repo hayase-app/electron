@@ -1,6 +1,6 @@
 {
   "name": "hayase",
-  "version": "6.3.7",
+  "version": "6.3.8",
   "description": "Hayase - Torrent streaming made simple",
   "main": "./out/main/index.js",
   "author": "ThaUnknown_",
