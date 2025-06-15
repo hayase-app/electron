@@ -43,7 +43,6 @@ export default class App {
     resizable: true,
     maximizable: true,
     fullscreenable: true,
-    roundedCorners: false,
     show: false,
     title: 'Hayase',
     icon,
@@ -61,7 +60,7 @@ export default class App {
   updater = new Updater()
   discord = new Discord()
   ipc = new IPC(this, this.torrentProcess, this.discord)
-  tray = new Tray(process.platform === 'win32' ? ico : nativeImage.createFromPath(icon))
+  tray = new Tray(process.platform === 'win32' ? ico : process.platform === 'darwin' ? nativeImage.createFromPath(icon).resize({ width: 16, height: 16 }) : icon)
 
   constructor () {
     expose(this.ipc, ipcMain, this.mainWindow.webContents)
