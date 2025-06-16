@@ -53,6 +53,7 @@ mac:
         - universal
 linux:
   artifactName: ${os}-${name}-${version}-linux.${ext}
+  icon: build/icon.icns
   target:
     - target: deb
       arch:
