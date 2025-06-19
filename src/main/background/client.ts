@@ -14,7 +14,7 @@ import HTTPTracker from 'http-tracker'
 import { hex2bin, arr2hex, text2arr, type TypedArray } from 'uint8-util'
 import debug from 'debug'
 
-import attachments from './attachments'
+import attachments from './attachments.ts'
 
 import type { Server } from 'node:http'
 import type { AddressInfo } from 'node:net'
@@ -330,7 +330,7 @@ export default class TorrentClient {
 
   debug (levels: string) {
     debug.disable()
-    debug.enable(levels)
+    if (levels) debug.enable(levels)
   }
 
   torrents () {

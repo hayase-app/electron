@@ -26,6 +26,7 @@ export default defineConfig({
         './transport/WebSocket': resolve(__dirname, 'src/main/patches/module.cjs'),
         './structures/ClientUser': resolve(__dirname, 'src/main/patches/user.cjs'),
         'discord-api-types/v10': resolve(__dirname, 'src/main/patches/module.cjs'),
+        'debug': resolve(__dirname, 'src/main/patches/debug.cjs'),
       }
     }
   },
