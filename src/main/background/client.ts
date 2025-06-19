@@ -1,26 +1,26 @@
+import { randomBytes } from 'node:crypto'
+import { statSync } from 'node:fs'
 import { readFile, writeFile, statfs, unlink, mkdir, readdir } from 'node:fs/promises'
+import os from 'node:os'
 import { join } from 'node:path'
 import { exit } from 'node:process'
-import { statSync } from 'node:fs'
-import os from 'node:os'
 import querystring from 'querystring'
 
-import WebTorrent from 'webtorrent'
-import MemoryChunkStore from 'memory-chunk-store'
 import bencode from 'bencode'
-import parseTorrent from 'parse-torrent'
+import debug from 'debug'
 // @ts-expect-error no export
 import HTTPTracker from 'http-tracker'
+import MemoryChunkStore from 'memory-chunk-store'
+import parseTorrent from 'parse-torrent'
 import { hex2bin, arr2hex, text2arr, type TypedArray, concat } from 'uint8-util'
-import debug from 'debug'
+import WebTorrent from 'webtorrent'
 
 import attachments from './attachments.ts'
 
+import type { TorrentFile, TorrentInfo, TorrentSettings } from '../../types'
 import type { Server } from 'node:http'
 import type { AddressInfo } from 'node:net'
-import type { TorrentFile, TorrentInfo, TorrentSettings } from '../../types'
 import type Torrent from 'webtorrent/lib/torrent.js'
-import { randomBytes } from 'node:crypto'
 
 let TMP: string
 try {
