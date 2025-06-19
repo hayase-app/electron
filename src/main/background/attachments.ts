@@ -33,7 +33,7 @@ export default new class Attachments {
   }).listen()
 
   subtitle (hash: string, id: number, cb: (subtitle: { text: string, time: number, duration: number }, trackNumber: number) => void) {
-    const metadata = this.filemap.get(hash + id)
+    const metadata = this.metadata(hash, id)
     if (!metadata) throw new Error('File not found')
     metadata.removeAllListeners('subtitle')
     metadata.on('subtitle', (a, b) => cb(a, b))
