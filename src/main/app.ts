@@ -31,7 +31,10 @@ protocol.registerSchemesAsPrivileged([
   { scheme: 'https', privileges: { standard: true, bypassCSP: true, allowServiceWorkers: true, supportFetchAPI: true, corsEnabled: false, stream: true, codeCache: true, secure: true } }
 ])
 export default class App {
-  torrentProcess = utilityProcess.fork(forkPath)
+  torrentProcess = utilityProcess.fork(forkPath, [], {
+    stdio: ['ignore', 'pipe', 'pipe'],
+    serviceName: 'Hayase Torrent Client'
+  })
 
   mainWindow = new BrowserWindow({
     width: 1600,
@@ -79,7 +82,8 @@ export default class App {
       }
       return { action: 'deny' }
     })
-
+    this.torrentProcess.stderr?.on('data', d => log.error('' + d))
+    this.torrentProcess.stdout?.on('data', d => log.log('' + d))
     if (TRANSPARENCY) {
     // Transparency fixes, window is resizable when fullscreen/maximized
       this.mainWindow.on('enter-html-full-screen', () => {

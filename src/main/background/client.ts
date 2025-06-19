@@ -11,7 +11,7 @@ import bencode from 'bencode'
 import parseTorrent from 'parse-torrent'
 // @ts-expect-error no export
 import HTTPTracker from 'http-tracker'
-import { hex2bin, arr2hex, text2arr, type TypedArray } from 'uint8-util'
+import { hex2bin, arr2hex, text2arr, type TypedArray, concat } from 'uint8-util'
 import debug from 'debug'
 
 import attachments from './attachments.ts'
@@ -20,6 +20,7 @@ import type { Server } from 'node:http'
 import type { AddressInfo } from 'node:net'
 import type { TorrentFile, TorrentInfo, TorrentSettings } from '../../types'
 import type Torrent from 'webtorrent/lib/torrent.js'
+import { randomBytes } from 'node:crypto'
 
 let TMP: string
 try {
@@ -137,6 +138,9 @@ const megaBitsToBytes = 1024 * 1024 / 8
 
 process.on('uncaughtException', err => console.error(err))
 
+// this could... be a bad idea and needs to be verified
+const peerId = concat([[45, 113, 66, 53, 48, 51, 48, 45], randomBytes(12)])
+
 export default class TorrentClient {
   [client]: WebTorrent;
   [server]: Server;
@@ -158,7 +162,8 @@ export default class TorrentClient {
       natUpnp: 'permanent',
       torrentPort: settings.torrentPort,
       dhtPort: settings.dhtPort,
-      maxConns: settings.maxConns
+      maxConns: settings.maxConns,
+      peerId
     }
     this[client] = new WebTorrent(this[opts])
     this[client].on('error', console.error)
@@ -180,7 +185,8 @@ export default class TorrentClient {
       natUpnp: 'permanent',
       torrentPort: settings.torrentPort,
       dhtPort: settings.dhtPort,
-      maxConns: settings.maxConns
+      maxConns: settings.maxConns,
+      peerId
     }
     this.streamed = settings.torrentStreamedDownload
     this.persist = settings.torrentPersist
@@ -194,7 +200,7 @@ export default class TorrentClient {
     await new Promise(resolve => this[client].destroy(resolve))
 
     return await new Promise(resolve => {
-      const checkClient = new WebTorrent({ torrentPort, natUpnp: 'permanent' })
+      const checkClient = new WebTorrent({ torrentPort, natUpnp: 'permanent', peerId })
       const torrent = checkClient.add(
         atob('bWFnbmV0Oj94dD11cm46YnRpaDpkZDgyNTVlY2RjN2NhNTVmYjBiYmY4MTMyM2Q4NzA2MmRiMWY2ZDFjJmRuPUJpZytCdWNrK0J1bm55JnRyPXVkcCUzQSUyRiUyRmV4cGxvZGllLm9yZyUzQTY5NjkmdHI9dWRwJTNBJTJGJTJGdHJhY2tlci5jb3BwZXJzdXJmZXIudGslM0E2OTY5JnRyPXVkcCUzQSUyRiUyRnRyYWNrZXIuZW1waXJlLWpzLnVzJTNBMTMzNyZ0cj11ZHAlM0ElMkYlMkZ0cmFja2VyLmxlZWNoZXJzLXBhcmFkaXNlLm9yZyUzQTY5NjkmdHI9dWRwJTNBJTJGJTJGdHJhY2tlci5vcGVudHJhY2tyLm9yZyUzQTEzMzc='),
         { store: MemoryChunkStore }

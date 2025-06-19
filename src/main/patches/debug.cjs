@@ -71,7 +71,7 @@ function formatArgs (args) {
  *
  * @api public
  */
-exports.log = console.debug || console.log || (() => {})
+exports.log = console.log || console.debug  || (() => {})
 
 /**
  * Save `namespaces`.
