@@ -12,6 +12,7 @@ import parseTorrent from 'parse-torrent'
 // @ts-expect-error no export
 import HTTPTracker from 'http-tracker'
 import { hex2bin, arr2hex, text2arr, type TypedArray } from 'uint8-util'
+import debug from 'debug'
 
 import attachments from './attachments'
 
@@ -325,6 +326,11 @@ export default class TorrentClient {
   errors (cb: (errors: Error) => void) {
     this[client].on('error', err => cb(err))
     process.on('uncaughtException', err => cb(err))
+  }
+
+  debug (levels: string) {
+    debug.disable()
+    debug.enable(levels)
   }
 
   torrents () {

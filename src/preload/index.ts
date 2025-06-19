@@ -83,7 +83,8 @@ const native: Partial<Native> = {
     if (!data) return
     await navigator.clipboard.writeText(data.url ?? data.text ?? data.title!)
   },
-  defaultTransparency: () => !isNewWindows
+  defaultTransparency: () => !isNewWindows,
+  debug: async (levels) => await (await torrent).debug(levels)
 }
 
 try {
