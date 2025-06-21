@@ -10,6 +10,12 @@ if (process.defaultApp) {
   app.setAsDefaultProtocolClient('hayase')
 }
 
+const NAVIGATE_TARGETS = {
+  schedule: 'schedule',
+  anime: 'anime',
+  w2g: 'w2g'
+} as const
+
 export default class Protocol {
   protocolRx = /hayase:\/\/([a-z0-9]+)\/(.*)/i
 
@@ -36,11 +42,33 @@ export default class Protocol {
     }
   }
 
-  handleProtocol (text: string) {
-    const match = text.match(this.protocolRx)
-    if (!match) return
-    if (match[1] === 'donate') shell.openExternal('https://github.com/sponsors/ThaUnknown/')
+  navigateTarget () {
+    if (process.argv.length < 2 || process.defaultApp) return ''
 
-    this.window.webContents.send('navigate', { target: match[1], value: match[2] })
+    for (const line of process.argv) {
+      const parsed = this._parseProtocol(line)
+      if (parsed && parsed.target in NAVIGATE_TARGETS) {
+        const targetValue = NAVIGATE_TARGETS[parsed.target as keyof typeof NAVIGATE_TARGETS]
+        return `app/${targetValue}/${parsed.value ?? ''}`
+      }
+    }
+    return ''
+  }
+
+  _parseProtocol (text: string) {
+    const match = text.match(this.protocolRx)
+    if (!match) return null
+    return {
+      target: match[1]!,
+      value: match[2]
+    }
+  }
+
+  handleProtocol (text: string) {
+    const parsed = this._parseProtocol(text)
+    if (!parsed) return
+    if (parsed.target === 'donate') shell.openExternal('https://github.com/sponsors/ThaUnknown/')
+
+    this.window.webContents.send('navigate', parsed)
   }
 }

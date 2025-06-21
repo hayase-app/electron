@@ -32,8 +32,18 @@ export default new class Attachments {
     }
   }).listen()
 
+  _metadata (hash: string, id: number) {
+    const file = this.filemap.get(hash + id)
+    if (!file) return
+    const meta = this.metadatamap.get(file)
+    if (meta) return meta
+    const metadata = new Metadata(file) as Metadata & EventEmitter
+    this.metadatamap.set(file, metadata)
+    return metadata
+  }
+
   subtitle (hash: string, id: number, cb: (subtitle: { text: string, time: number, duration: number }, trackNumber: number) => void) {
-    const metadata = this.metadata(hash, id)
+    const metadata = this._metadata(hash, id)
     if (!metadata) throw new Error('File not found')
     metadata.removeAllListeners('subtitle')
     metadata.on('subtitle', (a, b) => cb(a, b))
@@ -46,24 +56,14 @@ export default new class Attachments {
         this.filemap.set(hash + id, file)
         file.on('iterator', ({ iterator }: { iterator: AsyncIterable<Uint8Array> }, cb: (it: AsyncIterable<Uint8Array>) => void) => {
           if (this.destroyed) return cb(iterator)
-          cb(this.metadata(hash, id)?.parseStream(iterator) ?? iterator)
+          cb(this._metadata(hash, id)?.parseStream(iterator) ?? iterator)
         })
       }
     })
   }
 
-  metadata (hash: string, id: number) {
-    const file = this.filemap.get(hash + id)
-    if (!file) return
-    const meta = this.metadatamap.get(file)
-    if (meta) return meta
-    const metadata = new Metadata(file) as Metadata & EventEmitter
-    this.metadatamap.set(file, metadata)
-    return metadata
-  }
-
   async attachments (hash: string, id: number) {
-    const metadata = this.metadata(hash, id)
+    const metadata = this._metadata(hash, id)
     if (!metadata) throw new Error('File not found')
     return (await metadata.getAttachments()).map(({ filename, mimetype }, number) => {
       return { filename, mimetype, id, url: 'http://localhost:' + (this.server.address() as AddressInfo).port + '/' + hash + id + '/' + number }
@@ -71,13 +71,13 @@ export default new class Attachments {
   }
 
   chapters (hash: string, id: number) {
-    const metadata = this.metadata(hash, id)
+    const metadata = this._metadata(hash, id)
     if (!metadata) throw new Error('File not found')
     return metadata.getChapters()
   }
 
   tracks (hash: string, id: number) {
-    const metadata = this.metadata(hash, id)
+    const metadata = this._metadata(hash, id)
     if (!metadata) throw new Error('File not found')
     return metadata.getTracks() as Promise<Array<{ number: string, language?: string, type: string, header: string }>>
   }

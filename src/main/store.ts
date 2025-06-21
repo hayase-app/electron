@@ -1,9 +1,10 @@
-import { join } from 'node:path'
 import { readFileSync } from 'node:fs'
 import { writeFile } from 'node:fs/promises'
 import { release } from 'node:os'
+import { join } from 'node:path'
 
 import { app } from 'electron'
+import log from 'electron-log/main'
 
 const isNewWindows = process.platform === 'win32' && Number(release().split('.').pop()) >= 22621
 
@@ -47,7 +48,7 @@ function parseDataFile (filePath: string) {
   try {
     return { ...DEFAULTS, ...(JSON.parse(readFileSync(filePath).toString()) as typeof DEFAULTS) }
   } catch (error) {
-    // TODO: should we log this?
+    log.error('Failed to load native settings: ', error)
     return DEFAULTS
   }
 }

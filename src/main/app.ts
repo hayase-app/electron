@@ -2,23 +2,23 @@ import { join } from 'node:path'
 import process from 'node:process'
 
 import { electronApp, is } from '@electron-toolkit/utils'
-import { BrowserWindow, MessageChannelMain, app, dialog, ipcMain, powerMonitor, shell, utilityProcess, Tray, Menu, protocol, nativeImage } from 'electron' // type NativeImage, Notification, nativeImage,
 import electronShutdownHandler from '@paymoapp/electron-shutdown-handler'
+import { expose } from 'abslink/electron'
+import { BrowserWindow, MessageChannelMain, app, dialog, ipcMain, powerMonitor, shell, utilityProcess, Tray, Menu, protocol, nativeImage } from 'electron' // type NativeImage, Notification, nativeImage,
 import log from 'electron-log/main'
 import { autoUpdater } from 'electron-updater'
-import { expose } from 'abslink/electron'
 
-import icon from '../../build/icon.png?asset'
 import ico from '../../build/icon.ico?asset'
+import icon from '../../build/icon.png?asset'
 
 import './util.ts'
+import forkPath from './background/background.ts?modulePath'
 import Discord from './discord.ts'
 // import Protocol from './protocol.ts'
-import Updater from './updater.ts'
-import store from './store.ts'
-import forkPath from './background/background.ts?modulePath'
 import IPC from './ipc.ts'
 import Protocol from './protocol.ts'
+import store from './store.ts'
+import Updater from './updater.ts'
 
 log.initialize({ spyRendererConsole: true })
 log.transports.file.level = 'debug'
@@ -26,6 +26,8 @@ log.transports.file.maxSize = 10 * 1024 * 1024 // 10MB
 autoUpdater.logger = log
 
 const TRANSPARENCY = store.get('transparency')
+
+const BASE_URL = is.dev ? 'http://localhost:7344/' : 'https://hayase.app/'
 
 protocol.registerSchemesAsPrivileged([
   { scheme: 'https', privileges: { standard: true, bypassCSP: true, allowServiceWorkers: true, supportFetchAPI: true, corsEnabled: false, stream: true, codeCache: true, secure: true } }
@@ -199,11 +201,10 @@ export default class App {
     }
 
     if (is.dev) this.mainWindow.webContents.openDevTools()
-    const targetURL = is.dev ? 'http://localhost:7344/' : 'https://hayase.app/'
-    this.mainWindow.loadURL(targetURL)
+    this.mainWindow.loadURL(BASE_URL + this.protocol.navigateTarget())
     this.mainWindow.webContents.on('will-navigate', (e, url) => {
       const parsedUrl = new URL(url)
-      if (parsedUrl.origin !== targetURL) {
+      if (parsedUrl.origin !== BASE_URL) {
         e.preventDefault()
       }
     })
@@ -213,8 +214,8 @@ export default class App {
       if (reason === 'crashed') {
         if (++crashcount > 10) {
           // TODO
-          await dialog.showMessageBox({ message: 'Crashed too many times.', title: 'Miru', detail: 'App crashed too many times. For a fix visit https://miru.watch/faq/', icon })
-          shell.openExternal('https://miru.watch/faq/')
+          await dialog.showMessageBox({ message: 'Crashed too many times.', title: 'Hayase', detail: 'App crashed too many times. For a fix visit https://hayase.watch/faq/', icon })
+          shell.openExternal('https://hayase.watch/faq/')
         } else {
           app.relaunch()
         }
@@ -290,7 +291,7 @@ export default class App {
   async destroy (forceRunAfter = false) {
     if (this.destroyed) return
     this.destroyed = true
-    this.mainWindow.close()
+    this.mainWindow.hide()
     this.torrentProcess.postMessage({ id: 'destroy' })
     await new Promise(resolve => {
       this.torrentProcess.once('exit', resolve)

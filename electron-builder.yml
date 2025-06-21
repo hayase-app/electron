@@ -48,7 +48,7 @@ mac:
     - NSDownloadsFolderUsageDescription: Application requests access to the user's Downloads folder.
   notarize: false
   target:
-    - target: dmg
+    - target: default
       arch:
         - universal
 linux:

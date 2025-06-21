@@ -1,12 +1,12 @@
-import { contextBridge, ipcRenderer } from 'electron'
+import { proxy } from 'abslink'
 import { wrap } from 'abslink/electron'
 import { wrap as wrapPort } from 'abslink/w3c'
-import { proxy } from 'abslink'
+import { contextBridge, ipcRenderer } from 'electron'
 
-import type { Remote } from 'abslink'
-import type { Native } from '../types.d.ts'
-import type IPC from '../main/ipc.ts'
 import type TorrentClient from '../main/background/client.ts'
+import type IPC from '../main/ipc.ts'
+import type { Native } from '../types.d.ts'
+import type { Remote } from 'abslink'
 
 const isNewWindows = process.platform === 'win32' && Number(process.getSystemVersion().split('.').pop()) >= 22621
 
@@ -35,6 +35,8 @@ const native: Partial<Native> = {
   maximise: () => main.maximise(),
   close: () => main.close(),
   checkUpdate: () => main.checkUpdate(),
+  updateAndRestart: () => main.updateAndRestart(),
+  updateReady: () => main.updateReady(),
   toggleDiscordDetails: (bool: boolean) => main.toggleDiscordDetails(bool),
   setMediaSession: async (metadata, id) => {
     navigator.mediaSession.metadata = new MediaMetadata({ title: metadata.title, artist: metadata.description, artwork: [{ src: metadata.image }] })

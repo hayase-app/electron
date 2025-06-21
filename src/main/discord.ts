@@ -60,12 +60,12 @@ export default class Discord {
           },
           assets: {
             large_image: this.allowDiscordDetails && this.session?.image ? this.session.image : 'logo',
-            large_text: 'https://github.com/ThaUnknown/miru'
+            large_text: 'https://github.com/hayase-app/ui'
           },
           buttons: [
             {
               label: 'Download app',
-              url: 'https://github.com/ThaUnknown/miru/releases/latest'
+              url: 'https://github.com/hayase-app/ui/releases/latest'
             },
             {
               label: 'Watch on Hayase',

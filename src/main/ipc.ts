@@ -1,7 +1,7 @@
-import { basename, extname } from 'node:path'
+import { spawn } from 'node:child_process'
 import { readFile } from 'node:fs/promises'
 import os from 'node:os'
-import { spawn } from 'node:child_process'
+import { basename, extname } from 'node:path'
 
 import { app, dialog, shell, type UtilityProcess, ipcMain } from 'electron'
 import log from 'electron-log'
@@ -13,8 +13,7 @@ import type App from './app'
 import type { SessionMetadata, TorrentSettings } from '../types'
 import type Discord from './discord'
 
-// TODO: remove this github release path
-const WHITELISTED_URLS = ['https://github.com/ThaUnknown/miru/releases', 'https://anilist.co/', 'https://github.com/sponsors/ThaUnknown/', 'https://myanimelist.net/', 'https://miru.watch', 'https://hayase.app', 'https://hayase.watch', 'https://thewiki.moe']
+const WHITELISTED_URLS = ['https://anilist.co/', 'https://github.com/sponsors/ThaUnknown/', 'https://myanimelist.net/', 'https://miru.watch', 'https://hayase.app', 'https://hayase.watch', 'https://thewiki.moe']
 
 let player: ReturnType<typeof spawn> | undefined
 
@@ -61,7 +60,7 @@ export default class IPC {
   }
 
   downloadProgress (percent: number) {
-    this.app.mainWindow.setProgressBar(percent === 1 ? -1 : percent)
+    this.app.mainWindow.setProgressBar((percent === 1 || percent === 0) ? -1 : percent)
   }
 
   focus () {
@@ -138,14 +137,6 @@ export default class IPC {
     this.app.mainWindow.webContents.openDevTools()
   }
 
-  quitAndInstall () {
-    this.app.destroy(true)
-  }
-
-  checkUpdate () {
-    autoUpdater.checkForUpdatesAndNotify()
-  }
-
   toggleDiscordDetails (enabled: boolean) {
     this.discord.allowDiscordDetails = enabled
     this.discord.debouncedDiscordRPC()
@@ -184,6 +175,23 @@ export default class IPC {
     autoUpdater.on('download-progress', (progress) => {
       this.app.mainWindow.webContents.send('update-progress', progress.percent)
     })
+    autoUpdater.on('update-downloaded', () => {
+      this.app.mainWindow.webContents.send('update-progress', 100)
+    })
+  }
+
+  checkUpdate () {
+    autoUpdater.checkForUpdates()
+  }
+
+  updateAndRestart () {
+    this.app.destroy(true)
+  }
+
+  async updateReady () {
+    const update = await autoUpdater.checkForUpdates()
+    if (!update) throw new Error('No update available')
+    await update.downloadPromise
   }
 
   async spawnPlayer (url: string) {
@@ -198,7 +206,6 @@ export default class IPC {
       player = playerProcess
       this.app.mainWindow.focus()
       // this is needed as some players expect to be able to pipe to stdout.... even tho its slow...
-      // eslint-disable-next-line @typescript-eslint/no-empty-function
       playerProcess.stdout.on('data', () => {})
       playerProcess.once('close', resolve)
       playerProcess.once('error', reject)
