@@ -7,6 +7,7 @@ import { exit } from 'node:process'
 import querystring from 'querystring'
 
 import bencode from 'bencode'
+import peerid from 'bittorrent-peerid'
 import debug from 'debug'
 // @ts-expect-error no export
 import HTTPTracker from 'http-tracker'
@@ -17,7 +18,7 @@ import WebTorrent from 'webtorrent'
 
 import attachments from './attachments.ts'
 
-import type { TorrentFile, TorrentInfo, TorrentSettings } from '../../types'
+import type { PeerInfo, TorrentFile, TorrentInfo, TorrentSettings } from '../../types'
 import type { Server } from 'node:http'
 import type { AddressInfo } from 'node:net'
 import type Torrent from 'webtorrent/lib/torrent.js'
@@ -343,20 +344,120 @@ export default class TorrentClient {
     return this[client].torrents.map(t => this.makeStats(t))
   }
 
-  async torrentStats (id: string) {
+  async torrentInfo (id: string) {
     const torrent = await this[client].get(id)
     if (!torrent) throw new Error('Torrent not found')
     return this.makeStats(torrent)
   }
 
+  async peerInfo (id: string) {
+    const torrent = await this[client].get(id)
+
+    if (!torrent) throw new Error('Torrent not found')
+    const peers: PeerInfo[] = torrent.wires.map(wire => {
+      const flags: Array<'incoming' | 'outgoing' | 'utp' | 'encrypted'> = []
+
+      const type = wire.type
+      if (type.startsWith('utp')) flags.push('utp')
+      flags.push(type.endsWith('Incoming') ? 'incoming' : 'outgoing')
+      if (wire.peEnabled) flags.push('encrypted')
+
+      const parsed = peerid(wire.peerId)
+
+      const progress = this._wireProgress(wire, torrent)
+
+      return {
+        ip: wire.remoteAddress + ':' + wire.remotePort,
+        seeder: progress === 1 || wire.isSeeder,
+        client: `${parsed.client} ${parsed.version ?? '?'}`,
+        progress,
+        size: {
+          downloaded: wire.downloaded,
+          uploaded: wire.uploaded
+        },
+        speed: {
+          down: wire.downloadSpeed(),
+          up: wire.uploadSpeed()
+        },
+        time: 0,
+        flags
+      }
+    })
+
+    return peers
+  }
+
+  _wireProgress (wire: Torrent['wires'][number], torrent: Torrent): number {
+    if (!wire.peerPieces) return 0
+    let downloaded = 0
+    for (let index = 0, len = torrent.pieces.length; index < len; ++index) {
+      if (wire.peerPieces.get(index)) { // verified data
+        // @ts-expect-error bad typedefs
+        downloaded += (index === len - 1) ? torrent.lastPieceLength : torrent.pieceLength
+      }
+    }
+    // @ts-expect-error bad typedefs
+    return torrent.length ? downloaded / torrent.length : 0
+  }
+
+  async fileInfo (id: string) {
+    const torrent = await this[client].get(id)
+    if (!torrent) throw new Error('Torrent not found')
+    return torrent.files.map(({ name, length, progress, _iterators }) => ({
+      name,
+      size: length,
+      progress,
+      selections: _iterators.size
+    }))
+  }
+
+  async protocolStatus (id: string) {
+    const torrent = await this[client].get(id)
+    if (!torrent) throw new Error('Torrent not found')
+    return {
+      dht: !!this[client].dhtPort,
+      lsd: !!torrent.discovery?.lsd?.server,
+      pex: !torrent.private,
+      nat: !!this[client].natTraversal?._pmpClient && !!this[client].natTraversal?._upnpClient, //! !await this[client].natTraversal?.externalIp(),
+      // @ts-expect-error bad typedef
+      forwarding: !!Object.values(torrent._peers).find(peer => peer.type === 'utpIncoming' || peer.type === 'tcpIncoming'),
+      persisting: !!this.persist,
+      streaming: !!torrent._startAsDeselected
+    }
+  }
+
   makeStats (torrent: Torrent): TorrentInfo {
     const seeders = torrent.wires.filter(wire => wire.isSeeder).length
     const leechers = torrent.wires.length - seeders
-    const peers = torrent._peersLength
+    const wires = torrent._peersLength
     // @ts-expect-error bad typedefs
-    const { infoHash: hash, timeRemaining: eta, length: size, name, progress, downloadSpeed: down, uploadSpeed: up, downloaded } = torrent
+    const { infoHash: hash, timeRemaining: remaining, length: total, name, progress, downloadSpeed: down, uploadSpeed: up, downloaded, uploaded, pieces, pieceLength } = torrent
 
-    return { hash, name, peers, progress, down, up, seeders, leechers, size, downloaded, eta }
+    return {
+      hash,
+      name,
+      peers: {
+        seeders, leechers, wires
+      },
+      progress,
+      speed: {
+        down,
+        up
+      },
+      size: {
+        downloaded,
+        uploaded,
+        total
+      },
+      time: {
+        remaining,
+        elapsed: 0
+      },
+      pieces: {
+        total: pieces.length,
+        size: pieceLength
+      }
+    }
   }
 
   async destroy () {

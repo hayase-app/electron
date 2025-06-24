@@ -1,5 +1,5 @@
-import { app } from 'electron'
 import { optimizer } from '@electron-toolkit/utils'
+import { app } from 'electron'
 
 import App from './app.ts'
 

@@ -197,16 +197,20 @@ export default class IPC {
   async spawnPlayer (url: string) {
     if (!url) throw new Error('No URL provided')
     if (!url.startsWith('http://localhost:')) throw new Error('Invalid URL')
-    const path = store.get('player')
+    let path = store.get('player')
     if (!path) throw new Error('No player selected')
+
+    if (process.platform === 'darwin' && extname(path) === '.app') {
+    // Mac: Use executable in packaged .app bundle
+      path += `/Contents/MacOS/${basename(path, '.app')}`
+    }
+
     player?.kill()
 
     await new Promise((resolve, reject) => {
-      const playerProcess = spawn(path, [new URL(url).toString()])
+      const playerProcess = spawn(path, [new URL(url).toString()], { stdio: 'ignore' })
       player = playerProcess
       this.app.mainWindow.focus()
-      // this is needed as some players expect to be able to pipe to stdout.... even tho its slow...
-      playerProcess.stdout.on('data', () => {})
       playerProcess.once('close', resolve)
       playerProcess.once('error', reject)
     })
