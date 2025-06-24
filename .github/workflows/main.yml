@@ -41,10 +41,10 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.MIRU_SUBMODULES_PAT }}
           GH_TOKEN: ${{ secrets.MIRU_SUBMODULES_PAT }}
-          # APPLE_ID: ${{ secrets.APPLE_ID }}
-          # APPLE_ID_PASSWORD: ${{ secrets.APPLE_ID_PASSWORD }}
-          # APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
-          # CSC_LINK: ${{ secrets.APPLE_SIGNING_CERT }}
-          # CSC_KEY_PASSWORD: ${{ secrets.APPLE_SIGNING_PASSWORD }}
-          # APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_ID_PASSWORD }}
+          APPLE_ID: ${{ secrets.APPLE_ID }}
+          APPLE_ID_PASSWORD: ${{ secrets.APPLE_ID_PASSWORD }}
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+          CSC_LINK: ${{ secrets.APPLE_SIGNING_CERT }}
+          CSC_KEY_PASSWORD: ${{ secrets.APPLE_SIGNING_PASSWORD }}
+          APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_ID_PASSWORD }}
         run: npm run build:publish
