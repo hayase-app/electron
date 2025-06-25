@@ -32,6 +32,9 @@ nsis:
   createDesktopShortcut: always
   oneClick: false
   perMachine: true
+  allowElevation: true
+  deleteAppDataOnUninstall: true
+  packElevateHelper: true
   allowToChangeInstallationDirectory: true
 mac:
   artifactName: ${os}-${name}-${version}-mac.${ext}
