@@ -23,7 +23,7 @@ win:
       arch:
         - x64
   # signAndEditExecutable: true
-  # verifyUpdateCodeSignature: true
+  verifyUpdateCodeSignature: false
   artifactName: ${os}-${name}-${version}-installer.${ext}
 nsis:
   artifactName: ${os}-${name}-${version}-installer.${ext}
@@ -32,9 +32,7 @@ nsis:
   createDesktopShortcut: always
   oneClick: false
   perMachine: true
-  allowElevation: true
   deleteAppDataOnUninstall: true
-  packElevateHelper: true
   allowToChangeInstallationDirectory: true
 mac:
   artifactName: ${os}-${name}-${version}-mac.${ext}
