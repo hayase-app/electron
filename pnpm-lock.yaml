@@ -64,8 +64,8 @@ importers:
         specifier: ^1.0.8
         version: 1.0.8(@typescript-eslint/parser@8.30.1(eslint@9.24.0)(typescript@5.8.3))
       matroska-metadata:
-        specifier: ^1.0.6
-        version: 1.0.6
+        specifier: ^1.0.7
+        version: 1.0.7
       prettier:
         specifier: ^3.5.1
         version: 3.5.3
@@ -2464,8 +2464,8 @@ packages:
     resolution: {integrity: sha512-/IXtbwEk5HTPyEwyKX6hGkYXxM9nbj64B+ilVJnC/R6B0pH5G4V3b0pVbL7DBj4tkhBAppbQUlf6F6Xl9LHu1g==}
     engines: {node: '>= 0.4'}
 
-  matroska-metadata@1.0.6:
-    resolution: {integrity: sha512-eEzF7OkPTIHj2FCua/+Jxk8qNgiMT7zUQ/scQV1KWjdj2g4EnZTH2oCbO+xVIqnQv1nkbw3RLuuBfTPMSKVXSg==}
+  matroska-metadata@1.0.7:
+    resolution: {integrity: sha512-wu2AUyUwOnRuWoQ2y9ytRPTiZeVyoANsbEnAwCmgzH0mmpp2dgfztpzVCqP7/5EUuHchbkIghSuAB1KijLhLZw==}
 
   mdn-data@2.0.30:
     resolution: {integrity: sha512-GaqWWShW4kv/G9IEucWScBx9G1/vsFZZJUO+tD26M8J8z3Kw5RDQjaoZe03YAClgeS/SWPOcb4nkFBTEi5DUEA==}
@@ -6416,7 +6416,7 @@ snapshots:
 
   math-intrinsics@1.1.0: {}
 
-  matroska-metadata@1.0.6:
+  matroska-metadata@1.0.7:
     dependencies:
       ebml-iterator: 1.0.5
       fast-readable-async-iterator: 1.1.2
