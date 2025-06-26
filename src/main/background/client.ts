@@ -213,6 +213,7 @@ export default class TorrentClient {
         if (checkClient.destroyed) return
         await new Promise(resolve => checkClient.destroy(resolve))
         this[client] = new WebTorrent(this[opts])
+        this[store] = new Store(this[path])
         this[client].on('error', console.error)
         this[server] = this[client].createServer({}, 'node').listen(0)
         resolve(val)
