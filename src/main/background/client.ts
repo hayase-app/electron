@@ -7,18 +7,19 @@ import { exit } from 'node:process'
 import querystring from 'querystring'
 
 import bencode from 'bencode'
+import BitField from 'bitfield'
 import peerid from 'bittorrent-peerid'
 import debug from 'debug'
 // @ts-expect-error no export
 import HTTPTracker from 'http-tracker'
 import MemoryChunkStore from 'memory-chunk-store'
 import parseTorrent from 'parse-torrent'
-import { hex2bin, arr2hex, text2arr, type TypedArray, concat } from 'uint8-util'
+import { hex2bin, arr2hex, text2arr, concat } from 'uint8-util'
 import WebTorrent from 'webtorrent'
 
 import attachments from './attachments.ts'
 
-import type { PeerInfo, TorrentFile, TorrentInfo, TorrentSettings } from '../../types'
+import type { LibraryEntry, PeerInfo, TorrentFile, TorrentInfo, TorrentSettings } from '../../types'
 import type { Server } from 'node:http'
 import type { AddressInfo } from 'node:net'
 import type Torrent from 'webtorrent/lib/torrent.js'
@@ -47,7 +48,10 @@ interface TorrentMetadata {
   announce?: string[]
   urlList?: string[]
   private?: boolean
-  bitfield?: TypedArray
+  bitfield?: Uint8Array
+  date: number
+  mediaID: number
+  episode: number
 }
 
 interface TorrentData {
@@ -55,28 +59,35 @@ interface TorrentData {
   'announce-list'?: Uint8Array[][]
   'url-list'?: string[]
   private?: number
-  _bitfield?: TypedArray
+  _bitfield?: Uint8Array
   announce?: string
+  date: number
+  mediaID: number
+  episode: number
 }
 
-function structTorrent (parsed: TorrentMetadata) {
+function structTorrent ({ info, urlList, bitfield, announce, private: priv, mediaID, episode, date }: TorrentMetadata) {
   const torrent: TorrentData = {
-    info: parsed.info,
-    'url-list': parsed.urlList ?? [],
-    _bitfield: parsed.bitfield,
-    'announce-list': (parsed.announce ?? []).map(url => [text2arr(url)])
+    info,
+    'url-list': urlList ?? [],
+    _bitfield: bitfield,
+    'announce-list': (announce ?? []).map(url => [text2arr(url)]),
+    date,
+    mediaID,
+    episode
   }
-  torrent.announce ??= parsed.announce?.[0]
-  if (parsed.private !== undefined) torrent.private = Number(parsed.private)
+  torrent.announce ??= announce?.[0]
+  if (priv !== undefined) torrent.private = Number(priv)
 
   return torrent
 }
 
 const ANNOUNCE = [
-  atob('d3NzOi8vdHJhY2tlci5vcGVud2VidG9ycmVudC5jb20='),
-  atob('d3NzOi8vdHJhY2tlci53ZWJ0b3JyZW50LmRldg=='),
-  atob('d3NzOi8vdHJhY2tlci5maWxlcy5mbTo3MDczL2Fubm91bmNl'),
-  atob('d3NzOi8vdHJhY2tlci5idG9ycmVudC54eXov'),
+  // WSS trackers, for now WebRTC is disabled
+  // atob('d3NzOi8vdHJhY2tlci5vcGVud2VidG9ycmVudC5jb20='),
+  // atob('d3NzOi8vdHJhY2tlci53ZWJ0b3JyZW50LmRldg=='),
+  // atob('d3NzOi8vdHJhY2tlci5maWxlcy5mbTo3MDczL2Fubm91bmNl'),
+  // atob('d3NzOi8vdHJhY2tlci5idG9ycmVudC54eXov'),
   atob('dWRwOi8vb3Blbi5zdGVhbHRoLnNpOjgwL2Fubm91bmNl'),
   atob('aHR0cDovL255YWEudHJhY2tlci53Zjo3Nzc3L2Fubm91bmNl'),
   atob('dWRwOi8vdHJhY2tlci5vcGVudHJhY2tyLm9yZzoxMzM3L2Fubm91bmNl'),
@@ -121,6 +132,31 @@ class Store {
       return await unlink(join(await this.cacheFolder, key))
     } catch (err) {
       return null
+    }
+  }
+
+  async * entries () {
+    try {
+      const files = await readdir(await this.cacheFolder, { withFileTypes: true })
+      for (const file of files) {
+        if (!file.isDirectory()) {
+          const data = await readFile(join(await this.cacheFolder, file.name))
+          if (!data.length) continue
+
+          try {
+          // this double decoded bencoded data, unfortunate, but I wish to preserve my sanity
+            const bencoded: TorrentData = bencode.decode(data)
+            // eslint-disable-next-line @typescript-eslint/await-thenable, @typescript-eslint/no-explicit-any
+            const torrent: any = await parseTorrent(data)
+
+            yield { bencoded, torrent }
+          } catch (error) {
+            console.error(error)
+          }
+        }
+      }
+    } catch (error) {
+      console.error(error)
     }
   }
 
@@ -283,7 +319,7 @@ export default class TorrentClient {
     return parsed?.infoHash
   }
 
-  async playTorrent (id: string): Promise<TorrentFile[]> {
+  async playTorrent (id: string, mediaID: number, episode: number): Promise<TorrentFile[]> {
     if (this[client].torrents[0]) {
       const hash = this[client].torrents[0].infoHash
       // @ts-expect-error bad typedefs
@@ -308,7 +344,10 @@ export default class TorrentClient {
       announce: torrent.announce,
       private: torrent.private,
       urlList: torrent.urlList,
-      bitfield: torrent.bitfield!.buffer
+      bitfield: torrent.bitfield!.buffer,
+      date: Date.now(),
+      mediaID,
+      episode
     })
 
     const savebitfield = () => this[store].set(torrent.infoHash, baseInfo)
@@ -329,6 +368,34 @@ export default class TorrentClient {
 
   async cached () {
     return await this[store].list()
+  }
+
+  // TODO: use https://www.npmjs.com/package/comlink-async-generator?activeTab=code
+  async library () {
+    const torrents: LibraryEntry[] = []
+    for await (const { torrent, bencoded } of this[store].entries()) {
+      const bitfield = new BitField(bencoded._bitfield ?? new Uint8Array(0))
+
+      let downloaded = 0
+      for (let index = 0, len = torrent.pieces.length; index < len; ++index) {
+        if (bitfield.get(index)) { // verified data
+          downloaded += (index === len - 1) ? torrent.lastPieceLength : torrent.pieceLength
+        }
+      }
+      const progress = torrent.length ? downloaded / torrent.length : 0
+
+      torrents.push({
+        mediaID: bencoded.mediaID,
+        episode: bencoded.episode,
+        files: torrent.files.length,
+        hash: torrent.infoHash,
+        progress,
+        date: bencoded.date,
+        size: torrent.length,
+        name: torrent.name
+      })
+    }
+    return torrents
   }
 
   errors (cb: (errors: Error) => void) {
