@@ -114,12 +114,19 @@ class Store {
     this.cacheFolder = mkdir(targetPath, { recursive: true }).then(() => targetPath)
   }
 
-  async get (key?: string): Promise<TorrentData | null> {
+  async get (key?: string) {
     if (!key) return null
     try {
-      return bencode.decode(await readFile(join(await this.cacheFolder, key)))
-    } catch (err) {
-      return null
+      const data = await readFile(join(await this.cacheFolder, key))
+      if (!data.length) return
+      // this double decoded bencoded data, unfortunate, but I wish to preserve my sanity
+      const bencoded: TorrentData = bencode.decode(data)
+      // eslint-disable-next-line @typescript-eslint/await-thenable, @typescript-eslint/no-explicit-any
+      const torrent: any = await parseTorrent(data)
+
+      return { bencoded, torrent }
+    } catch (error) {
+      console.error(error)
     }
   }
 
@@ -140,19 +147,8 @@ class Store {
       const files = await readdir(await this.cacheFolder, { withFileTypes: true })
       for (const file of files) {
         if (!file.isDirectory()) {
-          const data = await readFile(join(await this.cacheFolder, file.name))
-          if (!data.length) continue
-
-          try {
-          // this double decoded bencoded data, unfortunate, but I wish to preserve my sanity
-            const bencoded: TorrentData = bencode.decode(data)
-            // eslint-disable-next-line @typescript-eslint/await-thenable, @typescript-eslint/no-explicit-any
-            const torrent: any = await parseTorrent(data)
-
-            yield { bencoded, torrent }
-          } catch (error) {
-            console.error(error)
-          }
+          const res = await this.get(file.name)
+          if (res) yield res
         }
       }
     } catch (error) {
@@ -327,10 +323,14 @@ export default class TorrentClient {
       if (!this.persist) await this[store].delete(hash)
     }
 
-    const torrent: Torrent = await this[client].get(id) ?? this[client].add(id, {
+    const existing = await this[client].get(id)
+
+    const storeData = !existing ? await this[store].get(await this.toInfoHash(id)) : undefined
+
+    const torrent: Torrent = existing ?? this[client].add(storeData?.torrent ?? id, {
       path: this[path],
       announce: ANNOUNCE,
-      bitfield: (await this[store].get(await this.toInfoHash(id)))?._bitfield,
+      bitfield: storeData?.bencoded._bitfield,
       deselect: this.streamed
     })
 
