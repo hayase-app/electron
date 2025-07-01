@@ -196,7 +196,8 @@ export default class TorrentClient {
       torrentPort: settings.torrentPort,
       dhtPort: settings.dhtPort,
       maxConns: settings.maxConns,
-      peerId
+      peerId,
+      secure: true
     }
     this[client] = new WebTorrent(this[opts])
     this[client].on('error', console.error)
@@ -333,6 +334,7 @@ export default class TorrentClient {
       bitfield: storeData?.bencoded._bitfield,
       deselect: this.streamed
     })
+    // torrent._drain = () => undefined
 
     if (!torrent.ready) await new Promise(resolve => torrent.once('ready', resolve))
 
@@ -428,7 +430,7 @@ export default class TorrentClient {
       const type = wire.type
       if (type.startsWith('utp')) flags.push('utp')
       flags.push(type.endsWith('Incoming') ? 'incoming' : 'outgoing')
-      if (wire.peEnabled) flags.push('encrypted')
+      if (wire._cryptoHandshakeDone) flags.push('encrypted')
 
       const parsed = peerid(wire.peerId)
 

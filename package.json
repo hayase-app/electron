@@ -1,6 +1,6 @@
 {
   "name": "hayase",
-  "version": "6.4.7",
+  "version": "6.4.8",
   "description": "Hayase - Torrent streaming made simple",
   "main": "./out/main/index.js",
   "repository": "github:hayase-app/ui",
@@ -49,6 +49,12 @@
     "typescript": "^5.7.3",
     "vite": "^6.2.5",
     "vite-plugin-cjs-interop": "^2.2.0",
-    "webtorrent": "^2.6.7"
+    "webtorrent": "^2.6.10"
+  },
+    "pnpm": {
+    "overrides": {
+      "webtorrent": "github:thaunknown/webtorrent",
+      "bittorrent-protocol": "github:thaunknown/bittorrent-protocol"
+    }
   }
 }

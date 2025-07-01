@@ -4,6 +4,10 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+overrides:
+  webtorrent: github:thaunknown/webtorrent
+  bittorrent-protocol: github:thaunknown/bittorrent-protocol
+
 importers:
 
   .:
@@ -79,8 +83,8 @@ importers:
         specifier: ^2.2.0
         version: 2.2.0(vite@6.3.2(@types/node@22.14.1))
       webtorrent:
-        specifier: ^2.6.7
-        version: 2.6.7
+        specifier: github:thaunknown/webtorrent
+        version: https://codeload.github.com/thaunknown/webtorrent/tar.gz/33f546013b0ee06c7f63853b8e6d4e13476a2c3f
 
 packages:
 
@@ -1104,8 +1108,9 @@ packages:
   bittorrent-peerid@1.3.6:
     resolution: {integrity: sha512-VyLcUjVMEOdSpHaCG/7odvCdLbAB1y3l9A2V6WIje24uV7FkJPrQrH/RrlFmKxP89pFVDEnE+YlHaFujlFIZsg==}
 
-  bittorrent-protocol@4.1.16:
-    resolution: {integrity: sha512-93t8h77uAyD8BGSpBo8SqxYyKBA/xgv9N8+WghnXpH2I+JmlmJmddUt8nugPRgj/LNuL1VrWJ26jhYhiVWpRaQ==}
+  bittorrent-protocol@https://codeload.github.com/thaunknown/bittorrent-protocol/tar.gz/f55aec466aeabf5fecd89f444e02830bcac17587:
+    resolution: {tarball: https://codeload.github.com/thaunknown/bittorrent-protocol/tar.gz/f55aec466aeabf5fecd89f444e02830bcac17587}
+    version: 4.1.18
     engines: {node: '>=12.20.0'}
 
   bittorrent-tracker@11.2.1:
@@ -3192,8 +3197,8 @@ packages:
     resolution: {integrity: sha512-jH9EhtKIjuXZ2cWxmXS8ZP80XyC3iasQxMDV8jzhNJpfDb7VbQLVW4Wvsxz9QZvzV+G4YoSfBUVKDOyxLzi/sg==}
     engines: {node: '>= 6'}
 
-  streamx@2.22.0:
-    resolution: {integrity: sha512-sLh1evHOzBy/iWRiR6d1zRcLao4gGZr3C1kzNz4fopCOKJb6xD9ub8Mpi9Mr1R6id5o43S+d93fI48UC5uM9aw==}
+  streamx@2.22.1:
+    resolution: {integrity: sha512-znKXEBxfatz2GBNK02kRnCXjV+AA4kjZIUxeWSr3UGirZMJfTE9uiwKHobnbgxWyL/JWro8tTq+vOqAK1/qbSA==}
 
   string-width@4.2.3:
     resolution: {integrity: sha512-wKyQRQpjJ0sIp62ErSZdGsjMJWsap5oRNihHhu6G7JVO/9jIB6UyevL+tXuOqrng8j/cxKTWyWUwvSTriiZz/g==}
@@ -3522,8 +3527,9 @@ packages:
     resolution: {integrity: sha512-sOn0bj3/noUdzQX7rvk0jFbBurqWDGGo2ipl+WfgoOe/x3cxbGLk/ZUY+WHCISSlLaIeBumi1X3wxQZnUESExQ==}
     engines: {node: '>=16.0.0'}
 
-  webtorrent@2.6.7:
-    resolution: {integrity: sha512-Z3aakL5QfxM5MP0D8l2r2mUstlZqijJF9Uv4MLvnyHovPl1qb1dWeuZGJ5Nlzp1la6+JDyuEreUb0Zt8dF1ZLw==}
+  webtorrent@https://codeload.github.com/thaunknown/webtorrent/tar.gz/33f546013b0ee06c7f63853b8e6d4e13476a2c3f:
+    resolution: {tarball: https://codeload.github.com/thaunknown/webtorrent/tar.gz/33f546013b0ee06c7f63853b8e6d4e13476a2c3f}
+    version: 2.6.10
     engines: {node: '>=16'}
 
   which-boxed-primitive@1.1.1:
@@ -4202,7 +4208,7 @@ snapshots:
     dependencies:
       debug: 4.4.1
       err-code: 3.0.1
-      streamx: 2.22.0
+      streamx: 2.22.1
       uint8-util: 2.2.5
       webrtc-polyfill: 1.1.10
     transitivePeerDependencies:
@@ -4212,7 +4218,7 @@ snapshots:
     dependencies:
       debug: 4.4.1
       queue-microtask: 1.2.3
-      streamx: 2.22.0
+      streamx: 2.22.1
       uint8-util: 2.2.5
       ws: 8.18.1(bufferutil@4.0.9)(utf-8-validate@6.0.5)
     transitivePeerDependencies:
@@ -4682,7 +4688,7 @@ snapshots:
 
   bare-stream@2.6.5(bare-events@2.5.4):
     dependencies:
-      streamx: 2.22.0
+      streamx: 2.22.1
     optionalDependencies:
       bare-events: 2.5.4
 
@@ -4727,13 +4733,13 @@ snapshots:
 
   bittorrent-peerid@1.3.6: {}
 
-  bittorrent-protocol@4.1.16:
+  bittorrent-protocol@https://codeload.github.com/thaunknown/bittorrent-protocol/tar.gz/f55aec466aeabf5fecd89f444e02830bcac17587:
     dependencies:
       bencode: 4.0.0
       bitfield: 4.2.0
       debug: 4.4.1
       rc4: 0.1.5
-      streamx: 2.22.0
+      streamx: 2.22.1
       throughput: 1.0.1
       uint8-util: 2.2.5
       unordered-array-remove: 1.0.2
@@ -7202,7 +7208,7 @@ snapshots:
   speed-limiter@1.0.2:
     dependencies:
       limiter: 1.1.5
-      streamx: 2.22.0
+      streamx: 2.22.1
 
   split@1.0.1:
     dependencies:
@@ -7216,7 +7222,7 @@ snapshots:
 
   stat-mode@1.0.0: {}
 
-  streamx@2.22.0:
+  streamx@2.22.1:
     dependencies:
       fast-fifo: 1.3.2
       text-decoder: 1.2.3
@@ -7592,7 +7598,7 @@ snapshots:
       node-datachannel: 0.12.0
       node-domexception: 1.0.0
 
-  webtorrent@2.6.7:
+  webtorrent@https://codeload.github.com/thaunknown/webtorrent/tar.gz/33f546013b0ee06c7f63853b8e6d4e13476a2c3f:
     dependencies:
       '@silentbot1/nat-api': 0.4.8
       '@thaunknown/simple-peer': 10.0.11
@@ -7600,7 +7606,7 @@ snapshots:
       addr-to-ip-port: 2.0.0
       bitfield: 4.2.0
       bittorrent-dht: 11.0.10
-      bittorrent-protocol: 4.1.16
+      bittorrent-protocol: https://codeload.github.com/thaunknown/bittorrent-protocol/tar.gz/f55aec466aeabf5fecd89f444e02830bcac17587
       cache-chunk-store: 3.2.2
       chunk-store-iterator: 1.0.4
       cpus: 1.0.3
@@ -7625,7 +7631,7 @@ snapshots:
       run-parallel: 1.2.0
       run-parallel-limit: 1.1.0
       speed-limiter: 1.0.2
-      streamx: 2.22.0
+      streamx: 2.22.1
       throughput: 1.0.1
       torrent-discovery: 11.0.17
       torrent-piece: 3.0.1
