@@ -437,7 +437,7 @@ export default class TorrentClient {
       const progress = this._wireProgress(wire, torrent)
 
       return {
-        ip: wire.remoteAddress + ':' + wire.remotePort,
+        ip: wire.remoteAddress.replace(/^::ffff:/, '') + ':' + wire.remotePort,
         seeder: progress === 1 || wire.isSeeder,
         client: `${parsed.client} ${parsed.version ?? '?'}`,
         progress,
