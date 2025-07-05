@@ -196,8 +196,7 @@ export default class TorrentClient {
       torrentPort: settings.torrentPort,
       dhtPort: settings.dhtPort,
       maxConns: settings.maxConns,
-      peerId,
-      secure: true
+      peerId
     }
     this[client] = new WebTorrent(this[opts])
     this[client].on('error', console.error)
