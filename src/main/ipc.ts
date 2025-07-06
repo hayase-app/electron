@@ -93,7 +93,7 @@ export default class IPC {
   async updateSettings (settings: TorrentSettings) {
     store.set('torrentSettings', settings)
 
-    this.torrentProcess.postMessage([{ id: 'settings', data: { ...store.data.torrentSettings, path: store.data.torrentPath, player: store.data.player } }])
+    this.torrentProcess.postMessage({ id: 'settings', data: { ...store.data.torrentSettings, path: store.data.torrentPath, player: store.data.player } })
   }
 
   async selectDownload () {
