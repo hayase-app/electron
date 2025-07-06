@@ -4,7 +4,7 @@ import process from 'node:process'
 import { electronApp, is } from '@electron-toolkit/utils'
 import electronShutdownHandler from '@paymoapp/electron-shutdown-handler'
 import { expose } from 'abslink/electron'
-import { BrowserWindow, MessageChannelMain, app, dialog, ipcMain, powerMonitor, shell, utilityProcess, Tray, Menu, protocol, nativeImage } from 'electron' // type NativeImage, Notification, nativeImage,
+import { BrowserWindow, MessageChannelMain, app, dialog, ipcMain, powerMonitor, shell, utilityProcess, Tray, Menu, protocol, nativeImage, session } from 'electron' // type NativeImage, Notification, nativeImage,
 import log from 'electron-log/main'
 import { autoUpdater } from 'electron-updater'
 
@@ -115,6 +115,27 @@ export default class App {
         }
       })
     }
+
+    session.defaultSession.webRequest.onBeforeSendHeaders((details, callback) => {
+      if (details.url.startsWith('https://graphql.anilist.co')) {
+        details.requestHeaders.Referer = 'https://anilist.co/'
+        details.requestHeaders.Origin = 'https://anilist.co'
+        delete details.requestHeaders['User-Agent']
+      }
+      callback({ cancel: false, requestHeaders: details.requestHeaders })
+    })
+
+    // anilist.... forgot to set the cache header on their preflights..... pathetic.... this just wastes rate limits, this fixes it!
+    session.defaultSession.webRequest.onHeadersReceived((details, callback) => {
+      if (details.url.startsWith('https://graphql.anilist.co') && details.method === 'OPTIONS') {
+        if (details.responseHeaders) {
+          details.responseHeaders['Cache-Control'] = ['public, max-age=86400']
+          details.responseHeaders['access-control-max-age'] = ['86400']
+        }
+      }
+
+      callback({ responseHeaders: details.responseHeaders })
+    })
 
     this.tray.setToolTip('Hayase')
     // this needs to be way better lol
