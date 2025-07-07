@@ -4,7 +4,7 @@ import process from 'node:process'
 import { electronApp, is } from '@electron-toolkit/utils'
 import electronShutdownHandler from '@paymoapp/electron-shutdown-handler'
 import { expose } from 'abslink/electron'
-import { BrowserWindow, MessageChannelMain, app, dialog, ipcMain, powerMonitor, shell, utilityProcess, Tray, Menu, protocol, nativeImage, session } from 'electron' // type NativeImage, Notification, nativeImage,
+import { BrowserWindow, MessageChannelMain, app, dialog, ipcMain, powerMonitor, shell, utilityProcess, Tray, Menu, protocol, nativeImage, session, nativeTheme } from 'electron' // type NativeImage, Notification, nativeImage,
 import log from 'electron-log/main'
 import { autoUpdater } from 'electron-updater'
 
@@ -68,14 +68,25 @@ export default class App {
   tray = new Tray(process.platform === 'win32' ? ico : process.platform === 'darwin' ? nativeImage.createFromPath(icon).resize({ width: 16, height: 16 }) : icon)
 
   constructor () {
+    nativeTheme.themeSource = 'dark'
     expose(this.ipc, ipcMain, this.mainWindow.webContents)
     this.mainWindow.setMenuBarVisibility(false)
-    this.mainWindow.webContents.setWindowOpenHandler(e => {
-      if (e.url.startsWith('https://anilist.co/api/v2/oauth/authorize')) {
+    this.mainWindow.webContents.setWindowOpenHandler(({ url }) => {
+      if (url.startsWith('https://anilist.co/api/v2/oauth/authorize')) {
         return {
           action: 'allow',
           createWindow (options) {
             const win = new BrowserWindow({ ...options, resizable: false, fullscreenable: false, title: 'AniList', titleBarOverlay: { color: '#0b1622' }, titleBarStyle: 'hidden', backgroundColor: '#0b1622' })
+            win.setMenuBarVisibility(false)
+            win.webContents.setWindowOpenHandler(() => ({ action: 'deny' }))
+            return win.webContents
+          }
+        }
+      } else if (url.startsWith('https://myanimelist.net/v1/oauth2/authorize')) {
+        return {
+          action: 'allow',
+          createWindow (options) {
+            const win = new BrowserWindow({ ...options, resizable: false, fullscreenable: false, title: 'MyAnimeList', titleBarOverlay: { color: '#ffffff' }, titleBarStyle: 'hidden', backgroundColor: '#ffffff' })
             win.setMenuBarVisibility(false)
             win.webContents.setWindowOpenHandler(() => ({ action: 'deny' }))
             return win.webContents
@@ -134,7 +145,21 @@ export default class App {
         }
       }
 
-      callback({ responseHeaders: details.responseHeaders })
+      // MAL doesn't implement CORS....
+      if (details.url.startsWith('https://myanimelist.net/v1/oauth2') || details.url.startsWith('https://api.myanimelist.net/v2/')) {
+        if (details.responseHeaders) {
+          details.responseHeaders['Access-Control-Allow-Origin'] = ['*']
+          details.responseHeaders['Access-Control-Allow-Methods'] = ['GET, POST, PUT, DELETE, OPTIONS, PATCH']
+          details.responseHeaders['Access-Control-Allow-Headers'] = ['*']
+          details.responseHeaders['Access-Control-Allow-Credentials'] = ['true']
+        }
+        if (details.method === 'OPTIONS' && details.statusCode === 405) {
+          details.statusLine = '200 OK'
+          details.statusCode = 200
+        }
+      }
+
+      callback(details)
     })
 
     this.tray.setToolTip('Hayase')
