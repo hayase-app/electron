@@ -7,7 +7,7 @@ import { cjsInterop } from 'vite-plugin-cjs-interop'
 export default defineConfig({
   main: {
     plugins: [
-      bytecodePlugin({ transformArrowFunctions: false }),
+      process.platform !== 'darwin' && bytecodePlugin({ transformArrowFunctions: false }),
       externalizeDepsPlugin(),
       cjsInterop({ dependencies: ['@paymoapp/electron-shutdown-handler'] }),
       license({
