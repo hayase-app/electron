@@ -140,6 +140,7 @@ export default class App {
     session.defaultSession.webRequest.onHeadersReceived((details, callback) => {
       if (details.url.startsWith('https://graphql.anilist.co') && details.method === 'OPTIONS') {
         if (details.responseHeaders) {
+          if (!details.responseHeaders['access-control-allow-origin'] || !details.responseHeaders['Access-Control-Allow-Origin']) details.responseHeaders['access-control-allow-origin'] = ['*']
           details.responseHeaders['Cache-Control'] = ['public, max-age=86400']
           details.responseHeaders['access-control-max-age'] = ['86400']
         }
@@ -272,13 +273,13 @@ export default class App {
     const reloadPorts = () => {
       if (this.destroyed) return
       const { port1, port2 } = new MessageChannelMain()
-      this.torrentProcess.postMessage({ id: 'settings', data: { ...store.data.torrentSettings, path: store.data.torrentPath, player: store.data.player } }, [port1])
+      this.torrentProcess.postMessage({ id: 'settings', data: { ...store.data.torrentSettings, path: store.data.torrentPath } }, [port1])
 
       this.mainWindow.webContents.postMessage('port', null, [port2])
     }
 
     const { port1, port2 } = new MessageChannelMain()
-    this.torrentProcess.once('spawn', () => this.torrentProcess.postMessage({ id: 'settings', data: { ...store.data.torrentSettings, path: store.data.torrentPath, player: store.data.player } }, [port1]))
+    this.torrentProcess.once('spawn', () => this.torrentProcess.postMessage({ id: 'settings', data: { ...store.data.torrentSettings, path: store.data.torrentPath } }, [port1]))
     ipcMain.once('preload-done', () => {
       this.mainWindow.webContents.postMessage('port', null, [port2])
       ipcMain.on('preload-done', () => reloadPorts())

@@ -19,9 +19,6 @@
     "maxNodeModuleJsDepth": 3
   },
   "files": [],
-  "include": [
-    "src/types.d.ts",
-  ],
   "references": [
     {
       "path": "./tsconfig.node.json"

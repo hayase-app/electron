@@ -3,12 +3,13 @@ import { wrap } from 'abslink/electron'
 import { wrap as wrapPort } from 'abslink/w3c'
 import { contextBridge, ipcRenderer } from 'electron'
 
-import type TorrentClient from '../main/background/client.ts'
 import type IPC from '../main/ipc.ts'
-import type { Native } from '../types.d.ts'
 import type { Remote } from 'abslink'
+import type { Native } from 'native'
+import type TorrentClient from 'torrent-client'
 
 const isNewWindows = process.platform === 'win32' && Number(process.getSystemVersion().split('.').pop()) >= 22621
+const isLinux = process.platform === 'linux'
 
 ipcRenderer.send('preload-done')
 
@@ -26,7 +27,11 @@ const main = wrap<typeof IPC.prototype>(ipcRenderer)
 const native: Partial<Native> = {
   openURL: (url: string) => main.openURL(url),
   selectPlayer: () => main.selectPlayer(),
-  selectDownload: () => main.selectDownload(),
+  selectDownload: async () => {
+    const path = await main.selectDownload()
+    await (await torrent).verifyDirectoryPermissions(path)
+    return path
+  },
   setAngle: (angle: string) => main.setAngle(angle),
   getLogs: () => main.getLogs(),
   getDeviceInfo: () => main.getDeviceInfo(),
@@ -88,7 +93,7 @@ const native: Partial<Native> = {
     if (!data) return
     await navigator.clipboard.writeText(data.url ?? data.text ?? data.title!)
   },
-  defaultTransparency: () => !isNewWindows,
+  defaultTransparency: () => !isNewWindows && !isLinux,
   debug: async (levels) => await (await torrent).debug(levels)
 }
 

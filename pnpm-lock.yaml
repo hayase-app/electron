@@ -42,9 +42,6 @@ importers:
       abslink:
         specifier: ^1.1.0
         version: 1.1.0
-      bittorrent-peerid:
-        specifier: ^1.3.6
-        version: 1.3.6
       electron:
         specifier: 32.1.1
         version: 32.1.1
@@ -63,12 +60,15 @@ importers:
       eslint-config-standard-universal:
         specifier: ^1.0.8
         version: 1.0.8(@typescript-eslint/parser@8.30.1(eslint@9.24.0)(typescript@5.8.3))
-      matroska-metadata:
-        specifier: ^1.0.7
-        version: 1.0.7
+      native:
+        specifier: github:hayase-app/native
+        version: https://codeload.github.com/hayase-app/native/tar.gz/61d27bc30411840846e4e8ec5ea8ce875305e424
       prettier:
         specifier: ^3.5.1
         version: 3.5.3
+      torrent-client:
+        specifier: github:hayase-app/torrent-client
+        version: https://codeload.github.com/hayase-app/torrent-client/tar.gz/f66b6f8023e08f0f8833468eb840cfa6c1ec155d
       typescript:
         specifier: ^5.7.3
         version: 5.8.3
@@ -78,9 +78,6 @@ importers:
       vite-plugin-cjs-interop:
         specifier: ^2.2.0
         version: 2.2.0(vite@6.3.2(@types/node@22.14.1))
-      webtorrent:
-        specifier: ^2.6.10
-        version: 2.6.10
 
 packages:
 
@@ -2597,6 +2594,10 @@ packages:
   napi-macros@2.2.2:
     resolution: {integrity: sha512-hmEVtAGYzVQpCKdbQea4skABsdXW4RUh5t5mJ2zzqowJS2OyXZTU1KhDVFhx+NlWZ4ap9mqR9TcDO3LTTttd+g==}
 
+  native@https://codeload.github.com/hayase-app/native/tar.gz/61d27bc30411840846e4e8ec5ea8ce875305e424:
+    resolution: {tarball: https://codeload.github.com/hayase-app/native/tar.gz/61d27bc30411840846e4e8ec5ea8ce875305e424}
+    version: 1.0.0
+
   natural-compare@1.4.0:
     resolution: {integrity: sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw==}
 
@@ -3328,6 +3329,10 @@ packages:
   to-regex-range@5.0.1:
     resolution: {integrity: sha512-65P7iz6X5yEr1cwcgvQxbbIw7Uk3gOy5dIdtZ4rDveLqhrdJP+Li/Hx6tyK0NEb+2GCyneCMJiGqrADCSNk8sQ==}
     engines: {node: '>=8.0'}
+
+  torrent-client@https://codeload.github.com/hayase-app/torrent-client/tar.gz/f66b6f8023e08f0f8833468eb840cfa6c1ec155d:
+    resolution: {tarball: https://codeload.github.com/hayase-app/torrent-client/tar.gz/f66b6f8023e08f0f8833468eb840cfa6c1ec155d}
+    version: 1.0.0
 
   torrent-discovery@11.0.17:
     resolution: {integrity: sha512-lOvw61g93GYrafHuHx8HkHCsX0nB7AoDUTVoQsLDlpjc2QPwld1HMALz9q6Q3BX9m87X8DI9+TrCGnT7QgOR3A==}
@@ -6525,6 +6530,8 @@ snapshots:
 
   napi-macros@2.2.2: {}
 
+  native@https://codeload.github.com/hayase-app/native/tar.gz/61d27bc30411840846e4e8ec5ea8ce875305e424: {}
+
   natural-compare@1.4.0: {}
 
   negotiator@0.6.4: {}
@@ -7391,6 +7398,16 @@ snapshots:
   to-regex-range@5.0.1:
     dependencies:
       is-number: 7.0.0
+
+  torrent-client@https://codeload.github.com/hayase-app/torrent-client/tar.gz/f66b6f8023e08f0f8833468eb840cfa6c1ec155d:
+    dependencies:
+      bittorrent-peerid: 1.3.6
+      matroska-metadata: 1.0.7
+      native: https://codeload.github.com/hayase-app/native/tar.gz/61d27bc30411840846e4e8ec5ea8ce875305e424
+      webtorrent: 2.6.10
+    transitivePeerDependencies:
+      - bare-buffer
+      - supports-color
 
   torrent-discovery@11.0.17:
     dependencies:

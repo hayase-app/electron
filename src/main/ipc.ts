@@ -10,8 +10,8 @@ import { autoUpdater } from 'electron-updater'
 import store from './store'
 
 import type App from './app'
-import type { SessionMetadata, TorrentSettings } from '../types'
 import type Discord from './discord'
+import type { SessionMetadata, TorrentSettings } from 'native'
 
 const WHITELISTED_URLS = ['https://anilist.co/', 'https://github.com/sponsors/ThaUnknown/', 'https://myanimelist.net/', 'https://miru.watch', 'https://hayase.app', 'https://hayase.watch', 'https://thewiki.moe']
 
@@ -90,10 +90,10 @@ export default class IPC {
     return basename(path, extname(path))
   }
 
-  async updateSettings (settings: TorrentSettings) {
+  async updateSettings (settings: TorrentSettings = store.data.torrentSettings) {
     store.set('torrentSettings', settings)
 
-    this.torrentProcess.postMessage({ id: 'settings', data: { ...store.data.torrentSettings, path: store.data.torrentPath, player: store.data.player } })
+    this.torrentProcess.postMessage({ id: 'settings', data: { ...store.data.torrentSettings, path: store.data.torrentPath } })
   }
 
   async selectDownload () {

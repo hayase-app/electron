@@ -1,6 +1,6 @@
 import { Client } from '@xhayper/discord-rpc/dist/Client'
 
-import type { SessionMetadata } from '../types'
+import type { SessionMetadata } from 'native'
 
 function throttle <T extends (...args: any[]) => unknown>(callback: T, waitFor: number) {
   let timeout: ReturnType<typeof setTimeout> | undefined

@@ -7,12 +7,13 @@ import { app } from 'electron'
 import log from 'electron-log/main'
 
 const isNewWindows = process.platform === 'win32' && Number(release().split('.').pop()) >= 22621
+const isLinux = process.platform === 'linux'
 
 const DEFAULTS = {
   angle: 'default',
   player: '',
   torrentPath: '',
-  transparency: !isNewWindows,
+  transparency: !isNewWindows && !isLinux,
   torrentSettings: {
     torrentPersist: false,
     torrentDHT: false,
