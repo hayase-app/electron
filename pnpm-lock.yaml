@@ -68,7 +68,7 @@ importers:
         version: 3.5.3
       torrent-client:
         specifier: github:hayase-app/torrent-client
-        version: https://codeload.github.com/hayase-app/torrent-client/tar.gz/f66b6f8023e08f0f8833468eb840cfa6c1ec155d
+        version: https://codeload.github.com/hayase-app/torrent-client/tar.gz/337d9ad637b651dfef0e2b152863f2687e7aa11e
       typescript:
         specifier: ^5.7.3
         version: 5.8.3
@@ -3330,8 +3330,8 @@ packages:
     resolution: {integrity: sha512-65P7iz6X5yEr1cwcgvQxbbIw7Uk3gOy5dIdtZ4rDveLqhrdJP+Li/Hx6tyK0NEb+2GCyneCMJiGqrADCSNk8sQ==}
     engines: {node: '>=8.0'}
 
-  torrent-client@https://codeload.github.com/hayase-app/torrent-client/tar.gz/f66b6f8023e08f0f8833468eb840cfa6c1ec155d:
-    resolution: {tarball: https://codeload.github.com/hayase-app/torrent-client/tar.gz/f66b6f8023e08f0f8833468eb840cfa6c1ec155d}
+  torrent-client@https://codeload.github.com/hayase-app/torrent-client/tar.gz/337d9ad637b651dfef0e2b152863f2687e7aa11e:
+    resolution: {tarball: https://codeload.github.com/hayase-app/torrent-client/tar.gz/337d9ad637b651dfef0e2b152863f2687e7aa11e}
     version: 1.0.0
 
   torrent-discovery@11.0.17:
@@ -7399,7 +7399,7 @@ snapshots:
     dependencies:
       is-number: 7.0.0
 
-  torrent-client@https://codeload.github.com/hayase-app/torrent-client/tar.gz/f66b6f8023e08f0f8833468eb840cfa6c1ec155d:
+  torrent-client@https://codeload.github.com/hayase-app/torrent-client/tar.gz/337d9ad637b651dfef0e2b152863f2687e7aa11e:
     dependencies:
       bittorrent-peerid: 1.3.6
       matroska-metadata: 1.0.7

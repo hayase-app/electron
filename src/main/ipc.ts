@@ -4,7 +4,7 @@ import os from 'node:os'
 import { basename, extname } from 'node:path'
 
 import { app, dialog, shell, type UtilityProcess, ipcMain } from 'electron'
-import log from 'electron-log'
+import log from 'electron-log/main'
 import { autoUpdater } from 'electron-updater'
 
 import store from './store'
