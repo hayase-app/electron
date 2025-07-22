@@ -1,19 +1,15 @@
 import { readFileSync } from 'node:fs'
 import { writeFile } from 'node:fs/promises'
-import { release } from 'node:os'
 import { join } from 'node:path'
 
 import { app } from 'electron'
 import log from 'electron-log/main'
 
-const isNewWindows = process.platform === 'win32' && Number(release().split('.').pop()) >= 22621
-const isLinux = process.platform === 'linux'
-
 const DEFAULTS = {
   angle: 'default',
   player: '',
   torrentPath: '',
-  transparency: !isNewWindows && !isLinux,
+  transparency: false,
   torrentSettings: {
     torrentPersist: false,
     torrentDHT: false,

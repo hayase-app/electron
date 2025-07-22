@@ -8,9 +8,6 @@ import type { Remote } from 'abslink'
 import type { Native } from 'native'
 import type TorrentClient from 'torrent-client'
 
-const isNewWindows = process.platform === 'win32' && Number(process.getSystemVersion().split('.').pop()) >= 22621
-const isLinux = process.platform === 'linux'
-
 ipcRenderer.send('preload-done')
 
 const torrent = new Promise<Remote<TorrentClient>>(resolve => {
@@ -93,7 +90,7 @@ const native: Partial<Native> = {
     if (!data) return
     await navigator.clipboard.writeText(data.url ?? data.text ?? data.title!)
   },
-  defaultTransparency: () => !isNewWindows && !isLinux,
+  defaultTransparency: () => false,
   debug: async (levels) => await (await torrent).debug(levels)
 }
 
