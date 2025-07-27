@@ -23,6 +23,15 @@ import Updater from './updater.ts'
 log.initialize({ spyRendererConsole: true, preload: false })
 log.transports.file.level = 'debug'
 log.transports.file.maxSize = 10 * 1024 * 1024 // 10MB
+
+log.hooks.push((message, transport, transportName) => {
+  const hasMatch = message.data.some(part => typeof part === 'string' && (part.includes('Mixed Content:') || part.includes('was loaded over HTTPS, but requested an insecure')))
+
+  if (hasMatch) return false
+
+  return message
+})
+
 autoUpdater.logger = log
 
 const TRANSPARENCY = store.get('transparency')
