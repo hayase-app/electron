@@ -20,7 +20,7 @@ import Protocol from './protocol.ts'
 import store from './store.ts'
 import Updater from './updater.ts'
 
-log.initialize({ spyRendererConsole: true })
+log.initialize({ spyRendererConsole: true, preload: false })
 log.transports.file.level = 'debug'
 log.transports.file.maxSize = 10 * 1024 * 1024 // 10MB
 autoUpdater.logger = log
