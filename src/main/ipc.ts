@@ -134,7 +134,7 @@ export default class IPC {
   }
 
   openUIDevtools () {
-    this.app.mainWindow.webContents.openDevTools()
+    this.app.mainWindow.webContents.openDevTools({ mode: 'detach' })
   }
 
   toggleDiscordDetails (enabled: boolean) {

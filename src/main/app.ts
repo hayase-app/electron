@@ -36,7 +36,7 @@ autoUpdater.logger = log
 
 const TRANSPARENCY = store.get('transparency')
 
-const BASE_URL = is.dev ? 'http://localhost:7344/' : 'https://hayase.app/'
+const BASE_URL = is.dev ? 'https://hayase.app/' : 'https://hayase.app/'
 
 protocol.registerSchemesAsPrivileged([
   { scheme: 'https', privileges: { standard: true, bypassCSP: true, allowServiceWorkers: true, supportFetchAPI: true, corsEnabled: false, stream: true, codeCache: true, secure: true } }
@@ -256,7 +256,7 @@ export default class App {
       process.on('SIGTERM', () => this.destroy())
     }
 
-    if (is.dev) this.mainWindow.webContents.openDevTools()
+    if (is.dev) this.mainWindow.webContents.openDevTools({ mode: 'detach' })
     this.mainWindow.loadURL(BASE_URL + this.protocol.navigateTarget())
     this.mainWindow.webContents.on('will-navigate', (e, url) => {
       const parsedUrl = new URL(url)
@@ -331,6 +331,12 @@ export default class App {
             program: 'hayase://donate/',
             title: 'Donate',
             description: 'Support This App'
+          },
+          {
+            type: 'task',
+            program: 'hayase://devtools/',
+            title: 'Devtools',
+            description: 'Open Devtools'
           }
         ]
       }

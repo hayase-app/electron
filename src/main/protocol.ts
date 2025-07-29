@@ -68,6 +68,7 @@ export default class Protocol {
     const parsed = this._parseProtocol(text)
     if (!parsed) return
     if (parsed.target === 'donate') shell.openExternal('https://github.com/sponsors/ThaUnknown/')
+    if (parsed.target === 'devtools') this.window.webContents.openDevTools({ mode: 'detach' })
 
     this.window.webContents.send('navigate', parsed)
   }
