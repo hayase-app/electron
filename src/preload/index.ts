@@ -92,7 +92,7 @@ const native: Partial<Native> = {
   },
   defaultTransparency: () => false,
   debug: async (levels) => await (await torrent).debug(levels),
-  profile: async () => await (await torrent).profile()
+  profile: async (sec) => await (await torrent).profile(sec)
 }
 
 try {
