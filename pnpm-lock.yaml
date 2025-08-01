@@ -19,7 +19,7 @@ importers:
         version: 2.5.3
       v8-profiler-next:
         specifier: github:ThaUnknown/v8-profiler-next
-        version: https://codeload.github.com/ThaUnknown/v8-profiler-next/tar.gz/29820d0cd63b06863a3c2c4a346f236b2ac6b90d(encoding@0.1.13)
+        version: https://codeload.github.com/ThaUnknown/v8-profiler-next/tar.gz/1a86a8fbbd893388a793cf004b11c23fe5356390(encoding@0.1.13)
     devDependencies:
       '@electron-toolkit/eslint-config-prettier':
         specifier: ^3.0.0
@@ -3526,8 +3526,8 @@ packages:
     engines: {node: '>=8.12'}
     hasBin: true
 
-  v8-profiler-next@https://codeload.github.com/ThaUnknown/v8-profiler-next/tar.gz/29820d0cd63b06863a3c2c4a346f236b2ac6b90d:
-    resolution: {tarball: https://codeload.github.com/ThaUnknown/v8-profiler-next/tar.gz/29820d0cd63b06863a3c2c4a346f236b2ac6b90d}
+  v8-profiler-next@https://codeload.github.com/ThaUnknown/v8-profiler-next/tar.gz/1a86a8fbbd893388a793cf004b11c23fe5356390:
+    resolution: {tarball: https://codeload.github.com/ThaUnknown/v8-profiler-next/tar.gz/1a86a8fbbd893388a793cf004b11c23fe5356390}
     version: 1.10.0
 
   verror@1.10.1:
@@ -7719,7 +7719,7 @@ snapshots:
       timeout-refresh: 1.0.3
       unordered-set: 2.0.1
 
-  v8-profiler-next@https://codeload.github.com/ThaUnknown/v8-profiler-next/tar.gz/29820d0cd63b06863a3c2c4a346f236b2ac6b90d(encoding@0.1.13):
+  v8-profiler-next@https://codeload.github.com/ThaUnknown/v8-profiler-next/tar.gz/1a86a8fbbd893388a793cf004b11c23fe5356390(encoding@0.1.13):
     dependencies:
       '@xprofiler/node-pre-gyp': 1.0.11(encoding@0.1.13)
       nan: 2.23.0
