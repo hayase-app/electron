@@ -91,7 +91,8 @@ const native: Partial<Native> = {
     await navigator.clipboard.writeText(data.url ?? data.text ?? data.title!)
   },
   defaultTransparency: () => false,
-  debug: async (levels) => await (await torrent).debug(levels)
+  debug: async (levels) => await (await torrent).debug(levels),
+  profile: async () => await (await torrent).profile()
 }
 
 try {

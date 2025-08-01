@@ -36,7 +36,7 @@ autoUpdater.logger = log
 
 const TRANSPARENCY = store.get('transparency')
 
-const BASE_URL = is.dev ? 'https://hayase.app/' : 'https://hayase.app/'
+const BASE_URL = is.dev ? 'http://localhost:7344/' : 'https://hayase.app/'
 
 protocol.registerSchemesAsPrivileged([
   { scheme: 'https', privileges: { standard: true, bypassCSP: true, allowServiceWorkers: true, supportFetchAPI: true, corsEnabled: false, stream: true, codeCache: true, secure: true } }
@@ -256,7 +256,7 @@ export default class App {
       process.on('SIGTERM', () => this.destroy())
     }
 
-    if (is.dev) this.mainWindow.webContents.openDevTools({ mode: 'detach' })
+    if (is.dev) this.mainWindow.webContents.openDevTools()
     this.mainWindow.loadURL(BASE_URL + this.protocol.navigateTarget())
     this.mainWindow.webContents.on('will-navigate', (e, url) => {
       const parsedUrl = new URL(url)
