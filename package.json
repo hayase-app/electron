@@ -27,7 +27,7 @@
     "@paymoapp/electron-shutdown-handler": "^1.1.2",
     "rollup-plugin-license": "^3.6.0",
     "utp-native": "^2.5.3",
-    "v8-profiler-next": "github:ThaUnknown/v8-profiler-next"
+    "@thaunknown/v8-profiler-next": "^1.10.0"
   },
   "devDependencies": {
     "@electron-toolkit/eslint-config-prettier": "^3.0.0",

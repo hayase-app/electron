@@ -11,15 +11,15 @@ importers:
       '@paymoapp/electron-shutdown-handler':
         specifier: ^1.1.2
         version: 1.1.2
+      '@thaunknown/v8-profiler-next':
+        specifier: ^1.10.0
+        version: 1.10.0(encoding@0.1.13)
       rollup-plugin-license:
         specifier: ^3.6.0
         version: 3.6.0(picomatch@4.0.2)(rollup@4.40.0)
       utp-native:
         specifier: ^2.5.3
         version: 2.5.3
-      v8-profiler-next:
-        specifier: github:ThaUnknown/v8-profiler-next
-        version: https://codeload.github.com/ThaUnknown/v8-profiler-next/tar.gz/7f64d05c54cf1167ebff9fb7aac36745e6857f8e(encoding@0.1.13)
     devDependencies:
       '@electron-toolkit/eslint-config-prettier':
         specifier: ^3.0.0
@@ -701,6 +701,9 @@ packages:
   '@thaunknown/thirty-two@1.0.5':
     resolution: {integrity: sha512-Q53KyCXweV1CS62EfqtPDqfpksn5keQ59PGqzzkK+g8Vif1jB4inoBCcs/BUSdsqddhE3G+2Fn+4RX3S6RqT0A==}
     engines: {node: '>=0.2.6'}
+
+  '@thaunknown/v8-profiler-next@1.10.0':
+    resolution: {integrity: sha512-CwRbyPifvybFiG4E2XlHYGHq8M9cprJa5yGLps/CIjZ0zYOdP2Ibaa04DuSLp3rF+uWnIFwB2PdUB+bcVrHmWw==}
 
   '@tootallnate/once@2.0.0':
     resolution: {integrity: sha512-XCuKFP5PS55gnMVu3dty8KPatLqUoy/ZYzDzAGCQ8JNFCkLXzmI7vNHCR+XpbZaMWQK/vQubr7PkYq8g470J/A==}
@@ -3526,10 +3529,6 @@ packages:
     engines: {node: '>=8.12'}
     hasBin: true
 
-  v8-profiler-next@https://codeload.github.com/ThaUnknown/v8-profiler-next/tar.gz/7f64d05c54cf1167ebff9fb7aac36745e6857f8e:
-    resolution: {tarball: https://codeload.github.com/ThaUnknown/v8-profiler-next/tar.gz/7f64d05c54cf1167ebff9fb7aac36745e6857f8e}
-    version: 1.10.0
-
   verror@1.10.1:
     resolution: {integrity: sha512-veufcmxri4e3XSrT0xwfUR7kguIkaxBeosDg00yDWhk49wdwkSUrvvsm7nc75e1PUyvIeZj6nS8VQRYz2/S4Xg==}
     engines: {node: '>=0.6.0'}
@@ -4297,6 +4296,15 @@ snapshots:
   '@thaunknown/thirty-two@1.0.5':
     dependencies:
       uint8-util: 2.2.5
+
+  '@thaunknown/v8-profiler-next@1.10.0(encoding@0.1.13)':
+    dependencies:
+      '@xprofiler/node-pre-gyp': 1.0.11(encoding@0.1.13)
+      nan: 2.23.0
+    transitivePeerDependencies:
+      - bluebird
+      - encoding
+      - supports-color
 
   '@tootallnate/once@2.0.0': {}
 
@@ -7718,15 +7726,6 @@ snapshots:
       readable-stream: 3.6.2
       timeout-refresh: 1.0.3
       unordered-set: 2.0.1
-
-  v8-profiler-next@https://codeload.github.com/ThaUnknown/v8-profiler-next/tar.gz/7f64d05c54cf1167ebff9fb7aac36745e6857f8e(encoding@0.1.13):
-    dependencies:
-      '@xprofiler/node-pre-gyp': 1.0.11(encoding@0.1.13)
-      nan: 2.23.0
-    transitivePeerDependencies:
-      - bluebird
-      - encoding
-      - supports-color
 
   verror@1.10.1:
     dependencies:
