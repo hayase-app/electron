@@ -3,9 +3,9 @@ import { writeFile } from 'node:fs/promises'
 import os from 'node:os'
 import { join } from 'node:path'
 
+import profiler from '@thaunknown/v8-profiler-next'
 import { expose } from 'abslink/w3c'
 import TorrentClient from 'torrent-client'
-import profiler from 'v8-profiler-next'
 
 import type { TorrentSettings } from 'native'
 
