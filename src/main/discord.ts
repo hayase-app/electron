@@ -45,7 +45,7 @@ export default class Discord {
 
   setDiscordRPC () {
     if (this.discord.user) {
-      const mediaUrl = 'https://anilist.co/anime/' + this.mediaId
+      const mediaUrl = this.allowDiscordDetails ? 'https://anilist.co/anime/' + this.mediaId : 'https://hayase.watch'
       const mediaTitle = this.allowDiscordDetails ? this.session?.title ?? 'Anime' : 'Anime'
       const position = (this.position?.position ?? 0) * 1000
       const duration = (this.position?.duration ?? 0) * 1000
