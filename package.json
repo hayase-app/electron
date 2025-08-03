@@ -1,6 +1,6 @@
 {
   "name": "hayase",
-  "version": "6.4.20",
+  "version": "6.4.21",
   "description": "Hayase - Torrent streaming made simple",
   "main": "./out/main/index.js",
   "repository": "github:hayase-app/ui",
@@ -26,8 +26,7 @@
   "dependencies": {
     "@paymoapp/electron-shutdown-handler": "^1.1.2",
     "rollup-plugin-license": "^3.6.0",
-    "utp-native": "^2.5.3",
-    "@thaunknown/v8-profiler-next": "^1.10.0"
+    "utp-native": "^2.5.3"
   },
   "devDependencies": {
     "@electron-toolkit/eslint-config-prettier": "^3.0.0",

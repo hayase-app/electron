@@ -6,12 +6,8 @@ import { cjsInterop } from 'vite-plugin-cjs-interop'
 
 export default defineConfig({
   main: {
-    build: {
-      sourcemap: true,
-      minify: false // Disable minification for better profiling
-    },
     plugins: [
-      // process.platform !== 'darwin' && bytecodePlugin({ transformArrowFunctions: false }),
+      process.platform !== 'darwin' && bytecodePlugin({ transformArrowFunctions: false }),
       externalizeDepsPlugin(),
       cjsInterop({ dependencies: ['@paymoapp/electron-shutdown-handler'] }),
       license({
