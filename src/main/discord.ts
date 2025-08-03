@@ -45,6 +45,8 @@ export default class Discord {
 
   setDiscordRPC () {
     if (this.discord.user) {
+      const mediaUrl = 'https://anilist.co/anime/' + this.mediaId
+      const mediaTitle = this.allowDiscordDetails ? this.session?.title ?? 'Anime' : 'Anime'
       const position = (this.position?.position ?? 0) * 1000
       const duration = (this.position?.duration ?? 0) * 1000
       const status = {
@@ -53,14 +55,19 @@ export default class Discord {
           type: 3,
           name: 'Hayase',
           state: this.allowDiscordDetails ? this.session?.description ?? 'Streaming anime torrents! 🍿' : 'Streaming anime torrents! 🍿',
-          details: this.allowDiscordDetails ? this.session?.title ?? 'Looking around...' : 'Looking around...',
+          details: mediaTitle,
+          details_url: mediaUrl,
           timestamps: {
             start: this.allowDiscordDetails && this.position ? Date.now() - position : undefined,
             end: this.allowDiscordDetails && this.position && this.playback === 'playing' ? Date.now() + (duration - position) : undefined
           },
           assets: {
             large_image: this.allowDiscordDetails && this.session?.image ? this.session.image : 'logo',
-            large_text: 'https://hayase.watch'
+            large_text: mediaTitle,
+            large_url: mediaUrl,
+            small_image: 'logo',
+            small_text: 'Watching on Hayase',
+            small_url: 'https://hayase.watch'
           },
           buttons: [
             {
@@ -75,7 +82,8 @@ export default class Discord {
           party: {
             id: '1222'
           },
-          instance: true
+          instance: true,
+          status_display_type: 2 // details
         }
       }
       this.discord.request('SET_ACTIVITY', status)
