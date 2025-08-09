@@ -1,6 +1,6 @@
 {
   "name": "hayase",
-  "version": "6.4.21",
+  "version": "6.4.22",
   "description": "Hayase - Torrent streaming made simple",
   "main": "./out/main/index.js",
   "repository": "github:hayase-app/ui",
