@@ -68,7 +68,7 @@ importers:
         version: 3.5.3
       torrent-client:
         specifier: github:hayase-app/torrent-client
-        version: https://codeload.github.com/hayase-app/torrent-client/tar.gz/5bcb73db092e3bb939c55c0a9661d81cb4c02f93
+        version: https://codeload.github.com/hayase-app/torrent-client/tar.gz/1e2524912e5fafffe57117281fd8b5d298787daa
       typescript:
         specifier: ^5.7.3
         version: 5.8.3
@@ -3330,8 +3330,8 @@ packages:
     resolution: {integrity: sha512-65P7iz6X5yEr1cwcgvQxbbIw7Uk3gOy5dIdtZ4rDveLqhrdJP+Li/Hx6tyK0NEb+2GCyneCMJiGqrADCSNk8sQ==}
     engines: {node: '>=8.0'}
 
-  torrent-client@https://codeload.github.com/hayase-app/torrent-client/tar.gz/5bcb73db092e3bb939c55c0a9661d81cb4c02f93:
-    resolution: {tarball: https://codeload.github.com/hayase-app/torrent-client/tar.gz/5bcb73db092e3bb939c55c0a9661d81cb4c02f93}
+  torrent-client@https://codeload.github.com/hayase-app/torrent-client/tar.gz/1e2524912e5fafffe57117281fd8b5d298787daa:
+    resolution: {tarball: https://codeload.github.com/hayase-app/torrent-client/tar.gz/1e2524912e5fafffe57117281fd8b5d298787daa}
     version: 1.0.0
 
   torrent-discovery@11.0.17:
@@ -3527,8 +3527,8 @@ packages:
     resolution: {integrity: sha512-sOn0bj3/noUdzQX7rvk0jFbBurqWDGGo2ipl+WfgoOe/x3cxbGLk/ZUY+WHCISSlLaIeBumi1X3wxQZnUESExQ==}
     engines: {node: '>=16.0.0'}
 
-  webtorrent@2.8.3:
-    resolution: {integrity: sha512-ST8iVQzhL0iKFMHDs49fGw/saNS56o/0cLKLS80RSVC0czEo/uIUzB1LpJrbZm/NagZ6ozQgv8t0xqDdw5KuaQ==}
+  webtorrent@2.8.4:
+    resolution: {integrity: sha512-OTzeMVa6r9GXzjj428HC5gSi6oRKFEqOpR5cwQ8+GtbYgQz6PF6y3tzqnVFf6xWvnKcoZiabpHud3gx01Cbt2A==}
     engines: {node: '>=16'}
 
   which-boxed-primitive@1.1.1:
@@ -7399,12 +7399,12 @@ snapshots:
     dependencies:
       is-number: 7.0.0
 
-  torrent-client@https://codeload.github.com/hayase-app/torrent-client/tar.gz/5bcb73db092e3bb939c55c0a9661d81cb4c02f93:
+  torrent-client@https://codeload.github.com/hayase-app/torrent-client/tar.gz/1e2524912e5fafffe57117281fd8b5d298787daa:
     dependencies:
       bittorrent-peerid: 1.3.6
       matroska-metadata: 1.0.7
       native: https://codeload.github.com/hayase-app/native/tar.gz/c7307d5f3fe3cefbd71e139b3b6c30eedba9788e
-      webtorrent: 2.8.3
+      webtorrent: 2.8.4
     transitivePeerDependencies:
       - bare-buffer
       - supports-color
@@ -7609,7 +7609,7 @@ snapshots:
       node-datachannel: 0.12.0
       node-domexception: 1.0.0
 
-  webtorrent@2.8.3:
+  webtorrent@2.8.4:
     dependencies:
       '@silentbot1/nat-api': 0.4.8
       '@thaunknown/simple-peer': 10.0.11
