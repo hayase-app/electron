@@ -54,6 +54,8 @@ const electronUnzipPlugin = () => {
           execSync(`powershell -command "Expand-Archive -Path '${zipPath}' -DestinationPath '${extractDir}' -Force"`)
         } else {
           execSync(`unzip -q "${zipPath}" -d "${extractDir}"`)
+          const electronBinary = resolve(extractDir, 'electron')
+          execSync(`chmod +x "${electronBinary}"`)
         }
 
         console.log(`Successfully extracted: ${zipFile}`)
