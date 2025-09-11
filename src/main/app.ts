@@ -59,6 +59,7 @@ export default class App {
     fullscreenable: true,
     show: false,
     title: 'Hayase',
+    backgroundColor: '#000000',
     icon,
     webPreferences: {
       preload: join(__dirname, '../preload/index.js'),
