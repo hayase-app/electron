@@ -26,13 +26,13 @@ importers:
         version: 3.1.0(eslint@9.35.0)(typescript@5.9.2)
       '@electron-toolkit/preload':
         specifier: ^3.0.2
-        version: 3.0.2(electron@38.1.0)
+        version: 3.0.2(electron@38.0.0)
       '@electron-toolkit/tsconfig':
         specifier: ^1.0.1
         version: 1.0.1(@types/node@24.3.1)
       '@electron-toolkit/utils':
         specifier: ^4.0.0
-        version: 4.0.0(electron@38.1.0)
+        version: 4.0.0(electron@38.0.0)
       '@types/node':
         specifier: ^24.3.1
         version: 24.3.1
@@ -43,8 +43,8 @@ importers:
         specifier: ^1.1.2
         version: 1.1.2
       electron:
-        specifier: 38.1.0
-        version: 38.1.0
+        specifier: 38.0.0
+        version: 38.0.0
       electron-builder:
         specifier: ^26.0.12
         version: 26.0.12(electron-builder-squirrel-windows@25.1.8)
@@ -1801,8 +1801,8 @@ packages:
       '@swc/core':
         optional: true
 
-  electron@38.1.0:
-    resolution: {integrity: sha512-ypA8GF8RU4HD5pA1sa0/2U8k+92EPP2c7pX+3XbgB760F7OmqrFXtYkOilVw6HfV4+lk88XxqigmsUKTACQYoQ==}
+  electron@38.0.0:
+    resolution: {integrity: sha512-egljptiPJqbL/oamFCEY+g3RNeONWTVxZSGeyLqzK8xq106JhzuxnhJZ3sxt4DzJFaofbGyGJA37Oe9d+gVzYw==}
     engines: {node: '>= 12.20.55'}
     hasBin: true
 
@@ -4147,17 +4147,17 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@electron-toolkit/preload@3.0.2(electron@38.1.0)':
+  '@electron-toolkit/preload@3.0.2(electron@38.0.0)':
     dependencies:
-      electron: 38.1.0
+      electron: 38.0.0
 
   '@electron-toolkit/tsconfig@1.0.1(@types/node@24.3.1)':
     dependencies:
       '@types/node': 24.3.1
 
-  '@electron-toolkit/utils@4.0.0(electron@38.1.0)':
+  '@electron-toolkit/utils@4.0.0(electron@38.0.0)':
     dependencies:
-      electron: 38.1.0
+      electron: 38.0.0
 
   '@electron/asar@3.2.18':
     dependencies:
@@ -5948,7 +5948,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  electron@38.1.0:
+  electron@38.0.0:
     dependencies:
       '@electron/get': 2.0.3
       '@types/node': 22.18.1

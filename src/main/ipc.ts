@@ -69,10 +69,6 @@ export default class IPC {
     this.app.mainWindow.focus()
   }
 
-  setTransparency (enabled: boolean) {
-    store.set('transparency', enabled)
-  }
-
   setZoom (scale: number) {
     this.app.mainWindow.webContents.setZoomFactor(Math.min(2.5, Math.max(Number(scale) || 1, 0.3)))
   }

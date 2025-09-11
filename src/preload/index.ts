@@ -82,7 +82,6 @@ const native: Partial<Native> = {
   downloadProgress: (percent: number) => main.downloadProgress(percent),
   restart: () => main.restart(),
   focus: () => main.focus(),
-  transparency: (enabled: boolean) => main.setTransparency(enabled),
   setZoom: (scale: number) => main.setZoom(scale),
   version: () => version,
   navigate: async (cb) => {
