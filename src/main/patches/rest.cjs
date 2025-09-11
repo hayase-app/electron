@@ -1,4 +1,4 @@
 module.exports.REST = class {
-  options=  {}
-  setToken(){ return this }
+  options = {}
+  setToken () { return this }
 }

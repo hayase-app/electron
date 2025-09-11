@@ -1,1 +1,1 @@
-module.exports = function () { throw new Error('No websocket')}
+module.exports = function () { throw new Error('No websocket') }

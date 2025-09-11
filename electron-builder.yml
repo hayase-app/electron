@@ -71,13 +71,14 @@ linux:
   maintainer: ThaUnknown
   category: AudioVideo;Video
   desktop:
-    Type: "Application"
-    Encoding: "UTF-8"
-    Name: "Hayase"
-    Comment: "Bittorrent streaming software for cats"
-    Keywords: "anime"
-    Terminal: "false"
-    MimeType: "x-scheme-handler/hayase;"
+    entry:
+      Type: "Application"
+      Encoding: "UTF-8"
+      Name: "Hayase"
+      Comment: "Bittorrent streaming software for cats"
+      Keywords: "anime"
+      Terminal: "false"
+      MimeType: "x-scheme-handler/hayase;"
 npmRebuild: false
 publish:
   provider: github

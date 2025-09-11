@@ -24,7 +24,7 @@ log.initialize({ spyRendererConsole: true, preload: false })
 log.transports.file.level = 'debug'
 log.transports.file.maxSize = 10 * 1024 * 1024 // 10MB
 
-log.hooks.push((message, transport, transportName) => {
+log.hooks.push(message => {
   const hasMatch = message.data.some(part => typeof part === 'string' && (part.includes('Mixed Content:') || part.includes('was loaded over HTTPS, but requested an insecure')))
 
   if (hasMatch) return false
@@ -206,7 +206,7 @@ export default class App {
     })
 
     this.mainWindow.webContents.on('frame-created', (_, { frame }) => {
-      frame.once('dom-ready', () => {
+      frame?.once('dom-ready', () => {
         if (frame.url.startsWith('https://www.youtube-nocookie.com')) {
           frame.executeJavaScript(/* js */`
             new MutationObserver(() => {
@@ -217,6 +217,7 @@ export default class App {
       })
     })
 
+    // @ts-expect-error idk brokey
     powerMonitor.on('shutdown', (e: Event) => {
       if (this.destroyed) return
       e.preventDefault()
