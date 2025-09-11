@@ -43,6 +43,7 @@
     "electron-updater": "^6.3.9",
     "electron-vite": "^4.0.0",
     "eslint-config-standard-universal": "^1.0.9",
+    "glob": "^11.0.3",
     "native": "github:hayase-app/native",
     "torrent-client": "github:hayase-app/torrent-client",
     "typescript": "^5.9.2",

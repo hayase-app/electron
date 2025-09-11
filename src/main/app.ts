@@ -34,7 +34,7 @@ log.hooks.push(message => {
 
 autoUpdater.logger = log
 
-const TRANSPARENCY = store.get('transparency')
+// const TRANSPARENCY = store.get('transparency')
 
 const BASE_URL = is.dev ? 'http://localhost:7344/' : 'https://hayase.app/'
 
@@ -53,7 +53,7 @@ export default class App {
     frame: false, // process.platform === 'darwin', // Only keep the native frame on Mac
     titleBarStyle: 'hidden',
     autoHideMenuBar: true,
-    transparent: TRANSPARENCY,
+    // transparent: TRANSPARENCY,
     resizable: true,
     maximizable: true,
     fullscreenable: true,
@@ -106,35 +106,35 @@ export default class App {
     })
     this.torrentProcess.stderr?.on('data', d => log.error('' + d))
     this.torrentProcess.stdout?.on('data', d => log.log('' + d))
-    if (TRANSPARENCY) {
-    // Transparency fixes, window is resizable when fullscreen/maximized
-      this.mainWindow.on('enter-html-full-screen', () => {
-        this.mainWindow.setResizable(false)
-      })
-      this.mainWindow.on('leave-html-full-screen', () => {
-        this.mainWindow.setResizable(!this.mainWindow.isMaximized())
-      })
-      this.mainWindow.on('enter-full-screen', () => {
-        this.mainWindow.setResizable(false)
-      })
-      this.mainWindow.on('leave-full-screen', () => {
-        this.mainWindow.setResizable(!this.mainWindow.isMaximized())
-      })
-      this.mainWindow.on('maximize', () => {
-        this.mainWindow.setResizable(false)
-      })
-      this.mainWindow.on('unmaximize', () => {
-        this.mainWindow.setResizable(true)
-      })
+    // if (TRANSPARENCY) {
+    // // Transparency fixes, window is resizable when fullscreen/maximized
+    //   this.mainWindow.on('enter-html-full-screen', () => {
+    //     this.mainWindow.setResizable(false)
+    //   })
+    //   this.mainWindow.on('leave-html-full-screen', () => {
+    //     this.mainWindow.setResizable(!this.mainWindow.isMaximized())
+    //   })
+    //   this.mainWindow.on('enter-full-screen', () => {
+    //     this.mainWindow.setResizable(false)
+    //   })
+    //   this.mainWindow.on('leave-full-screen', () => {
+    //     this.mainWindow.setResizable(!this.mainWindow.isMaximized())
+    //   })
+    //   this.mainWindow.on('maximize', () => {
+    //     this.mainWindow.setResizable(false)
+    //   })
+    //   this.mainWindow.on('unmaximize', () => {
+    //     this.mainWindow.setResizable(true)
+    //   })
 
-      this.mainWindow.on('will-move', (e) => {
-        if (this.mainWindow.isMaximized()) {
-          this.mainWindow.setResizable(true)
-          this.mainWindow.unmaximize()
-          e.preventDefault()
-        }
-      })
-    }
+    //   this.mainWindow.on('will-move', (e) => {
+    //     if (this.mainWindow.isMaximized()) {
+    //       this.mainWindow.setResizable(true)
+    //       this.mainWindow.unmaximize()
+    //       e.preventDefault()
+    //     }
+    //   })
+    // }
 
     session.defaultSession.webRequest.onBeforeSendHeaders((details, callback) => {
       if (details.url.startsWith('https://graphql.anilist.co')) {

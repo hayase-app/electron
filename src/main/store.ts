@@ -9,7 +9,7 @@ const DEFAULTS = {
   angle: 'default',
   player: '',
   torrentPath: '',
-  transparency: false,
+  // transparency: false,
   torrentSettings: {
     torrentPersist: false,
     torrentDHT: false,
