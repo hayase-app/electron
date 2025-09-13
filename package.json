@@ -1,6 +1,6 @@
 {
   "name": "hayase",
-  "version": "6.4.29",
+  "version": "6.4.30",
   "description": "Hayase - Torrent streaming made simple",
   "main": "./out/main/index.js",
   "repository": "github:hayase-app/ui",
@@ -8,10 +8,9 @@
   "homepage": "https://hayase.app",
   "packageManager": "pnpm@9.14.4",
   "scripts": {
-    "format": "prettier --write .",
     "lint": "eslint --cache .",
-    "typecheck:node": "tsc --noEmit -p tsconfig.node.json --composite false",
-    "typecheck:web": "tsc --noEmit -p tsconfig.web.json --composite false",
+    "typecheck:node": "tsc --noEmit -p tsconfig.node.json --composite false --noEmit",
+    "typecheck:web": "tsc --noEmit -p tsconfig.web.json --composite false --noEmit",
     "typecheck": "npm run typecheck:node && npm run typecheck:web",
     "start": "electron-vite preview",
     "dev": "electron-vite dev --watch",

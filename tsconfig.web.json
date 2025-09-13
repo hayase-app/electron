@@ -3,11 +3,12 @@
   "include": [
     "src/renderer/**/*.ts",
     "src/preload/*.d.ts",
+    "src/preload/*.ts",
     "src/preload/index.d.ts"
   ],
   "compilerOptions": {
     "allowSyntheticDefaultImports": true,
-    "emitDeclarationOnly": true,
+    "emitDeclarationOnly": false,
     "allowJs": true,
     "checkJs": true,
     "esModuleInterop": true,
@@ -21,6 +22,8 @@
     "strictNullChecks": true,
     "noUncheckedIndexedAccess": true,
     "maxNodeModuleJsDepth": 1,
-    "composite": true
+    "composite": true,
+    "moduleResolution": "bundler",
+    "module": "esnext",
   }
 }

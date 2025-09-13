@@ -78,6 +78,7 @@ export default class App {
   tray = new Tray(process.platform === 'win32' ? ico : process.platform === 'darwin' ? nativeImage.createFromPath(icon).resize({ width: 16, height: 16 }) : icon)
 
   constructor () {
+    if (store.data.doh) this.setDOH(store.data.doh)
     nativeTheme.themeSource = 'dark'
     expose(this.ipc, ipcMain, this.mainWindow.webContents)
     this.mainWindow.setMenuBarVisibility(false)
@@ -343,6 +344,20 @@ export default class App {
         ]
       }
     ])
+  }
+
+  setDOH (dns: string) {
+    try {
+      app.configureHostResolver({
+        secureDnsMode: 'secure',
+        secureDnsServers: [dns]
+      })
+      return true
+    } catch (e) {
+      const err = e as Error
+      log.error('Failed to set DOH: ', err.stack)
+      return false
+    }
   }
 
   destroyed = false

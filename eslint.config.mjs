@@ -4,6 +4,7 @@ import _globals from 'globals'
 
 export default tseslint.config(
   { ignores: ['**/node_modules', '**/dist', '**/out'] },
+  // @ts-expect-error w/e
   ...config(_globals.node),
   {
     languageOptions: {

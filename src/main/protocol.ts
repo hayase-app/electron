@@ -35,7 +35,6 @@ export default class Protocol {
     })
 
     if (process.argv.length >= 2 && !process.defaultApp) {
-      // TODO: verify this works, might need to wait for main window to load... somehow
       for (const line of process.argv) {
         this.handleProtocol(line)
       }
