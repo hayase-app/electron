@@ -89,7 +89,7 @@ export default class IPC {
   updateSettings (settings: TorrentSettings = store.data.torrentSettings) {
     store.set('torrentSettings', settings)
 
-    this.torrentProcess.postMessage({ id: 'settings', data: { ...store.data.torrentSettings, path: store.data.torrentPath, doh: store.data.doh } })
+    this.torrentProcess.postMessage({ id: 'settings', data: { ...store.data.torrentSettings, path: store.data.torrentPath } })
   }
 
   async selectDownload () {
@@ -155,10 +155,9 @@ export default class IPC {
   }
 
   setDOH (dns: string) {
-    if (this.app.setDOH(dns)) {
-      store.set('doh', dns)
-      this.updateSettings()
-    }
+    this.app.setDOH(dns)
+    store.set('doh', dns)
+    // this.updateSettings()
   }
 
   version () {

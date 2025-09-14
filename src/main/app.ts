@@ -352,11 +352,9 @@ export default class App {
         secureDnsMode: 'secure',
         secureDnsServers: [dns]
       })
-      return true
     } catch (e) {
       const err = e as Error
       log.error('Failed to set DOH: ', err.stack)
-      return false
     }
   }
 

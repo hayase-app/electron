@@ -20,9 +20,9 @@ try {
 }
 
 process.parentPort.on('message', ({ ports, data: _data }) => {
-  let settings: TorrentSettings & { path: string, doh: string } | undefined
+  let settings: TorrentSettings & { path: string } | undefined
   const { id, data } = _data as Message
-  if (id === 'settings') settings = data as TorrentSettings & { path: string, doh: string }
+  if (id === 'settings') settings = data as TorrentSettings & { path: string }
   if (id === 'destroy') tclient?.destroy()
 
   if (ports[0]) {
