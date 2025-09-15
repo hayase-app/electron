@@ -108,6 +108,7 @@ export default class IPC {
       }
     }
     store.set('torrentPath', path)
+    this.updateSettings()
     return path
   }
 
