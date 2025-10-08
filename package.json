@@ -1,6 +1,6 @@
 {
   "name": "hayase",
-  "version": "6.4.32",
+  "version": "6.4.33",
   "description": "Hayase - Torrent streaming made simple",
   "main": "./out/main/index.js",
   "repository": "github:hayase-app/ui",
@@ -14,6 +14,7 @@
     "typecheck": "npm run typecheck:node && npm run typecheck:web",
     "start": "electron-vite preview",
     "dev": "electron-vite dev --watch",
+    "rebuild": "electron-rebuild -f -w yencode",
     "build": "electron-vite build",
     "postinstall": "electron-builder install-app-deps",
     "build:publish": "npm run build && electron-builder -p always",
@@ -25,7 +26,8 @@
   "dependencies": {
     "@paymoapp/electron-shutdown-handler": "^1.1.2",
     "rollup-plugin-license": "^3.6.0",
-    "utp-native": "^2.5.3"
+    "utp-native": "^2.5.3",
+    "yencode": "github:ThaUnknown/node-yencode"
   },
   "devDependencies": {
     "@electron-toolkit/eslint-config-prettier": "^3.0.0",
@@ -48,5 +50,10 @@
     "typescript": "^5.9.2",
     "vite": "^6.2.5",
     "vite-plugin-cjs-interop": "^2.3.0"
+  },
+  "pnpm": {
+    "overrides": {
+      "yencode": "github:ThaUnknown/node-yencode"
+    }
   }
 }

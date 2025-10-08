@@ -11,6 +11,8 @@ const electronUnzipPlugin = () => {
   return {
     name: 'electron-unzip',
     buildStart () {
+      // skip on dev
+      // if (process.env.NODE_ENV === 'development') return
       const electronDistPath = resolve(__dirname, 'electron-dist')
 
       let zipPattern: string

@@ -70,6 +70,7 @@ const native: Partial<Native> = {
   protocolStatus: async (hash) => await (await torrent).protocolStatus(hash),
   updateSettings: (settings) => main.updateSettings(settings),
   cachedTorrents: async () => await (await torrent).cached(),
+  createNZB: async (id, url, domain, port, login, password, poolSize) => await (await torrent).createNZBWebSeed(id, url, domain, port, login, password, poolSize),
   setHideToTray: (enabled: boolean) => main.setHideToTray(enabled),
   isApp: true,
   spawnPlayer: (url) => main.spawnPlayer(url),
