@@ -5,7 +5,7 @@ settings:
   excludeLinksFromLockfile: false
 
 overrides:
-  yencode: github:ThaUnknown/node-yencode
+  yencode: npm:@thaunknown/yencode@^1.2.4
 
 importers:
 
@@ -14,15 +14,15 @@ importers:
       '@paymoapp/electron-shutdown-handler':
         specifier: ^1.1.2
         version: 1.1.2
+      '@thaunknown/yencode':
+        specifier: ^1.2.4
+        version: 1.2.4
       rollup-plugin-license:
         specifier: ^3.6.0
         version: 3.6.0(picomatch@4.0.2)(rollup@4.40.0)
       utp-native:
         specifier: ^2.5.3
         version: 2.5.3
-      yencode:
-        specifier: github:ThaUnknown/node-yencode
-        version: https://codeload.github.com/ThaUnknown/node-yencode/tar.gz/866eff7136129f908783ffe6cf7be68bc78488bb
     devDependencies:
       '@electron-toolkit/eslint-config-prettier':
         specifier: ^3.0.0
@@ -956,6 +956,10 @@ packages:
   '@thaunknown/thirty-two@1.0.5':
     resolution: {integrity: sha512-Q53KyCXweV1CS62EfqtPDqfpksn5keQ59PGqzzkK+g8Vif1jB4inoBCcs/BUSdsqddhE3G+2Fn+4RX3S6RqT0A==}
     engines: {node: '>=0.2.6'}
+
+  '@thaunknown/yencode@1.2.4':
+    resolution: {integrity: sha512-1ng2DiSiIihHybuQjetJth0NPKa2/EyjHvQGqBPsPisRAulsmZhEbfBHQa6PgJn0Me8DsgtmVLpDdfM5pOk47A==}
+    engines: {node: '>=0.10'}
 
   '@tootallnate/once@2.0.0':
     resolution: {integrity: sha512-XCuKFP5PS55gnMVu3dty8KPatLqUoy/ZYzDzAGCQ8JNFCkLXzmI7vNHCR+XpbZaMWQK/vQubr7PkYq8g470J/A==}
@@ -3998,11 +4002,6 @@ packages:
   yauzl@2.10.0:
     resolution: {integrity: sha512-p4a9I6X6nu6IhoGmBqAcbJy1mlC4j27vEPZX9F4L4/vZT3Lyq1VkFHw/V/PUcB9Buo+DG3iHkT0x3Qya58zc3g==}
 
-  yencode@https://codeload.github.com/ThaUnknown/node-yencode/tar.gz/866eff7136129f908783ffe6cf7be68bc78488bb:
-    resolution: {tarball: https://codeload.github.com/ThaUnknown/node-yencode/tar.gz/866eff7136129f908783ffe6cf7be68bc78488bb}
-    version: 1.2.4
-    engines: {node: '>=0.10'}
-
   yocto-queue@0.1.0:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
@@ -4794,6 +4793,10 @@ snapshots:
   '@thaunknown/thirty-two@1.0.5':
     dependencies:
       uint8-util: 2.2.5
+
+  '@thaunknown/yencode@1.2.4':
+    dependencies:
+      node-gyp-build: 4.8.4
 
   '@tootallnate/once@2.0.0': {}
 
@@ -7355,7 +7358,7 @@ snapshots:
       mime: 4.1.0
       nntp-js: 1.0.1
       nzb-parser: 1.0.1
-      yencode: https://codeload.github.com/ThaUnknown/node-yencode/tar.gz/866eff7136129f908783ffe6cf7be68bc78488bb
+      yencode: '@thaunknown/yencode@1.2.4'
 
   nzb-parser@1.0.1:
     dependencies:
@@ -8567,10 +8570,6 @@ snapshots:
     dependencies:
       buffer-crc32: 0.2.13
       fd-slicer: 1.1.0
-
-  yencode@https://codeload.github.com/ThaUnknown/node-yencode/tar.gz/866eff7136129f908783ffe6cf7be68bc78488bb:
-    dependencies:
-      node-gyp-build: 4.8.4
 
   yocto-queue@0.1.0: {}
 

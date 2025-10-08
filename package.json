@@ -27,7 +27,7 @@
     "@paymoapp/electron-shutdown-handler": "^1.1.2",
     "rollup-plugin-license": "^3.6.0",
     "utp-native": "^2.5.3",
-    "yencode": "github:ThaUnknown/node-yencode"
+    "@thaunknown/yencode": "^1.2.4"
   },
   "devDependencies": {
     "@electron-toolkit/eslint-config-prettier": "^3.0.0",
@@ -53,7 +53,7 @@
   },
   "pnpm": {
     "overrides": {
-      "yencode": "github:ThaUnknown/node-yencode"
+      "yencode": "npm:@thaunknown/yencode@^1.2.4"
     }
   }
 }
