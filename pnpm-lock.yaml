@@ -14,15 +14,15 @@ importers:
       '@paymoapp/electron-shutdown-handler':
         specifier: ^1.1.2
         version: 1.1.2
-      '@thaunknown/yencode':
-        specifier: ^1.2.4
-        version: 1.2.4
       rollup-plugin-license:
         specifier: ^3.6.0
         version: 3.6.0(picomatch@4.0.2)(rollup@4.40.0)
       utp-native:
         specifier: ^2.5.3
         version: 2.5.3
+      yencode:
+        specifier: npm:@thaunknown/yencode@^1.2.4
+        version: '@thaunknown/yencode@1.2.4'
     devDependencies:
       '@electron-toolkit/eslint-config-prettier':
         specifier: ^3.0.0

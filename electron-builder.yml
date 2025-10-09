@@ -38,7 +38,7 @@ mac:
   artifactName: ${os}-${name}-${version}-mac.${ext}
   entitlementsInherit: build/entitlements.mac.plist
   defaultArch: universal
-  singleArchFiles: node_modules/+(register-scheme|utp-native|fs-native-extensions)/**
+  singleArchFiles: node_modules/+(register-scheme|utp-native|fs-native-extensions|yencode)/**
   category: public.app-category.video
   darkModeSupport: true
   hardenedRuntime: true
