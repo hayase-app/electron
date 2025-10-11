@@ -53,7 +53,7 @@
   },
   "pnpm": {
     "overrides": {
-      "yencode": "npm:@thaunknown/yencode@^1.2.6"
+      "yencode": "npm:@thaunknown/yencode@^1.2.8"
     }
   }
 }
