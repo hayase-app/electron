@@ -35,10 +35,12 @@ nsis:
   deleteAppDataOnUninstall: true
   allowToChangeInstallationDirectory: true
 mac:
+  asarUnpack:
+    - resources/**
   artifactName: ${os}-${name}-${version}-mac.${ext}
   entitlementsInherit: build/entitlements.mac.plist
   defaultArch: universal
-  singleArchFiles: node_modules/+(register-scheme|utp-native|fs-native-extensions|yencode)/**
+  singleArchFiles: node_modules/+(register-scheme|utp-native|fs-native-extensions|yencode)/**/*.node
   category: public.app-category.video
   darkModeSupport: true
   hardenedRuntime: true
@@ -79,7 +81,7 @@ linux:
       Keywords: "anime"
       Terminal: "false"
       MimeType: "x-scheme-handler/hayase;"
-npmRebuild: false
+npmRebuild: true
 publish:
   provider: github
   owner: hayase-app
