@@ -14,7 +14,6 @@ files:
   - '!node_modules/utp-native/deps/**'
   - '!node_modules/utp-native/prebuilds/**'
   - '!node_modules/**/LICENSE'
-  - '!node_modules/**/bin/**'
   - "!**/.eslintcache"
   - '!**/.gitmodules'
   - '!**/.gitattributes'
