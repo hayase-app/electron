@@ -5,7 +5,7 @@ settings:
   excludeLinksFromLockfile: false
 
 overrides:
-  yencode: npm:@thaunknown/yencode@^1.2.8
+  yencode: npm:@thaunknown/yencode@^1.3.0
 
 importers:
 
@@ -21,8 +21,8 @@ importers:
         specifier: ^2.5.3
         version: 2.5.3
       yencode:
-        specifier: npm:@thaunknown/yencode@^1.2.8
-        version: '@thaunknown/yencode@1.2.8'
+        specifier: npm:@thaunknown/yencode@^1.3.0
+        version: '@thaunknown/yencode@1.3.0'
     devDependencies:
       '@electron-toolkit/eslint-config-prettier':
         specifier: ^3.0.0
@@ -957,8 +957,8 @@ packages:
     resolution: {integrity: sha512-Q53KyCXweV1CS62EfqtPDqfpksn5keQ59PGqzzkK+g8Vif1jB4inoBCcs/BUSdsqddhE3G+2Fn+4RX3S6RqT0A==}
     engines: {node: '>=0.2.6'}
 
-  '@thaunknown/yencode@1.2.8':
-    resolution: {integrity: sha512-lS8NqsyZfBmO7Eyf6qCThpxwXBSfUpBu1J5vpN1+7U7b4EQ80akKXIcZscPEbtVkcXliJXs3qIuJHVUFciqGHQ==}
+  '@thaunknown/yencode@1.3.0':
+    resolution: {integrity: sha512-RplaH7+zGUH12RG+kMk3YRLOcp8rFwRhmLwYCe4HWhO/XsTlBqQml//jHAsfcvg6ZeC7lRd/AylIV8evS4yX7g==}
     engines: {node: '>=0.10'}
 
   '@tootallnate/once@2.0.0':
@@ -4794,9 +4794,7 @@ snapshots:
     dependencies:
       uint8-util: 2.2.5
 
-  '@thaunknown/yencode@1.2.8':
-    dependencies:
-      node-gyp-build: 4.8.4
+  '@thaunknown/yencode@1.3.0': {}
 
   '@tootallnate/once@2.0.0': {}
 
@@ -7358,7 +7356,7 @@ snapshots:
       mime: 4.1.0
       nntp-js: 1.0.1
       nzb-parser: 1.0.1
-      yencode: '@thaunknown/yencode@1.2.8'
+      yencode: '@thaunknown/yencode@1.3.0'
 
   nzb-parser@1.0.1:
     dependencies:
