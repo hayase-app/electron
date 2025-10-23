@@ -1,5 +1,10 @@
 import { autoUpdater } from 'electron-updater'
 
+autoUpdater.setFeedURL({
+  provider: 'github',
+  owner: 'hayase-app',
+  repo: 'ui'
+})
 autoUpdater.checkForUpdates()
 export default class Updater {
   hasUpdate = false

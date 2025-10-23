@@ -3,26 +3,26 @@ productName: Hayase
 directories:
   buildResources: build
 files:
-  - '!**/.vscode/*'
-  - '!src/*'
-  - '!electron.vite.config.{js,ts,mjs,cjs}'
-  - '!{.eslintignore,.eslintrc.js,.prettierignore,.prettierrc.yaml,dev-app-update.yml,CHANGELOG.md,README.md}'
-  - '!{.env,.env.*,.npmrc,pnpm-lock.yaml}'
-  - '!{tsconfig.json,tsconfig.node.json,tsconfig.web.json}'
-  - '!node_modules/**/*.{mk,a,o,h,lib,tlog,cpp,c,vcxproj,vcxproj.filters,props,iobj,ipdb,pdb,exp,recipe}'
-  - '!node_modules/yencode/crcutil-1.0/**'
-  - '!node_modules/utp-native/deps/**'
-  - '!node_modules/**/LICENSE'
+  - "!**/.vscode/*"
+  - "!src/*"
+  - "!electron.vite.config.{js,ts,mjs,cjs}"
+  - "!{.eslintignore,.eslintrc.js,.prettierignore,.prettierrc.yaml,dev-app-update.yml,CHANGELOG.md,README.md}"
+  - "!{.env,.env.*,.npmrc,pnpm-lock.yaml}"
+  - "!{tsconfig.json,tsconfig.node.json,tsconfig.web.json}"
+  - "!node_modules/**/*.{mk,a,o,h,lib,tlog,cpp,c,vcxproj,vcxproj.filters,props,iobj,ipdb,pdb,exp,recipe}"
+  - "!node_modules/yencode/crcutil-1.0/**"
+  - "!node_modules/utp-native/deps/**"
+  - "!node_modules/**/LICENSE"
   - "!**/.eslintcache"
-  - '!**/.gitmodules'
-  - '!**/.gitattributes'
-  - '!**/*.md'
-  - '!eslint.config.mjs'
-  - '!electron-dist/*'
-  - '!resources/*'
+  - "!**/.gitmodules"
+  - "!**/.gitattributes"
+  - "!**/*.md"
+  - "!eslint.config.mjs"
+  - "!electron-dist/*"
+  - "!resources/*"
 asarUnpack:
   - resources/**
-  - '**/*.node'
+  - "**/*.node"
 win:
   executableName: Hayase
   target:
@@ -93,7 +93,7 @@ npmRebuild: true
 publish:
   provider: github
   owner: hayase-app
-  repo: ui
+  repo: docs
 electronDist: electron-dist
 protocols:
   - name: hayase
