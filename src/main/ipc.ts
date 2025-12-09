@@ -13,7 +13,7 @@ import type App from './app'
 import type Discord from './discord'
 import type { SessionMetadata, TorrentSettings } from 'native'
 
-const WHITELISTED_URLS = ['https://anilist.co/', 'https://github.com/sponsors/ThaUnknown/', 'https://myanimelist.net/', 'https://miru.watch', 'https://hayase.app', 'https://hayase.watch', 'https://thewiki.moe']
+const WHITELISTED_URLS = ['https://anilist.co/', 'https://github.com/sponsors/ThaUnknown/', 'https://myanimelist.net/', 'https://miru.watch', 'https://hayase.app', 'https://hayase.watch', 'https://thewiki.moe', 'https://kitsu.app']
 
 let player: ReturnType<typeof spawn> | undefined
 
