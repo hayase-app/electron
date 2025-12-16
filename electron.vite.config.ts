@@ -2,7 +2,7 @@ import { execSync } from 'node:child_process'
 import { existsSync, mkdirSync } from 'node:fs'
 import { resolve } from 'node:path'
 
-import { bytecodePlugin, defineConfig, externalizeDepsPlugin } from 'electron-vite'
+import { defineConfig } from 'electron-vite'
 import { glob } from 'glob'
 import license from 'rollup-plugin-license'
 import { cjsInterop } from 'vite-plugin-cjs-interop'
@@ -70,10 +70,11 @@ const electronUnzipPlugin = () => {
 
 export default defineConfig({
   main: {
+    build: {
+      bytecode: process.platform !== 'darwin' && { transformArrowFunctions: false }
+    },
     plugins: [
       electronUnzipPlugin(),
-      process.platform !== 'darwin' && bytecodePlugin({ transformArrowFunctions: false }),
-      externalizeDepsPlugin(),
       cjsInterop({ dependencies: ['@paymoapp/electron-shutdown-handler'] }),
       license({
         thirdParty: {
@@ -99,7 +100,6 @@ export default defineConfig({
   preload: {
     // preload is too small for bytecodePlugin to be effective
     plugins: [
-      externalizeDepsPlugin(),
       license({
         thirdParty: {
           allow: '(MIT OR Apache-2.0 OR ISC OR BSD-3-Clause OR BSD-2-Clause)',
