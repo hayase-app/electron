@@ -178,15 +178,6 @@ export default class IPC {
     autoUpdater.checkForUpdates()
   }
 
-  async updateToNewEndpoint (repo: string) {
-    autoUpdater.setFeedURL({
-      provider: 'github',
-      owner: 'hayase-app',
-      repo
-    })
-    await autoUpdater.checkForUpdates()
-  }
-
   updateAndRestart () {
     this.app.destroy(true)
   }
