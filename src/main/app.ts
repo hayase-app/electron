@@ -42,9 +42,10 @@ protocol.registerSchemesAsPrivileged([
   { scheme: 'https', privileges: { standard: true, bypassCSP: true, allowServiceWorkers: true, supportFetchAPI: true, corsEnabled: false, stream: true, codeCache: true, secure: true } }
 ])
 export default class App {
-  torrentProcess = utilityProcess.fork(forkPath, [], {
+  torrentProcess = utilityProcess.fork(forkPath, ['--disallow-code-generation-from-strings --disable-proto=throw --frozen-intrinsics --js-flags="--disallow-code-generation-from-strings"'], {
     stdio: ['ignore', 'pipe', 'pipe'],
-    serviceName: 'Hayase Torrent Client'
+    serviceName: 'Hayase Torrent Client',
+    execArgv: ['--disallow-code-generation-from-strings --disable-proto=throw --frozen-intrinsics --js-flags="--disallow-code-generation-from-strings"']
   })
 
   mainWindow = new BrowserWindow({

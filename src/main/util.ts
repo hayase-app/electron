@@ -20,7 +20,10 @@ const flags: Array<[string, string | undefined]| [string]> = [
   // chromium throttles stuff if it detects slow network, nono, this is native, dont do that
   ['force-effective-connection-type', '4G'],
   // image video etc cache, hopefully lets video buffer more and remembers more images, might be bad to touch this?
-  ['disk-cache-size', '500000000']
+  ['disk-cache-size', '500000000'],
+  // NodeJS security stuff, not supported yet
+  ['disallow-code-generation-from-strings'], ['disable-proto', 'throw'], ['frozen-intrinsics'],
+  ['js-flags', '--disallow-code-generation-from-strings']
 ]
 for (const [flag, value] of flags) {
   app.commandLine.appendSwitch(flag, value)
