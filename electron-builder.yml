@@ -1,5 +1,13 @@
 appId: com.github.thaunknown.miru
 productName: Hayase
+electronFuses:
+  resetAdHocDarwinSignature: false
+  runAsNode: false
+  enableCookieEncryption: true
+  enableNodeOptionsEnvironmentVariable: false
+  enableNodeCliInspectArguments: false
+  enableEmbeddedAsarIntegrityValidation: true
+  onlyLoadAppFromAsar: true
 directories:
   buildResources: build
 files:
