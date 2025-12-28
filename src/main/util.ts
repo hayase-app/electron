@@ -1,11 +1,10 @@
-import process from 'node:process'
+import { platform, arch } from 'node:process'
 
 import { app } from 'electron'
 
 import store from './store.ts'
 
-// safe performance stuff
-const enableFeatures: [string, string] = ['enable-features', 'PlatformEncryptedDolbyVision,CanvasOopRasterization,ThrottleDisplayNoneAndVisibilityHiddenCrossOriginIframes,UseSkiaRenderer,WebAssemblyLazyCompilation,FluentOverlayScrollbar,WindowsScrollingPersonality,AutoPictureInPictureForVideoPlayback']
+const IS_LINUX = ['linux', 'freebsd', 'openbsd', 'netbsd', 'dragonfly', 'sunos'].includes(platform)
 
 const flags: Array<[string, string | undefined]| [string]> = [
   // not sure if safe?
@@ -14,7 +13,8 @@ const flags: Array<[string, string | undefined]| [string]> = [
   // ['force-gpu-mem-available-mb=2048'],
   // should be safe
   ['enable-hardware-overlays', 'single-fullscreen,single-on-top,underlay'],
-  enableFeatures,
+  // safe performance and compatibility stuff
+  ['enable-features', 'PlatformEncryptedDolbyVision,CanvasOopRasterization,ThrottleDisplayNoneAndVisibilityHiddenCrossOriginIframes,UseSkiaRenderer,WebAssemblyLazyCompilation,FluentOverlayScrollbar,WindowsScrollingPersonality,AutoPictureInPictureForVideoPlayback' + (IS_LINUX ? ',Vulkan,VulkanFromANGLE' : '')],
   // disabling shit widget layering aka right click context menus [I think] for macOS [I think]
   ['disable-features', 'WidgetLayering'], // ,MediaEngagementBypassAutoplayPolicies,PreloadMediaEngagementData,RecordMediaEngagementScores might not be good,
   // utility stuff, aka website security that's useless for a native app:
@@ -27,23 +27,21 @@ const flags: Array<[string, string | undefined]| [string]> = [
   ['disk-cache-size', '500000000'],
   // NodeJS security stuff, not supported yet
   ['disallow-code-generation-from-strings'], ['disable-proto', 'throw'], ['frozen-intrinsics'],
-  ['js-flags', '--disallow-code-generation-from-strings --experimental-wasm-rab-integration']
+  ['js-flags', '--disallow-code-generation-from-strings --experimental-wasm-rab-integration'],
+  // BrowserWindow's enableBlinkFeatures are ignored if initial page load is server by a service worker if Cross-Origin-Embedder-Policy is used
+  // this is a bad workaround
+  ['enable-experimental-web-platform-features'],
+  // custom angle setting
+  ['use-angle', store.get('angle') || 'default']
 ]
 
-const linuxPlatforms = ['linux', 'freebsd', 'openbsd', 'netbsd', 'dragonfly', 'sunos']
-
-if (linuxPlatforms.includes(process.platform)) {
-  flags.push(['enable-unsafe-webgpu'])
-  enableFeatures[1] += ',Vulkan,VulkanFromANGLE'
-} else if (process.platform === 'win32' && process.arch === 'arm64') {
+if (IS_LINUX || (platform === 'win32' && arch === 'arm64')) {
   flags.push(['enable-unsafe-webgpu'])
 }
 
 for (const [flag, value] of flags) {
   app.commandLine.appendSwitch(flag, value)
 }
-
-app.commandLine.appendSwitch('use-angle', store.get('angle') || 'default')
 
 // mainWindow.setThumbarButtons([
 //   {

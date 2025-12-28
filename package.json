@@ -47,6 +47,7 @@
     "eslint-config-standard-universal": "^1.0.9",
     "glob": "^13.0.0",
     "native": "github:hayase-app/native",
+    "rollup-plugin-license": "^3.6.0",
     "torrent-client": "github:hayase-app/torrent-client",
     "typescript": "^5.9.3",
     "vite": "^7.3.0",
