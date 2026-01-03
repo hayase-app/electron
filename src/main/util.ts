@@ -14,7 +14,7 @@ const flags: Array<[string, string | undefined]| [string]> = [
   // should be safe
   ['enable-hardware-overlays', 'single-fullscreen,single-on-top,underlay'],
   // safe performance and compatibility stuff
-  ['enable-features', 'PlatformEncryptedDolbyVision,CanvasOopRasterization,ThrottleDisplayNoneAndVisibilityHiddenCrossOriginIframes,UseSkiaRenderer,WebAssemblyLazyCompilation,FluentOverlayScrollbar,WindowsScrollingPersonality,AutoPictureInPictureForVideoPlayback' + (IS_LINUX ? ',Vulkan,VulkanFromANGLE' : '')],
+  ['enable-features', 'PlatformEncryptedDolbyVision,CanvasOopRasterization,ThrottleDisplayNoneAndVisibilityHiddenCrossOriginIframes,UseSkiaRenderer,WebAssemblyLazyCompilation,FluentOverlayScrollbar,FluentOverlayScrollbars,WindowsScrollingPersonality,AutoPictureInPictureForVideoPlayback' + (IS_LINUX ? ',Vulkan,VulkanFromANGLE' : '')],
   // disabling shit widget layering aka right click context menus [I think] for macOS [I think]
   ['disable-features', 'WidgetLayering'], // ,MediaEngagementBypassAutoplayPolicies,PreloadMediaEngagementData,RecordMediaEngagementScores might not be good,
   // utility stuff, aka website security that's useless for a native app:
@@ -28,9 +28,6 @@ const flags: Array<[string, string | undefined]| [string]> = [
   // NodeJS security stuff, not supported yet
   ['disallow-code-generation-from-strings'], ['disable-proto', 'throw'], ['frozen-intrinsics'],
   ['js-flags', '--disallow-code-generation-from-strings --experimental-wasm-rab-integration'],
-  // BrowserWindow's enableBlinkFeatures are ignored if initial page load is server by a service worker if Cross-Origin-Embedder-Policy is used
-  // this is a bad workaround
-  ['enable-experimental-web-platform-features'],
   // custom angle setting
   ['use-angle', store.get('angle') || 'default']
 ]

@@ -67,7 +67,7 @@ export default class App {
       sandbox: true,
       webSecurity: true,
       allowRunningInsecureContent: true,
-      enableBlinkFeatures: 'FontAccess, AudioVideoTracks, FluentOverlayScrollbar, WindowsScrollingPersonality',
+      enableBlinkFeatures: 'FluentOverlayScrollbars,FluentOverlayScrollbar',
       backgroundThrottling: true
     }
   })
