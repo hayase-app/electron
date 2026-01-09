@@ -54,6 +54,11 @@ export default class IPC {
     this.hideToTray = enabled
   }
 
+  setExperimentalGPU (enabled: boolean) {
+    store.set('experimentalGPU', enabled)
+    this.restart()
+  }
+
   restart () {
     app.relaunch()
     this.app.destroy()

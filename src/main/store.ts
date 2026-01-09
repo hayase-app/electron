@@ -10,6 +10,7 @@ const DEFAULTS = {
   player: '',
   torrentPath: '',
   doh: '',
+  experimentalGPU: false,
   // transparency: false,
   torrentSettings: {
     torrentPersist: false,

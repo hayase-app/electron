@@ -32,7 +32,7 @@ const flags: Array<[string, string | undefined]| [string]> = [
   ['use-angle', store.get('angle') || 'default']
 ]
 
-if (IS_LINUX || (platform === 'win32' && arch === 'arm64')) {
+if (IS_LINUX || (platform === 'win32' && arch === 'arm64') || store.get('experimentalGPU')) {
   flags.push(['enable-unsafe-webgpu'])
 }
 
