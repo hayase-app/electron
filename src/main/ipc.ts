@@ -55,7 +55,9 @@ export default class IPC {
   }
 
   setExperimentalGPU (enabled: boolean) {
-    store.set('experimentalGPU', enabled)
+    const oldvalue = store.get('unsafeWebGPU')
+    if (oldvalue === enabled) return
+    store.set('unsafeWebGPU', enabled)
     this.restart()
   }
 
