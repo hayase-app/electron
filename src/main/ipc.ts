@@ -54,13 +54,6 @@ export default class IPC {
     this.hideToTray = enabled
   }
 
-  setExperimentalGPU (enabled: boolean) {
-    const oldvalue = store.get('unsafeWebGPU')
-    if (oldvalue === enabled) return
-    store.set('unsafeWebGPU', enabled)
-    this.restart()
-  }
-
   restart () {
     app.relaunch()
     this.app.destroy()

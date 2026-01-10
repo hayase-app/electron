@@ -1,10 +1,10 @@
-import { platform, arch } from 'node:process'
+// import { platform, arch } from 'node:process'
 
 import { app } from 'electron'
 
 import store from './store.ts'
 
-const IS_LINUX = ['linux', 'freebsd', 'openbsd', 'netbsd', 'dragonfly', 'sunos'].includes(platform)
+// const IS_LINUX = ['linux', 'freebsd', 'openbsd', 'netbsd', 'dragonfly', 'sunos'].includes(platform)
 
 const flags: Array<[string, string | undefined]| [string]> = [
   // not sure if safe?
@@ -14,7 +14,7 @@ const flags: Array<[string, string | undefined]| [string]> = [
   // should be safe
   ['enable-hardware-overlays', 'single-fullscreen,single-on-top,underlay'],
   // safe performance and compatibility stuff
-  ['enable-features', 'PlatformEncryptedDolbyVision,CanvasOopRasterization,ThrottleDisplayNoneAndVisibilityHiddenCrossOriginIframes,UseSkiaRenderer,WebAssemblyLazyCompilation,FluentOverlayScrollbar,FluentOverlayScrollbars,WindowsScrollingPersonality,AutoPictureInPictureForVideoPlayback' + (IS_LINUX ? ',Vulkan,VulkanFromANGLE' : '')],
+  ['enable-features', 'PlatformEncryptedDolbyVision,CanvasOopRasterization,ThrottleDisplayNoneAndVisibilityHiddenCrossOriginIframes,UseSkiaRenderer,WebAssemblyLazyCompilation,FluentOverlayScrollbar,FluentOverlayScrollbars,WindowsScrollingPersonality,AutoPictureInPictureForVideoPlayback'], // + (IS_LINUX ? ',Vulkan,VulkanFromANGLE' : '')
   // disabling shit widget layering aka right click context menus [I think] for macOS [I think]
   ['disable-features', 'WidgetLayering'], // ,MediaEngagementBypassAutoplayPolicies,PreloadMediaEngagementData,RecordMediaEngagementScores might not be good,
   // utility stuff, aka website security that's useless for a native app:
@@ -32,9 +32,9 @@ const flags: Array<[string, string | undefined]| [string]> = [
   ['use-angle', store.get('angle') || 'default']
 ]
 
-if (IS_LINUX || (platform === 'win32' && arch === 'arm64') || store.get('unsafeWebGPU')) {
-  flags.push(['enable-unsafe-webgpu'])
-}
+// if (IS_LINUX || (platform === 'win32' && arch === 'arm64') || store.get('unsafeWebGPU')) {
+//   flags.push(['enable-unsafe-webgpu'])
+// }
 
 for (const [flag, value] of flags) {
   app.commandLine.appendSwitch(flag, value)
