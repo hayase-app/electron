@@ -4,7 +4,7 @@ import process from 'node:process'
 import { electronApp, is } from '@electron-toolkit/utils'
 import electronShutdownHandler from '@paymoapp/electron-shutdown-handler'
 import { expose } from 'abslink/electron'
-import { BrowserWindow, MessageChannelMain, app, dialog, ipcMain, powerMonitor, shell, utilityProcess, Tray, Menu, protocol, nativeImage, session, nativeTheme } from 'electron' // type NativeImage, Notification, nativeImage,
+import { BrowserWindow, MessageChannelMain, app, dialog, ipcMain, powerMonitor, shell, utilityProcess, Tray, Menu, protocol, nativeImage, session, nativeTheme, webFrame } from 'electron' // type NativeImage, Notification, nativeImage,
 import log from 'electron-log/main'
 import { autoUpdater } from 'electron-updater'
 
@@ -364,6 +364,7 @@ export default class App {
   hideToTray () {
     if (this.destroyed) return
     this.mainWindow.hide()
+    webFrame.clearCache()
   }
 
   async destroy (forceRunAfter = false) {

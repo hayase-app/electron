@@ -113,7 +113,10 @@ export default class IPC {
   }
 
   setAngle (angle: string) {
+    const current = store.get('angle')
+    if (current === angle) return
     store.set('angle', angle)
+    this.restart()
   }
 
   async getLogs () {
