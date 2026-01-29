@@ -39,6 +39,11 @@ const native: Partial<Native> = {
   checkUpdate: () => main.checkUpdate(),
   updateAndRestart: () => main.updateAndRestart(),
   updateReady: () => main.updateReady(),
+  updateProgress: async (cb: (progress: number) => void) => {
+    // the less proxies used, the better, could use proxy(cb) here, but this has less overhead
+    main.updateProgress()
+    ipcRenderer.on('update-progress', (_e, data) => cb(data))
+  },
   toggleDiscordDetails: (bool: boolean) => main.toggleDiscordDetails(bool),
   setMediaSession: async (metadata, id) => {
     navigator.mediaSession.metadata = new MediaMetadata({ title: metadata.title, artist: metadata.description, artwork: [{ src: metadata.image }] })
@@ -71,15 +76,13 @@ const native: Partial<Native> = {
   updateSettings: (settings) => main.updateSettings(settings),
   cachedTorrents: async () => await (await torrent).cached(),
   createNZB: async (id, url, domain, port, login, password, poolSize) => await (await torrent).createNZBWebSeed(id, url, domain, port, login, password, poolSize),
+  getDisplays: async cb => await (await torrent).chromecasts.listen(proxy(cb)),
+  castPlay: async (host, hash, id, media) => await (await torrent).chromecasts.play(host, hash, id, media),
+  castClose: async (host) => await (await torrent).chromecasts.close(host),
   setHideToTray: (enabled: boolean) => main.setHideToTray(enabled),
   isApp: true,
   spawnPlayer: (url) => main.spawnPlayer(url),
   setDOH: (dns) => main.setDOH(dns),
-  updateProgress: async (cb: (progress: number) => void) => {
-    // the less proxies used, the better, could use proxy(cb) here, but this has less overhead
-    main.updateProgress()
-    ipcRenderer.on('update-progress', (_e, data) => cb(data))
-  },
   downloadProgress: (percent: number) => main.downloadProgress(percent),
   restart: () => main.restart(),
   focus: () => main.focus(),
