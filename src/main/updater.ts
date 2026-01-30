@@ -1,5 +1,6 @@
 import { autoUpdater } from 'electron-updater'
 
+// autoUpdater.forceDevUpdateConfig = true
 autoUpdater.setFeedURL({ url: 'https://api.hayase.watch/files', provider: 'generic' })
 autoUpdater.checkForUpdates()
 

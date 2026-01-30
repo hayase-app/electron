@@ -177,8 +177,8 @@ export default class IPC {
     })
   }
 
-  checkUpdate () {
-    autoUpdater.checkForUpdates()
+  async checkUpdate () {
+    await autoUpdater.checkForUpdates()
   }
 
   updateAndRestart () {
