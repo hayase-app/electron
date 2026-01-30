@@ -18,7 +18,7 @@ files:
   - "!{.env,.env.*,.npmrc,pnpm-lock.yaml}"
   - "!{tsconfig.json,tsconfig.node.json,tsconfig.web.json}"
   - "!node_modules/**/*.{mk,a,o,h,lib,tlog,cpp,c,vcxproj,vcxproj.filters,props,iobj,ipdb,pdb,exp,recipe}"
-  - "!node_modules/yencode/crcutil-1.0/**"
+  - "!node_modules/@thaunknown/yencode/crcutil-1.0/**"
   - "!node_modules/utp-native/deps/**"
   - "!node_modules/**/LICENSE"
   - "!**/.eslintcache"

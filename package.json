@@ -26,7 +26,6 @@
   "dependencies": {
     "@paymoapp/electron-shutdown-handler": "^1.1.2",
     "@thaunknown/yencode": "1.3.2",
-    "rollup-plugin-license": "^3.6.0",
     "utp-native": "^2.5.3"
   },
   "devDependencies": {
