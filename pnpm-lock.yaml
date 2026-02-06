@@ -68,7 +68,7 @@ importers:
         version: 13.0.0
       native:
         specifier: github:hayase-app/native
-        version: https://codeload.github.com/hayase-app/native/tar.gz/1a6a3879c2faf3439282a2e26c9a37407ad7dc47
+        version: https://codeload.github.com/hayase-app/native/tar.gz/6b03836608b83ffae8bdc8c391cf856c8a86dca1
       rollup-plugin-license:
         specifier: ^3.6.0
         version: 3.6.0(picomatch@4.0.3)(rollup@4.53.5)
@@ -2377,7 +2377,7 @@ packages:
   glob@8.1.0:
     resolution: {integrity: sha512-r8hpEjiQEYlF2QU0df3dS+nxxSIreXQS1qRhMJM0Q5NDdR386C7jb7Hwwod8Fgiuex+k0GFjgft18yvxm5XoCQ==}
     engines: {node: '>=12'}
-    deprecated: Glob versions prior to v9 are no longer supported
+    deprecated: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
 
   global-agent@3.0.0:
     resolution: {integrity: sha512-PT6XReJ+D07JvGoxQMkT6qji/jVNfX/h364XHZOWeRzy64sSFr+xJ5OX7LI3b4MPQzdL4H8Y8M0xzPpsVMwA8Q==}
@@ -3047,8 +3047,8 @@ packages:
   napi-macros@2.2.2:
     resolution: {integrity: sha512-hmEVtAGYzVQpCKdbQea4skABsdXW4RUh5t5mJ2zzqowJS2OyXZTU1KhDVFhx+NlWZ4ap9mqR9TcDO3LTTttd+g==}
 
-  native@https://codeload.github.com/hayase-app/native/tar.gz/1a6a3879c2faf3439282a2e26c9a37407ad7dc47:
-    resolution: {tarball: https://codeload.github.com/hayase-app/native/tar.gz/1a6a3879c2faf3439282a2e26c9a37407ad7dc47}
+  native@https://codeload.github.com/hayase-app/native/tar.gz/6b03836608b83ffae8bdc8c391cf856c8a86dca1:
+    resolution: {tarball: https://codeload.github.com/hayase-app/native/tar.gz/6b03836608b83ffae8bdc8c391cf856c8a86dca1}
     version: 1.0.0
 
   natural-compare@1.4.0:
@@ -7529,7 +7529,7 @@ snapshots:
 
   napi-macros@2.2.2: {}
 
-  native@https://codeload.github.com/hayase-app/native/tar.gz/1a6a3879c2faf3439282a2e26c9a37407ad7dc47:
+  native@https://codeload.github.com/hayase-app/native/tar.gz/6b03836608b83ffae8bdc8c391cf856c8a86dca1:
     dependencies:
       '@types/chromecast-caf-receiver': 6.0.25
 
@@ -8495,7 +8495,7 @@ snapshots:
       fast-xml-parser: 5.3.3
       matroska-metadata: 1.0.8
       multicast-dns: 7.2.5
-      native: https://codeload.github.com/hayase-app/native/tar.gz/1a6a3879c2faf3439282a2e26c9a37407ad7dc47
+      native: https://codeload.github.com/hayase-app/native/tar.gz/6b03836608b83ffae8bdc8c391cf856c8a86dca1
       network-address: 1.1.2
       nzb-file: 1.1.11
       protobufjs: 8.0.0

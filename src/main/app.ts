@@ -159,7 +159,8 @@ export default class App {
       }
 
       // MAL doesn't implement CORS....
-      if (details.url.startsWith('https://myanimelist.net/v1/oauth2') || details.url.startsWith('https://api.myanimelist.net/v2/')) {
+      // enable CORS for any extensions that want it, but only for specific urls
+      if (details.url.startsWith('https://myanimelist.net/v1/oauth2') || details.url.startsWith('https://api.myanimelist.net/v2/') || this.ipc.corsURLS.some(corsUrl => details.url.startsWith(corsUrl))) {
         if (details.responseHeaders) {
           details.responseHeaders['Access-Control-Allow-Origin'] = ['*']
           details.responseHeaders['Access-Control-Allow-Methods'] = ['GET, POST, PUT, DELETE, OPTIONS, PATCH']

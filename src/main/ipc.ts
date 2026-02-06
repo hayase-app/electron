@@ -22,6 +22,7 @@ export default class IPC {
   torrentProcess
   hideToTray = false
   discord
+  corsURLS: string[] = []
   constructor (window: App, torrentProcess: UtilityProcess, discord: Discord) {
     this.app = window
     this.torrentProcess = torrentProcess
@@ -57,6 +58,10 @@ export default class IPC {
   restart () {
     app.relaunch()
     this.app.destroy()
+  }
+
+  enableCORS (urls: string[]) {
+    this.corsURLS = urls.filter(url => WHITELISTED_URLS.some(whitelisted => url.startsWith(whitelisted)))
   }
 
   downloadProgress (percent: number) {
