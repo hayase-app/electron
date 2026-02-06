@@ -61,7 +61,7 @@ export default class IPC {
   }
 
   enableCORS (urls: string[]) {
-    this.corsURLS = urls.filter(url => WHITELISTED_URLS.some(whitelisted => url.startsWith(whitelisted)))
+    this.corsURLS = urls.filter(url => !WHITELISTED_URLS.some(whitelisted => url.startsWith(whitelisted)))
   }
 
   downloadProgress (percent: number) {
