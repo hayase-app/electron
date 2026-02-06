@@ -36,7 +36,7 @@ autoUpdater.logger = log
 
 // const TRANSPARENCY = store.get('transparency')
 
-const BASE_URL = is.dev ? 'http://localhost:7344/' : 'https://hayase.app/'
+const BASE_URL = is.dev ? 'https://hayase.app/' : 'https://hayase.app/'
 
 protocol.registerSchemesAsPrivileged([
   { scheme: 'https', privileges: { standard: true, bypassCSP: true, allowServiceWorkers: true, supportFetchAPI: true, corsEnabled: false, stream: true, codeCache: true, secure: true } }
@@ -162,10 +162,10 @@ export default class App {
       // enable CORS for any extensions that want it, but only for specific urls
       if (details.url.startsWith('https://myanimelist.net/v1/oauth2') || details.url.startsWith('https://api.myanimelist.net/v2/') || this.ipc.corsURLS.some(corsUrl => details.url.startsWith(corsUrl))) {
         if (details.responseHeaders) {
-          details.responseHeaders['Access-Control-Allow-Origin'] = ['*']
-          details.responseHeaders['Access-Control-Allow-Methods'] = ['GET, POST, PUT, DELETE, OPTIONS, PATCH']
-          details.responseHeaders['Access-Control-Allow-Headers'] = ['*']
-          details.responseHeaders['Access-Control-Allow-Credentials'] = ['true']
+          details.responseHeaders['access-control-allow-origin'] = ['*']
+          details.responseHeaders['access-control-allow-methods'] = ['GET, POST, PUT, DELETE, OPTIONS, PATCH']
+          details.responseHeaders['access-control-allow-headers'] = ['*']
+          details.responseHeaders['access-control-allow-credentials'] = ['true']
         }
         if (details.method === 'OPTIONS' && details.statusCode === 405) {
           details.statusLine = '200 OK'
