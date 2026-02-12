@@ -36,7 +36,7 @@ autoUpdater.logger = log
 
 // const TRANSPARENCY = store.get('transparency')
 
-const BASE_URL = is.dev ? 'http://localhost:7344/' : 'https://hayase.app/'
+const BASE_URL = is.dev ? 'https://hayase.app/' : 'https://hayase.app/'
 
 protocol.registerSchemesAsPrivileged([
   { scheme: 'https', privileges: { standard: true, bypassCSP: true, allowServiceWorkers: true, supportFetchAPI: true, corsEnabled: false, stream: true, codeCache: true, secure: true } }
@@ -293,7 +293,7 @@ export default class App {
     }
 
     const { port1, port2 } = new MessageChannelMain()
-    this.torrentProcess.once('spawn', () => this.torrentProcess.postMessage({ id: 'settings', data: { ...store.data.torrentSettings, path: store.data.torrentPath } }, [port1]))
+    this.torrentProcess.once('spawn', () => this.torrentProcess.postMessage({ id: 'settings', data: { ...store.data.torrentSettings, path: store.data.torrentPath, doh: this.hasDOH && store.data.doh } }, [port1]))
     ipcMain.once('preload-done', () => {
       this.mainWindow.webContents.postMessage('port', null, [port2])
       ipcMain.on('preload-done', () => reloadPorts())
@@ -348,15 +348,18 @@ export default class App {
     ])
   }
 
+  hasDOH = false
   setDOH (dns: string) {
     try {
       app.configureHostResolver({
         secureDnsMode: 'secure',
         secureDnsServers: [dns]
       })
+      this.hasDOH = true
     } catch (e) {
       const err = e as Error
       log.error('Failed to set DOH: ', err.stack)
+      this.hasDOH = false
     }
   }
 

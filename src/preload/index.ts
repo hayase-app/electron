@@ -7,6 +7,7 @@ import type IPC from '../main/ipc.ts'
 import type { Remote } from 'abslink'
 import type { Native } from 'native'
 import type TorrentClient from 'torrent-client'
+import type { PROVIDERS } from 'torrent-client/doh'
 
 ipcRenderer.send('preload-done')
 
@@ -83,7 +84,10 @@ const native: Partial<Native> = {
   setHideToTray: (enabled: boolean) => main.setHideToTray(enabled),
   isApp: true,
   spawnPlayer: (url) => main.spawnPlayer(url),
-  setDOH: (dns) => main.setDOH(dns),
+  setDOH: async (dns) => {
+    await main.setDOH(dns)
+    await (await torrent).setDOH(dns as `https://${keyof typeof PROVIDERS}`)
+  },
   downloadProgress: (percent: number) => main.downloadProgress(percent),
   restart: () => main.restart(),
   focus: () => main.focus(),
