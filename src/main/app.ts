@@ -174,10 +174,9 @@ export default class App {
     // anilist.... forgot to set the cache header on their preflights..... pathetic.... this just wastes rate limits, this fixes it!
     // they also don't set CORS headers on errors
     session.defaultSession.webRequest.onHeadersReceived((details, callback) => {
-      if (details.url.startsWith('https://graphql.anilist.co')) {
-        if (details.responseHeaders && details.method === 'OPTIONS') {
-          setCors(details.responseHeaders)
-
+      if (details.url.startsWith('https://graphql.anilist.co') && details.responseHeaders) {
+        setCors(details.responseHeaders)
+        if (details.method === 'OPTIONS') {
           details.responseHeaders['Cache-Control'] = ['public, max-age=86400']
           details.responseHeaders['access-control-max-age'] = ['86400']
           details.statusLine = '204 No Content'
