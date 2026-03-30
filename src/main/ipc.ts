@@ -78,6 +78,11 @@ export default class IPC {
     this.app.mainWindow.webContents.setZoomFactor(Math.min(2.5, Math.max(Number(scale) || 1, 0.3)))
   }
 
+  unsafeUseInternalALAPI () {
+    app.relaunch({ args: ['--use-internal-al-api'] })
+    this.app.destroy()
+  }
+
   async selectPlayer () {
     const { filePaths, canceled } = await dialog.showOpenDialog({
       title: 'Select video player executable',

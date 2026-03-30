@@ -41,6 +41,7 @@ const native: Partial<Native> = {
   updateAndRestart: () => main.updateAndRestart(),
   updateReady: () => main.updateReady(),
   enableCORS: (urls) => main.enableCORS(urls),
+  unsafeUseInternalALAPI: () => main.unsafeUseInternalALAPI(),
   updateProgress: async (cb: (progress: number) => void) => {
     // the less proxies used, the better, could use proxy(cb) here, but this has less overhead
     main.updateProgress()

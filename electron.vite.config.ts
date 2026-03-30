@@ -26,7 +26,7 @@ const electronUnzipPlugin = () => {
           zipPattern = '*linux*.zip'
           break
         default:
-          console.warn(`Bytecode unsuppored platform: ${process.platform}`)
+          console.warn(`\nBytecode unsuppored platform: ${process.platform}`)
           return
       }
 
@@ -34,7 +34,7 @@ const electronUnzipPlugin = () => {
         const zipFile = glob.sync(zipPattern, { cwd: electronDistPath })[0]
 
         if (!zipFile) {
-          console.warn(`No electron distribution zip file found for pattern: ${zipPattern}`)
+          console.warn(`\nNo electron distribution zip file found for pattern: ${zipPattern}`)
           return
         }
 
@@ -44,11 +44,11 @@ const electronUnzipPlugin = () => {
         process.env.ELECTRON_EXEC_PATH = extractDir + (process.platform === 'win32' ? '/electron.exe' : '/electron')
 
         if (existsSync(extractDir)) {
-          console.log(`Electron distribution already extracted: ${extractDir}`)
+          console.log(`\nElectron distribution already extracted: ${extractDir}`)
           return
         }
 
-        console.log(`Extracting electron distribution: ${zipFile}`)
+        console.log(`\nExtracting electron distribution: ${zipFile}`)
 
         mkdirSync(extractDir, { recursive: true })
 
@@ -60,9 +60,9 @@ const electronUnzipPlugin = () => {
           execSync(`chmod +x "${electronBinary}"`)
         }
 
-        console.log(`Successfully extracted: ${zipFile}`)
+        console.log(`\nSuccessfully extracted: ${zipFile}`)
       } catch (error) {
-        console.error('Failed to extract electron distribution:', error)
+        console.error('\nFailed to extract electron distribution:', error)
       }
     }
   }

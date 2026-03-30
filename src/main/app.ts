@@ -12,6 +12,7 @@ import ico from '../../build/icon.ico?asset'
 import icon from '../../build/icon.png?asset'
 
 import './util.ts'
+import { rewriteInternalRequest } from './al.ts'
 import forkPath from './background/background.ts?modulePath'
 import Discord from './discord.ts'
 // import Protocol from './protocol.ts'
@@ -36,11 +37,21 @@ autoUpdater.logger = log
 
 // const TRANSPARENCY = store.get('transparency')
 
-const BASE_URL = is.dev ? 'https://hayase.app/' : 'https://hayase.app/'
+const BASE_URL = is.dev ? 'http://localhost:7344/' : 'https://hayase.app/'
 
 protocol.registerSchemesAsPrivileged([
   { scheme: 'https', privileges: { standard: true, bypassCSP: true, allowServiceWorkers: true, supportFetchAPI: true, corsEnabled: false, stream: true, codeCache: true, secure: true } }
 ])
+
+function setCors (record?: Record<string, string[]>, credentails = false) {
+  if (!record) return
+  if (record['access-control-allow-origin'] ?? record['Access-Control-Allow-Origin']) return
+  record['access-control-allow-origin'] = ['*']
+  record['access-control-allow-methods'] = ['GET, POST, PUT, DELETE, OPTIONS, PATCH']
+  record['access-control-allow-headers'] = ['*']
+  if (credentails) record['access-control-allow-credentials'] = ['true']
+}
+
 export default class App {
   torrentProcess = utilityProcess.fork(forkPath, ['--disallow-code-generation-from-strings --disable-proto=throw --frozen-intrinsics --js-flags="--disallow-code-generation-from-strings"'], {
     stdio: ['ignore', 'pipe', 'pipe'],
@@ -77,6 +88,8 @@ export default class App {
   discord = new Discord()
   ipc = new IPC(this, this.torrentProcess, this.discord)
   tray = new Tray(process.platform === 'win32' ? ico : process.platform === 'darwin' ? nativeImage.createFromPath(icon).resize({ width: 16, height: 16 }) : icon)
+
+  unsafeUseInternalALAPI = process.argv.includes('--use-internal-al-api')
 
   constructor () {
     if (store.data.doh) this.setDOH(store.data.doh)
@@ -139,34 +152,45 @@ export default class App {
     //   })
     // }
 
-    session.defaultSession.webRequest.onBeforeSendHeaders((details, callback) => {
+    if (this.unsafeUseInternalALAPI) {
+      session.defaultSession.webRequest.onBeforeRequest({ urls: ['https://graphql.anilist.co/*'] }, (details, callback) => {
+        if (details.method !== 'POST') return callback({ cancel: false })
+        callback({ redirectURL: 'https://anilist.co/graphql/' })
+      })
+    }
+
+    session.defaultSession.webRequest.onBeforeSendHeaders(async (details, callback) => {
       if (details.url.startsWith('https://graphql.anilist.co')) {
         details.requestHeaders.Referer = 'https://anilist.co/'
         details.requestHeaders.Origin = 'https://anilist.co'
         delete details.requestHeaders['User-Agent']
       }
+
+      if (details.url.startsWith('https://anilist.co/graphql') && this.unsafeUseInternalALAPI && details.method !== 'GET') await rewriteInternalRequest(details)
+
       callback({ cancel: false, requestHeaders: details.requestHeaders })
     })
 
     // anilist.... forgot to set the cache header on their preflights..... pathetic.... this just wastes rate limits, this fixes it!
+    // they also don't set CORS headers on errors
     session.defaultSession.webRequest.onHeadersReceived((details, callback) => {
-      if (details.url.startsWith('https://graphql.anilist.co') && details.method === 'OPTIONS') {
-        if (details.responseHeaders) {
-          if (!details.responseHeaders['access-control-allow-origin'] || !details.responseHeaders['Access-Control-Allow-Origin']) details.responseHeaders['access-control-allow-origin'] = ['*']
+      if (details.url.startsWith('https://graphql.anilist.co')) {
+        if (details.responseHeaders && details.method === 'OPTIONS') {
+          setCors(details.responseHeaders)
+
           details.responseHeaders['Cache-Control'] = ['public, max-age=86400']
           details.responseHeaders['access-control-max-age'] = ['86400']
+          details.statusLine = '204 No Content'
+          details.statusCode = 204
         }
       }
+
+      if (details.url.startsWith('https://anilist.co/graphql') && this.unsafeUseInternalALAPI) setCors(details.responseHeaders)
 
       // MAL doesn't implement CORS....
       // enable CORS for any extensions that want it, but only for specific urls
       if (details.url.startsWith('https://myanimelist.net/v1/oauth2') || details.url.startsWith('https://api.myanimelist.net/v2/') || this.ipc.corsURLS.some(corsUrl => details.url.startsWith(corsUrl))) {
-        if (details.responseHeaders) {
-          details.responseHeaders['access-control-allow-origin'] = ['*']
-          details.responseHeaders['access-control-allow-methods'] = ['GET, POST, PUT, DELETE, OPTIONS, PATCH']
-          details.responseHeaders['access-control-allow-headers'] = ['*']
-          details.responseHeaders['access-control-allow-credentials'] = ['true']
-        }
+        setCors(details.responseHeaders, true)
         if (details.method === 'OPTIONS' && details.statusCode === 405) {
           details.statusLine = '200 OK'
           details.statusCode = 200
