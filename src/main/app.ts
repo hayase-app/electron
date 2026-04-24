@@ -37,7 +37,8 @@ autoUpdater.logger = log
 
 // const TRANSPARENCY = store.get('transparency')
 
-const BASE_URL = is.dev ? 'http://localhost:7344/' : 'https://hayase.app/'
+// const BASE_URL = is.dev ? 'http://localhost:7344/' : 'https://hayase.app/'
+const BASE_URL = 'https://hayase.app/'
 
 protocol.registerSchemesAsPrivileged([
   { scheme: 'https', privileges: { standard: true, bypassCSP: true, allowServiceWorkers: true, supportFetchAPI: true, corsEnabled: false, stream: true, codeCache: true, secure: true } }

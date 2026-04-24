@@ -10,29 +10,34 @@ electronFuses:
   onlyLoadAppFromAsar: true
 directories:
   buildResources: build
-files:
-  - "!**/.vscode/*"
-  - "!src/*"
-  - "!electron.vite.config.{js,ts,mjs,cjs}"
-  - "!{.eslintignore,.eslintrc.js,.prettierignore,.prettierrc.yaml,dev-app-update.yml,CHANGELOG.md,README.md}"
-  - "!{.env,.env.*,.npmrc,pnpm-lock.yaml}"
-  - "!{tsconfig.json,tsconfig.node.json,tsconfig.web.json}"
-  - "!node_modules/**/*.{mk,a,o,h,lib,tlog,cpp,c,vcxproj,vcxproj.filters,props,iobj,ipdb,pdb,exp,recipe}"
-  - "!node_modules/@thaunknown/yencode/crcutil-1.0/**"
-  - "!node_modules/utp-native/deps/**"
-  - "!node_modules/**/LICENSE"
-  - "!**/.eslintcache"
-  - "!**/.gitmodules"
-  - "!**/.gitattributes"
-  - "!**/*.md"
-  - "!eslint.config.mjs"
-  - "!electron-dist/*"
-  - "!resources/*"
 asarUnpack:
   - resources/**
   - "**/*.node"
+  - node_modules/**/*.node
+  - "**/node_modules/**/*.node"
 win:
   executableName: Hayase
+  files:
+    - "!node_modules/**/prebuilds/!(win32*)/*.node"
+    - "!**/.vscode/*"
+    - "!src/*"
+    - "!electron.vite.config.{js,ts,mjs,cjs}"
+    - "!{.eslintignore,.eslintrc.js,.prettierignore,.prettierrc.yaml,dev-app-update.yml,CHANGELOG.md,README.md}"
+    - "!{.env,.env.*,.npmrc,pnpm-lock.yaml}"
+    - "!{tsconfig.json,tsconfig.node.json,tsconfig.web.json}"
+    - "!node_modules/**/*.{mk,a,o,h,lib,tlog,cpp,c,vcxproj,vcxproj.filters,props,iobj,ipdb,pdb,exp,recipe,bare,map,ts,txt,cts}"
+    - "!node_modules/@thaunknown/yencode/crcutil-1.0/**"
+    - "!node_modules/@thaunknown/yencode/build/**"
+    - "!node_modules/utp-native/build/**"
+    - "!node_modules/utp-native/deps/**"
+    - "!node_modules/**/LICENSE"
+    - "!**/.eslintcache"
+    - "!**/.gitmodules"
+    - "!**/.gitattributes"
+    - "!**/*.md"
+    - "!eslint.config.mjs"
+    - "!electron-dist/*"
+    - "!resources/*"
   target:
     - target: nsis
       arch:
@@ -55,11 +60,34 @@ mac:
   artifactName: ${os}-${name}-${version}-mac.${ext}
   entitlementsInherit: build/entitlements.mac.plist
   defaultArch: universal
-  singleArchFiles: node_modules/+(register-scheme|utp-native|fs-native-extensions|yencode)/**/*.node
+  singleArchFiles: "**/node_modules/{utp-native,fs-native-extensions,@thaunknown/yencode}/**/*.node"
+  x64ArchFiles: "**/node_modules/{utp-native,fs-native-extensions,@thaunknown/yencode}/**/*.node"
   category: public.app-category.video
   darkModeSupport: true
   hardenedRuntime: true
   mergeASARs: false
+  files:
+    - "!node_modules/@paymoapp/electron-shutdown-handler/**"
+    - "!node_modules/**/prebuilds/!(darwin*)/*.node"
+    - "!**/.vscode/*"
+    - "!src/*"
+    - "!electron.vite.config.{js,ts,mjs,cjs}"
+    - "!{.eslintignore,.eslintrc.js,.prettierignore,.prettierrc.yaml,dev-app-update.yml,CHANGELOG.md,README.md}"
+    - "!{.env,.env.*,.npmrc,pnpm-lock.yaml}"
+    - "!{tsconfig.json,tsconfig.node.json,tsconfig.web.json}"
+    - "!node_modules/**/*.{mk,a,o,h,lib,tlog,cpp,c,vcxproj,vcxproj.filters,props,iobj,ipdb,pdb,exp,recipe,bare,map,ts,txt,cts}"
+    - "!node_modules/@thaunknown/yencode/crcutil-1.0/**"
+    - "!node_modules/@thaunknown/yencode/build/**"
+    - "!node_modules/utp-native/build/**"
+    - "!node_modules/utp-native/deps/**"
+    - "!node_modules/**/LICENSE"
+    - "!**/.eslintcache"
+    - "!**/.gitmodules"
+    - "!**/.gitattributes"
+    - "!**/*.md"
+    - "!eslint.config.mjs"
+    - "!electron-dist/*"
+    - "!resources/*"
   extendInfo:
     - NSCameraUsageDescription: Application requests access to the device's camera.
     - NSMicrophoneUsageDescription: Application requests access to the device's microphone.
@@ -73,6 +101,27 @@ mac:
 linux:
   artifactName: ${os}-${name}-${version}-linux.${ext}
   icon: build/icon.icns
+  files:
+    - "!node_modules/**/prebuilds/!(linux*)/*.node"
+    - "!**/.vscode/*"
+    - "!src/*"
+    - "!electron.vite.config.{js,ts,mjs,cjs}"
+    - "!{.eslintignore,.eslintrc.js,.prettierignore,.prettierrc.yaml,dev-app-update.yml,CHANGELOG.md,README.md}"
+    - "!{.env,.env.*,.npmrc,pnpm-lock.yaml}"
+    - "!{tsconfig.json,tsconfig.node.json,tsconfig.web.json}"
+    - "!node_modules/**/*.{mk,a,o,h,lib,tlog,cpp,c,vcxproj,vcxproj.filters,props,iobj,ipdb,pdb,exp,recipe,bare,map,ts,txt,cts}"
+    - "!node_modules/@thaunknown/yencode/crcutil-1.0/**"
+    - "!node_modules/@thaunknown/yencode/build/**"
+    - "!node_modules/utp-native/build/**"
+    - "!node_modules/utp-native/deps/**"
+    - "!node_modules/**/LICENSE"
+    - "!**/.eslintcache"
+    - "!**/.gitmodules"
+    - "!**/.gitattributes"
+    - "!**/*.md"
+    - "!eslint.config.mjs"
+    - "!electron-dist/*"
+    - "!resources/*"
   target:
     - target: deb
       arch:

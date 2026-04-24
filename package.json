@@ -6,7 +6,7 @@
   "repository": "github:hayase-app/ui",
   "author": "ThaUnknown_",
   "homepage": "https://hayase.app",
-  "packageManager": "pnpm@9.14.4",
+  "packageManager": "pnpm@10.28.1",
   "scripts": {
     "lint": "eslint --cache .",
     "typecheck:node": "tsc --noEmit -p tsconfig.node.json --composite false --noEmit",
@@ -25,7 +25,8 @@
   },
   "dependencies": {
     "@paymoapp/electron-shutdown-handler": "^1.1.3",
-    "@thaunknown/yencode": "1.3.2",
+    "@thaunknown/yencode": "1.5.5",
+    "fs-native-extensions": "1.5.0",
     "utp-native": "^2.5.3"
   },
   "devDependencies": {
@@ -35,9 +36,9 @@
     "@electron-toolkit/tsconfig": "^2.0.0",
     "@electron-toolkit/utils": "^4.0.0",
     "@electron/fuses": "^2.1.1",
-    "@types/node": "^25.5.2",
+    "@types/node": "^25.6.0",
     "@xhayper/discord-rpc": "^1.3.3",
-    "abslink": "^1.1.6",
+    "abslink": "^1.2.2",
     "cookie": "^1.1.1",
     "electron": "39.2.7",
     "electron-builder": "^26.0.12",
@@ -47,9 +48,9 @@
     "eslint-config-standard-universal": "^1.0.9",
     "glob": "^13.0.6",
     "native": "github:hayase-app/native",
-    "rollup-plugin-license": "^3.6.0",
+    "rollup-plugin-license": "^3.7.1",
     "torrent-client": "github:hayase-app/torrent-client",
-    "typescript": "^5.9.3",
+    "typescript": "^6.0.3",
     "vite": "^7.3.2",
     "vite-plugin-cjs-interop": "^2.4.4"
   }
