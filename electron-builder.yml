@@ -67,7 +67,7 @@ mac:
   hardenedRuntime: true
   mergeASARs: false
   files:
-    - "!node_modules/@paymoapp/electron-shutdown-handler/**"
+    - "!node_modules/@paymoapp/electron-shutdown-handler/**/*.node"
     - "!node_modules/**/prebuilds/!(darwin*)/*.node"
     - "!**/.vscode/*"
     - "!src/*"
