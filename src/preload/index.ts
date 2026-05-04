@@ -75,6 +75,7 @@ const native: Partial<Native> = {
   torrentInfo: async (hash) => await (await torrent).torrentInfo(hash),
   peerInfo: async (hash) => await (await torrent).peerInfo(hash),
   fileInfo: async (hash) => await (await torrent).fileInfo(hash),
+  trackers: async (hash) => await (await torrent).trackers(hash),
   protocolStatus: async (hash) => await (await torrent).protocolStatus(hash),
   updateSettings: (settings) => main.updateSettings(settings),
   cachedTorrents: async () => await (await torrent).cached(),
