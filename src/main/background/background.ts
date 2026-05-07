@@ -5,7 +5,7 @@ import { join } from 'node:path'
 import { expose } from 'abslink/w3c'
 import TorrentClient from 'torrent-client'
 
-import type { TorrentSettings } from 'native'
+import type { ClientSettings } from 'native'
 import type { PROVIDERS } from 'torrent-client/doh'
 
 interface Message {
@@ -21,9 +21,9 @@ try {
 }
 
 process.parentPort.on('message', ({ ports, data: _data }) => {
-  let settings: TorrentSettings & { path: string, doh?: `https://${keyof typeof PROVIDERS}` } | undefined
+  let settings: ClientSettings & { path: string, doh?: `https://${keyof typeof PROVIDERS}` } | undefined
   const { id, data } = _data as Message
-  if (id === 'settings') settings = data as TorrentSettings & { path: string }
+  if (id === 'settings') settings = data as ClientSettings & { path: string }
   if (id === 'destroy') tclient?.destroy()
 
   if (ports[0]) {

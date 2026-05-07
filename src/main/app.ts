@@ -21,6 +21,8 @@ import Protocol from './protocol.ts'
 import store from './store.ts'
 import Updater from './updater.ts'
 
+import type { Messageable } from 'abslink'
+
 log.initialize({ spyRendererConsole: true, preload: false })
 log.transports.file.level = 'debug'
 log.transports.file.maxSize = 10 * 1024 * 1024 // 10MB
@@ -95,7 +97,7 @@ export default class App {
   constructor () {
     if (store.data.doh) this.setDOH(store.data.doh)
     nativeTheme.themeSource = 'dark'
-    expose(this.ipc, ipcMain, this.mainWindow.webContents)
+    expose(this.ipc, ipcMain, this.mainWindow.webContents as Messageable)
     this.mainWindow.setMenuBarVisibility(false)
     this.mainWindow.webContents.setWindowOpenHandler(({ url }) => {
       if (url.startsWith('https://anilist.co/api/v2/oauth/authorize')) {
