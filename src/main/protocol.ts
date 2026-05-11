@@ -13,7 +13,9 @@ if (process.defaultApp) {
 const NAVIGATE_TARGETS = {
   schedule: 'schedule',
   anime: 'anime',
-  w2g: 'w2g'
+  w2g: 'w2g',
+  debug: 'debug',
+  extensions: 'extensions'
 } as const
 
 export default class Protocol {
