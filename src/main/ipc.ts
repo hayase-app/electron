@@ -1,7 +1,7 @@
 import { spawn } from 'node:child_process'
 import { readFile } from 'node:fs/promises'
 import os from 'node:os'
-import { basename, extname } from 'node:path'
+import { basename, dirname, extname } from 'node:path'
 
 import { app, dialog, shell, type UtilityProcess, ipcMain } from 'electron'
 import log from 'electron-log/main'
@@ -11,7 +11,7 @@ import store from './store'
 
 import type App from './app'
 import type Discord from './discord'
-import type { SessionMetadata, TorrentSettings } from 'native'
+import type { SessionMetadata, ClientSettings } from 'native'
 
 const WHITELISTED_URLS = ['https://anilist.co/', 'https://github.com/sponsors/ThaUnknown/', 'https://myanimelist.net/', 'https://miru.watch', 'https://hayase.app', 'https://hayase.watch', 'https://thewiki.moe', 'https://kitsu.app']
 
@@ -96,7 +96,7 @@ export default class IPC {
     return basename(path, extname(path))
   }
 
-  updateSettings (settings: TorrentSettings = store.data.torrentSettings) {
+  updateSettings (settings: ClientSettings = store.data.torrentSettings) {
     store.set('torrentSettings', settings)
 
     this.torrentProcess.postMessage({ id: 'settings', data: { ...store.data.torrentSettings, path: store.data.torrentPath } })
@@ -110,6 +110,9 @@ export default class IPC {
     if (canceled || !filePaths.length) return store.get('torrentPath')
 
     let path = filePaths[0]!
+
+    if (dirname(path) === path) throw new Error('Cannot select root directory as download location. Please create a folder inside the desired drive and select that instead.')
+
     if (!(path.endsWith('\\') || path.endsWith('/'))) {
       if (path.includes('\\')) {
         path += '\\'

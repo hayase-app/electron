@@ -19,7 +19,12 @@ const DEFAULTS = {
     maxConns: 50,
     torrentPort: 0,
     dhtPort: 0,
-    torrentPeX: false
+    torrentPeX: false,
+    nzbDomain: '',
+    nzbLogin: '',
+    nzbPassword: '',
+    nzbPort: 119,
+    nzbPoolSize: 5
   }
 }
 
