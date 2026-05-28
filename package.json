@@ -41,7 +41,7 @@
     "abslink": "^1.2.2",
     "cookie": "^1.1.1",
     "electron": "42.2.0",
-    "electron-builder": "^26.0.12",
+    "electron-builder": "^26.11.1",
     "electron-log": "^5.4.4",
     "electron-updater": "^6.8.3",
     "electron-vite": "^5.0.0",
@@ -60,7 +60,7 @@
       "@electron/fuses": "npm:@thaunknown/fuses"
     },
     "patchedDependencies": {
-      "app-builder-lib": "patches/app-builder-lib.patch"
+      "app-builder-lib@26.11.1": "patches/app-builder-lib@26.11.1.patch"
     }
   }
 }

@@ -1,8 +1,8 @@
 diff --git a/out/platformPackager.js b/out/platformPackager.js
-index 8405c93105b7ce634edf959626f8c2ee00fd8a1c..684e188b53e8f5af53b6d0624ce39fc4f8b36145 100644
+index d7cdb8dfbb80da562a64a18a5041af0699162895..fc6c5c7fa1d5ca92bf852b6790a40351699ba531 100644
 --- a/out/platformPackager.js
 +++ b/out/platformPackager.js
-@@ -298,6 +298,15 @@ class PlatformPackager {
+@@ -291,6 +291,15 @@ class PlatformPackager {
          if (fuses.grantFileProtocolExtraPrivileges != null) {
              config[fuses_1.FuseV1Options.GrantFileProtocolExtraPrivileges] = fuses.grantFileProtocolExtraPrivileges;
          }
@@ -19,10 +19,10 @@ index 8405c93105b7ce634edf959626f8c2ee00fd8a1c..684e188b53e8f5af53b6d0624ce39fc4
      }
      /**
 diff --git a/scheme.json b/scheme.json
-index 80be7e2ab02bc695c36382b8fca7a75f68782179..c65b9ff1507251b84852a63efd7f1e7b65fa91e0 100644
+index f4ea4fbbc5f19a5b6cad17f0c8d3cc8e7776fead..395c61fb59291c8eddba7f4a0fb57441f69232a1 100644
 --- a/scheme.json
 +++ b/scheme.json
-@@ -1350,6 +1350,18 @@
+@@ -1499,6 +1499,18 @@
          "runAsNode": {
            "description": "The runAsNode fuse toggles whether the `ELECTRON_RUN_AS_NODE` environment variable is respected or not.  Please note that if this fuse is disabled then `process.fork` in the main process will not function as expected as it depends on this environment variable to function. Instead, we recommend that you use [Utility Processes](https://github.com/electron/electron/blob/main/docs/api/utility-process.md), which work for many use cases where you need a standalone Node.js process (like a Sqlite server process or similar scenarios).",
            "type": "boolean"
