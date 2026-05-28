@@ -7,6 +7,7 @@ settings:
 overrides:
   '@vladfrangu/async_event_emitter': npm:@vladfrangu/async_event_emitter@2.4.6
   '@electron/fuses': npm:@thaunknown/fuses
+  webtorrent: github:thaunknown/webtorrent
 
 patchedDependencies:
   app-builder-lib@26.11.1:
@@ -4320,8 +4321,9 @@ packages:
     resolution: {integrity: sha512-B52Rwxu7wzhLhANMRBys8W1wXAi9LwVzLfWWyueSQZmjpgojzX5p5g3m/fcZMFDtB+JZLnOt0Ud9u9FOZakg1Q==}
     engines: {node: '>=16.0.0'}
 
-  webtorrent@3.0.14:
-    resolution: {integrity: sha512-z4M1CawI5X1NIrcZuZUmOTDBidJdiewgxA5hukMffbbGVV4q1gs+ujCbwA7iX1XOsMb/xgVWCcXfLQwBhp1zag==}
+  webtorrent@https://codeload.github.com/thaunknown/webtorrent/tar.gz/6c9a6d7efec2b8212d0b539707c8a327e8e5776d:
+    resolution: {tarball: https://codeload.github.com/thaunknown/webtorrent/tar.gz/6c9a6d7efec2b8212d0b539707c8a327e8e5776d}
+    version: 3.0.14
     engines: {node: '>=22'}
 
   which-boxed-primitive@1.1.1:
@@ -9059,7 +9061,7 @@ snapshots:
       nzb-file: 1.1.16
       nzb-parser: 1.0.3
       protobufjs: 8.0.1
-      webtorrent: 3.0.14(bare-url@2.4.3)
+      webtorrent: https://codeload.github.com/thaunknown/webtorrent/tar.gz/6c9a6d7efec2b8212d0b539707c8a327e8e5776d(bare-url@2.4.3)
     transitivePeerDependencies:
       - bare-abort-controller
       - bare-buffer
@@ -9314,7 +9316,7 @@ snapshots:
     dependencies:
       node-datachannel: 0.32.3
 
-  webtorrent@3.0.14(bare-url@2.4.3):
+  webtorrent@https://codeload.github.com/thaunknown/webtorrent/tar.gz/6c9a6d7efec2b8212d0b539707c8a327e8e5776d(bare-url@2.4.3):
     dependencies:
       '@silentbot1/nat-api': 0.4.9
       '@thaunknown/simple-peer': 10.1.1
