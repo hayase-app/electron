@@ -89,7 +89,7 @@ importers:
         version: 3.7.1(picomatch@4.0.4)(rollup@4.53.5)
       torrent-client:
         specifier: github:hayase-app/torrent-client
-        version: https://codeload.github.com/hayase-app/torrent-client/tar.gz/2a94f7e3e2140686df29102608eb60ef30dd58e9(bare-url@2.4.3)
+        version: https://codeload.github.com/hayase-app/torrent-client/tar.gz/1f45aba05bca36db1ed85d0399ef9632e1162bce(bare-url@2.4.3)
       typescript:
         specifier: ^6.0.3
         version: 6.0.3
@@ -4085,8 +4085,8 @@ packages:
     resolution: {integrity: sha512-65P7iz6X5yEr1cwcgvQxbbIw7Uk3gOy5dIdtZ4rDveLqhrdJP+Li/Hx6tyK0NEb+2GCyneCMJiGqrADCSNk8sQ==}
     engines: {node: '>=8.0'}
 
-  torrent-client@https://codeload.github.com/hayase-app/torrent-client/tar.gz/2a94f7e3e2140686df29102608eb60ef30dd58e9:
-    resolution: {tarball: https://codeload.github.com/hayase-app/torrent-client/tar.gz/2a94f7e3e2140686df29102608eb60ef30dd58e9}
+  torrent-client@https://codeload.github.com/hayase-app/torrent-client/tar.gz/1f45aba05bca36db1ed85d0399ef9632e1162bce:
+    resolution: {tarball: https://codeload.github.com/hayase-app/torrent-client/tar.gz/1f45aba05bca36db1ed85d0399ef9632e1162bce}
     version: 1.0.0
 
   torrent-discovery@11.0.21:
@@ -4320,8 +4320,8 @@ packages:
     resolution: {integrity: sha512-B52Rwxu7wzhLhANMRBys8W1wXAi9LwVzLfWWyueSQZmjpgojzX5p5g3m/fcZMFDtB+JZLnOt0Ud9u9FOZakg1Q==}
     engines: {node: '>=16.0.0'}
 
-  webtorrent@3.0.13:
-    resolution: {integrity: sha512-Vt4W/ybTFAZrMYBhAExGg2XXd9Gj+ZOXkuNO4VfGqi/ZJCjBXbO+YkbnpyiUzMHD4Fm+lgEPDzgBGcOaJqCgcw==}
+  webtorrent@3.0.14:
+    resolution: {integrity: sha512-z4M1CawI5X1NIrcZuZUmOTDBidJdiewgxA5hukMffbbGVV4q1gs+ujCbwA7iX1XOsMb/xgVWCcXfLQwBhp1zag==}
     engines: {node: '>=22'}
 
   which-boxed-primitive@1.1.1:
@@ -5274,7 +5274,7 @@ snapshots:
     dependencies:
       debug: 4.4.3
       err-code: 3.0.1
-      streamx: 2.25.0
+      streamx: 2.26.0
       uint8-util: 2.2.6
       webrtc-polyfill: 1.2.1
     transitivePeerDependencies:
@@ -5286,7 +5286,7 @@ snapshots:
     dependencies:
       debug: 4.4.3
       queue-microtask: 1.2.3
-      streamx: 2.25.0
+      streamx: 2.26.0
       uint8-util: 2.2.6
       ws: 8.21.0(bufferutil@4.1.0)(utf-8-validate@6.0.6)
     transitivePeerDependencies:
@@ -5628,7 +5628,7 @@ snapshots:
 
   app-builder-bin@5.0.0-alpha.12: {}
 
-  app-builder-lib@25.1.8(patch_hash=b616df14263464adacade2c1d039e9dd22d43f5acc962bec6df2f015289b32fa)(dmg-builder@26.11.1)(electron-builder-squirrel-windows@25.1.8):
+  app-builder-lib@25.1.8(dmg-builder@26.11.1)(electron-builder-squirrel-windows@25.1.8):
     dependencies:
       '@develar/schema-utils': 2.6.5
       '@electron/notarize': 2.5.0
@@ -5875,7 +5875,7 @@ snapshots:
 
   bare-stream@2.13.1(bare-events@2.8.3):
     dependencies:
-      streamx: 2.25.0
+      streamx: 2.26.0
       teex: 1.0.1
     optionalDependencies:
       bare-events: 2.8.3
@@ -6486,7 +6486,7 @@ snapshots:
 
   electron-builder-squirrel-windows@25.1.8(dmg-builder@26.11.1):
     dependencies:
-      app-builder-lib: 25.1.8(patch_hash=b616df14263464adacade2c1d039e9dd22d43f5acc962bec6df2f015289b32fa)(dmg-builder@26.11.1)(electron-builder-squirrel-windows@25.1.8)
+      app-builder-lib: 25.1.8(dmg-builder@26.11.1)(electron-builder-squirrel-windows@25.1.8)
       archiver: 5.3.2
       builder-util: 25.1.7
       fs-extra: 10.1.0
@@ -8803,7 +8803,7 @@ snapshots:
   speed-limiter@1.0.2:
     dependencies:
       limiter: 1.1.5
-      streamx: 2.25.0
+      streamx: 2.26.0
     transitivePeerDependencies:
       - bare-abort-controller
       - react-native-b4a
@@ -8998,7 +8998,7 @@ snapshots:
 
   teex@1.0.1:
     dependencies:
-      streamx: 2.25.0
+      streamx: 2.26.0
     transitivePeerDependencies:
       - bare-abort-controller
       - react-native-b4a
@@ -9043,7 +9043,7 @@ snapshots:
     dependencies:
       is-number: 7.0.0
 
-  torrent-client@https://codeload.github.com/hayase-app/torrent-client/tar.gz/2a94f7e3e2140686df29102608eb60ef30dd58e9(bare-url@2.4.3):
+  torrent-client@https://codeload.github.com/hayase-app/torrent-client/tar.gz/1f45aba05bca36db1ed85d0399ef9632e1162bce(bare-url@2.4.3):
     dependencies:
       '@silentbot1/nat-api': 0.4.9
       '@types/chromecast-caf-receiver': 6.0.26
@@ -9059,7 +9059,7 @@ snapshots:
       nzb-file: 1.1.16
       nzb-parser: 1.0.3
       protobufjs: 8.0.1
-      webtorrent: 3.0.13(bare-url@2.4.3)
+      webtorrent: 3.0.14(bare-url@2.4.3)
     transitivePeerDependencies:
       - bare-abort-controller
       - bare-buffer
@@ -9314,7 +9314,7 @@ snapshots:
     dependencies:
       node-datachannel: 0.32.3
 
-  webtorrent@3.0.13(bare-url@2.4.3):
+  webtorrent@3.0.14(bare-url@2.4.3):
     dependencies:
       '@silentbot1/nat-api': 0.4.9
       '@thaunknown/simple-peer': 10.1.1
