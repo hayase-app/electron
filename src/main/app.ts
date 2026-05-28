@@ -56,10 +56,9 @@ function setCors (record?: Record<string, string[]>, credentails = false) {
 }
 
 export default class App {
-  torrentProcess = utilityProcess.fork(forkPath, ['--disallow-code-generation-from-strings --disable-proto=throw --frozen-intrinsics --js-flags="--disallow-code-generation-from-strings"'], {
+  torrentProcess = utilityProcess.fork(forkPath, [], {
     stdio: ['ignore', 'pipe', 'pipe'],
-    serviceName: 'Hayase Torrent Client',
-    execArgv: ['--disallow-code-generation-from-strings --disable-proto=throw --frozen-intrinsics --js-flags="--disallow-code-generation-from-strings"']
+    serviceName: 'Hayase Torrent Client'
   })
 
   mainWindow = new BrowserWindow({

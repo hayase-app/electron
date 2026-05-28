@@ -6,7 +6,7 @@ import store from './store.ts'
 
 // const IS_LINUX = ['linux', 'freebsd', 'openbsd', 'netbsd', 'dragonfly', 'sunos'].includes(platform)
 
-const flags: Array<[string, string | undefined]| [string]> = [
+const flags: Array<[string, string | undefined] | [string]> = [
   // not sure if safe?
   ['disable-gpu-sandbox'], ['disable-direct-composition-video-overlays'], ['double-buffer-compositing'], ['enable-zero-copy'], ['ignore-gpu-blocklist'],
   ['force_high_performance_gpu'],
@@ -25,9 +25,6 @@ const flags: Array<[string, string | undefined]| [string]> = [
   ['force-effective-connection-type', '4G'],
   // image video etc cache, hopefully lets video buffer more and remembers more images, might be bad to touch this?
   ['disk-cache-size', '500000000'],
-  // NodeJS security stuff, not supported yet
-  ['disallow-code-generation-from-strings'], ['disable-proto', 'throw'], ['frozen-intrinsics'],
-  ['js-flags', '--disallow-code-generation-from-strings --experimental-wasm-rab-integration'],
   // custom angle setting
   ['use-angle', store.get('angle') || 'default']
 ]

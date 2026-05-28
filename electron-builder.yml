@@ -8,6 +8,9 @@ electronFuses:
   enableNodeCliInspectArguments: false
   enableEmbeddedAsarIntegrityValidation: true
   onlyLoadAppFromAsar: true
+  disallowCodeGenerationFromStrings: true
+  disableProtoThrow: true
+  frozenIntrinsics: true
 directories:
   buildResources: build
 asarUnpack:
