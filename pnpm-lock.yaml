@@ -7,7 +7,6 @@ settings:
 overrides:
   '@vladfrangu/async_event_emitter': npm:@vladfrangu/async_event_emitter@2.4.6
   '@electron/fuses': npm:@thaunknown/fuses
-  webtorrent: github:thaunknown/webtorrent#utpspeed
 
 patchedDependencies:
   app-builder-lib@26.11.1:
@@ -90,7 +89,7 @@ importers:
         version: 3.7.1(picomatch@4.0.4)(rollup@4.53.5)
       torrent-client:
         specifier: github:hayase-app/torrent-client
-        version: https://codeload.github.com/hayase-app/torrent-client/tar.gz/1f45aba05bca36db1ed85d0399ef9632e1162bce(bare-url@2.4.3)
+        version: https://codeload.github.com/hayase-app/torrent-client/tar.gz/a80a45fd86870cbffa6c5ec730a2fc619928b82f(bare-url@2.4.3)
       typescript:
         specifier: ^6.0.3
         version: 6.0.3
@@ -1523,10 +1522,6 @@ packages:
   bencode@2.0.3:
     resolution: {integrity: sha512-D/vrAD4dLVX23NalHwb8dSvsUsxeRPO8Y7ToKA015JQYq69MLDOMkC0uGZYA/MPpltLO8rt8eqFC2j8DxjTZ/w==}
 
-  bencode@4.0.0:
-    resolution: {integrity: sha512-AERXw18df0pF3ziGOCyUjqKZBVNH8HV3lBxnx5w0qtgMIk4a1wb9BkcCQbkp9Zstfrn/dzRwl7MmUHHocX3sRQ==}
-    engines: {node: '>=12.20.0'}
-
   bencode@4.0.1:
     resolution: {integrity: sha512-/bCR3FvgfB8AZk4LlowShU+nfaTNRM2vruJ9aejDa5LpgkCoRjFyEauFiZFxbpxVxQbBFapYCN42Er2dkE/Qgw==}
     engines: {node: '>=12.20.0'}
@@ -1538,10 +1533,6 @@ packages:
   bitfield@5.0.1:
     resolution: {integrity: sha512-81mvFHCa0L1HsDdKVCTkPKZZ6KFdyXgfQNoneFT7Qk5/PZeBWdPkTFa4KttbR8uHszfjiqOJbeahLOPfCqw4cw==}
     engines: {node: '>=20.19.0'}
-
-  bittorrent-dht@11.0.11:
-    resolution: {integrity: sha512-5rWMoK/2XjcPSx9nfqiL6mHxsXLwohX+81aL4a3qUyGU1992mBqARQE/evZ+a6eWb5DeRjeDU+qFZm11rmPZnQ==}
-    engines: {node: '>=12.20.0'}
 
   bittorrent-dht@11.0.12:
     resolution: {integrity: sha512-bFmQq874HMIBon/6KNMf/U1OG+UxJ0UzI9oPra2IRlZLuPA7VwBiA7uEpWaO2ww8G76OFjxB1p1XCOS94FuCPQ==}
@@ -3296,6 +3287,7 @@ packages:
   node-domexception@1.0.0:
     resolution: {integrity: sha512-/jKZoMpw0F8GRwl4/eLROPA3cfcXtLApP0QzLmUT/HuPCZWyB7IY9ZrMeKw2O/nFIqPQB3PVM9aYm0F312AXDQ==}
     engines: {node: '>=10.5.0'}
+    deprecated: Use your platform's native DOMException instead
 
   node-exports-info@1.6.0:
     resolution: {integrity: sha512-pyFS63ptit/P5WqUkt+UUfe+4oevH+bFeIiPPdfb0pFeYEu/1ELnJu5l+5EcTKYL5M7zaAa7S8ddywgXypqKCw==}
@@ -4079,8 +4071,8 @@ packages:
     resolution: {integrity: sha512-65P7iz6X5yEr1cwcgvQxbbIw7Uk3gOy5dIdtZ4rDveLqhrdJP+Li/Hx6tyK0NEb+2GCyneCMJiGqrADCSNk8sQ==}
     engines: {node: '>=8.0'}
 
-  torrent-client@https://codeload.github.com/hayase-app/torrent-client/tar.gz/1f45aba05bca36db1ed85d0399ef9632e1162bce:
-    resolution: {tarball: https://codeload.github.com/hayase-app/torrent-client/tar.gz/1f45aba05bca36db1ed85d0399ef9632e1162bce}
+  torrent-client@https://codeload.github.com/hayase-app/torrent-client/tar.gz/a80a45fd86870cbffa6c5ec730a2fc619928b82f:
+    resolution: {tarball: https://codeload.github.com/hayase-app/torrent-client/tar.gz/a80a45fd86870cbffa6c5ec730a2fc619928b82f}
     version: 1.0.0
 
   torrent-discovery@11.0.21:
@@ -4314,9 +4306,8 @@ packages:
     resolution: {integrity: sha512-B52Rwxu7wzhLhANMRBys8W1wXAi9LwVzLfWWyueSQZmjpgojzX5p5g3m/fcZMFDtB+JZLnOt0Ud9u9FOZakg1Q==}
     engines: {node: '>=16.0.0'}
 
-  webtorrent@https://codeload.github.com/thaunknown/webtorrent/tar.gz/3b2ace02fce0e24662015caefe6b21ddddf7b8cd:
-    resolution: {tarball: https://codeload.github.com/thaunknown/webtorrent/tar.gz/3b2ace02fce0e24662015caefe6b21ddddf7b8cd}
-    version: 3.0.15
+  webtorrent@3.0.16:
+    resolution: {integrity: sha512-oryVor+AGWiNbI4zBT58CKw5MrUYz2GxP5fleHyIhucqwTYAl6pjGkDTjCPGiY5VZCPnVhhhlt+eFov85ZgZKg==}
     engines: {node: '>=22'}
 
   which-boxed-primitive@1.1.1:
@@ -5889,10 +5880,6 @@ snapshots:
 
   bencode@2.0.3: {}
 
-  bencode@4.0.0:
-    dependencies:
-      uint8-util: 2.2.6
-
   bencode@4.0.1:
     dependencies:
       uint8-util: 2.2.6
@@ -5900,20 +5887,6 @@ snapshots:
   bep53-range@2.0.0: {}
 
   bitfield@5.0.1: {}
-
-  bittorrent-dht@11.0.11:
-    dependencies:
-      bencode: 4.0.0
-      debug: 4.4.3
-      k-bucket: 5.1.0
-      k-rpc: 5.1.0
-      last-one-wins: 1.0.4
-      lru: 3.1.0
-      randombytes: 2.1.0
-      record-cache: 1.2.0
-    transitivePeerDependencies:
-      - react-native-b4a
-      - supports-color
 
   bittorrent-dht@11.0.12:
     dependencies:
@@ -9038,12 +9011,12 @@ snapshots:
     dependencies:
       is-number: 7.0.0
 
-  torrent-client@https://codeload.github.com/hayase-app/torrent-client/tar.gz/1f45aba05bca36db1ed85d0399ef9632e1162bce(bare-url@2.4.3):
+  torrent-client@https://codeload.github.com/hayase-app/torrent-client/tar.gz/a80a45fd86870cbffa6c5ec730a2fc619928b82f(bare-url@2.4.3):
     dependencies:
       '@silentbot1/nat-api': 0.4.9
       '@types/chromecast-caf-receiver': 6.0.26
       '@types/multicast-dns': 7.2.4
-      bittorrent-dht: 11.0.11
+      bittorrent-dht: 11.0.12
       bittorrent-peerid: 2.0.2
       cross-fetch-ponyfill: 1.0.3
       fast-xml-parser: 5.8.0
@@ -9054,7 +9027,7 @@ snapshots:
       nzb-file: 1.1.16
       nzb-parser: 1.0.3
       protobufjs: 8.0.1
-      webtorrent: https://codeload.github.com/thaunknown/webtorrent/tar.gz/3b2ace02fce0e24662015caefe6b21ddddf7b8cd(bare-url@2.4.3)
+      webtorrent: 3.0.16(bare-url@2.4.3)
     transitivePeerDependencies:
       - bare-abort-controller
       - bare-buffer
@@ -9309,7 +9282,7 @@ snapshots:
     dependencies:
       node-datachannel: 0.32.3
 
-  webtorrent@https://codeload.github.com/thaunknown/webtorrent/tar.gz/3b2ace02fce0e24662015caefe6b21ddddf7b8cd(bare-url@2.4.3):
+  webtorrent@3.0.16(bare-url@2.4.3):
     dependencies:
       '@silentbot1/nat-api': 0.4.9
       '@thaunknown/simple-peer': 10.1.1

@@ -57,8 +57,7 @@
   "pnpm": {
     "overrides": {
       "@vladfrangu/async_event_emitter": "npm:@vladfrangu/async_event_emitter@2.4.6",
-      "@electron/fuses": "npm:@thaunknown/fuses",
-      "webtorrent": "github:thaunknown/webtorrent#utpspeed"
+      "@electron/fuses": "npm:@thaunknown/fuses"
     },
     "patchedDependencies": {
       "app-builder-lib@26.11.1": "patches/app-builder-lib@26.11.1.patch"
