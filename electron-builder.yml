@@ -16,6 +16,7 @@ directories:
 asarUnpack:
   - resources/**
   - out/main/native-assets/**/*.node
+  - out/main/native-modules/**/prebuilds/*/*.node
 files:
   - "!**/.vscode/*"
   - "!src/*"
@@ -38,10 +39,6 @@ files:
   - "!resources/*"
   - "!patches/*"
 win:
-  asarUnpack:
-    - resources/**
-    - out/main/native-assets/**/*.node
-    - out/main/native-modules/**/prebuilds/win32-x64/*.node
   executableName: Hayase
   target:
     - target: nsis
@@ -60,11 +57,6 @@ nsis:
   deleteAppDataOnUninstall: true
   allowToChangeInstallationDirectory: true
 mac:
-  asarUnpack:
-    - resources/**
-    - out/main/native-assets/**/*.node
-    - out/main/native-modules/**/prebuilds/darwin-x64/*.node
-    - out/main/native-modules/**/prebuilds/darwin-arm64/*.node
   x64ArchFiles: "**/*.node"
   artifactName: ${os}-${name}-${version}-mac.${ext}
   entitlementsInherit: build/entitlements.mac.plist
@@ -84,10 +76,6 @@ mac:
       arch:
         - universal
 linux:
-  asarUnpack:
-    - resources/**
-    - out/main/native-assets/**/*.node
-    - out/main/native-modules/**/prebuilds/linux-x64/*.node
   artifactName: ${os}-${name}-${version}-linux.${ext}
   icon: build/icon.icns
   target:

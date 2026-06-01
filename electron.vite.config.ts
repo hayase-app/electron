@@ -13,13 +13,14 @@ const pkgName = (pkg: string) => pkg.replace(/@/g, '').replace(/\//g, '-')
 
 const nativeModuleDir = (pkg: string) => `native-modules/${pkgName(pkg)}`
 
-function copyDirRecursive (src: string, dst: string) {
+function copyDirRecursive (src: string, dst: string, fileFilter?: (name: string) => boolean) {
   if (!existsSync(dst)) mkdirSync(dst, { recursive: true })
   for (const entry of readdirSync(src, { withFileTypes: true })) {
+    if (!entry.isDirectory() && fileFilter && !fileFilter(entry.name)) continue
     const srcPath = join(src, entry.name)
     const dstPath = join(dst, entry.name)
     if (entry.isDirectory()) {
-      copyDirRecursive(srcPath, dstPath)
+      copyDirRecursive(srcPath, dstPath, fileFilter)
     } else {
       copyFileSync(srcPath, dstPath)
     }
@@ -134,7 +135,7 @@ const compileNativeModulesPlugin = ({ dependencies: NATIVE_PACKAGES }: { depende
                 : ['linux-x64']
             for (const dir of readdirSync(prebuildsSrc, { withFileTypes: true })) {
               if (dir.isDirectory() && platformDirs.includes(dir.name)) {
-                copyDirRecursive(join(prebuildsSrc, dir.name), join(prebuildsDst, dir.name))
+                copyDirRecursive(join(prebuildsSrc, dir.name), join(prebuildsDst, dir.name), (name) => name.endsWith('.node'))
               }
             }
             console.log(`[native-modules] Copied prebuilds for ${basename(moduleDir)}`)
