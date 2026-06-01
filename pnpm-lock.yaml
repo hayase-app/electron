@@ -16,19 +16,6 @@ patchedDependencies:
 importers:
 
   .:
-    dependencies:
-      '@paymoapp/electron-shutdown-handler':
-        specifier: ^1.1.3
-        version: 1.1.3
-      '@thaunknown/yencode':
-        specifier: 1.5.5
-        version: 1.5.5
-      fs-native-extensions:
-        specifier: 1.5.0
-        version: 1.5.0(bare-url@2.4.3)
-      utp-native:
-        specifier: ^2.5.3
-        version: 2.5.3
     devDependencies:
       '@electron-toolkit/eslint-config-prettier':
         specifier: ^3.0.0
@@ -48,6 +35,9 @@ importers:
       '@electron/fuses':
         specifier: npm:@thaunknown/fuses
         version: '@thaunknown/fuses@0.0.0-development'
+      '@paymoapp/electron-shutdown-handler':
+        specifier: ^1.1.3
+        version: 1.1.3
       '@types/node':
         specifier: ^25.9.1
         version: 25.9.1
@@ -3550,6 +3540,7 @@ packages:
   prebuild-install@7.1.3:
     resolution: {integrity: sha512-8Mf2cbV7x1cXPUILADGI3wuhfqWvtiLA1iclTDbFRZkgRQS0NqsPZphna9V+HyTEadheuPmjaJMsbzKQFOzLug==}
     engines: {node: '>=10'}
+    deprecated: No longer maintained. Please contact the author of the relevant native addon; alternatives are available.
     hasBin: true
 
   prelude-ls@1.2.1:
@@ -5831,6 +5822,7 @@ snapshots:
       bare-semver: 1.0.2
     optionalDependencies:
       bare-url: 2.4.3
+    optional: true
 
   bare-events@2.8.3: {}
 
@@ -5850,6 +5842,7 @@ snapshots:
       bare-semver: 1.0.2
     optionalDependencies:
       bare-url: 2.4.3
+    optional: true
 
   bare-os@3.9.1: {}
 
@@ -5857,7 +5850,8 @@ snapshots:
     dependencies:
       bare-os: 3.9.1
 
-  bare-semver@1.0.2: {}
+  bare-semver@1.0.2:
+    optional: true
 
   bare-stream@2.13.1(bare-events@2.8.3):
     dependencies:
@@ -7122,6 +7116,7 @@ snapshots:
       which-runtime: 1.3.2
     transitivePeerDependencies:
       - bare-url
+    optional: true
 
   fs.realpath@1.0.0: {}
 
@@ -7964,7 +7959,8 @@ snapshots:
 
   napi-build-utils@2.0.0: {}
 
-  napi-macros@2.2.2: {}
+  napi-macros@2.2.2:
+    optional: true
 
   native@https://codeload.github.com/hayase-app/native/tar.gz/de8461642d749b4fa29482564fe5039cd934b487:
     dependencies:
@@ -7984,7 +7980,7 @@ snapshots:
 
   node-abi@3.89.0:
     dependencies:
-      semver: 7.7.4
+      semver: 7.8.1
 
   node-abi@4.31.0:
     dependencies:
@@ -8480,6 +8476,7 @@ snapshots:
       bare-addon-resolve: 1.10.0(bare-url@2.4.3)
     transitivePeerDependencies:
       - bare-url
+    optional: true
 
   require-directory@2.1.1: {}
 
@@ -8988,7 +8985,8 @@ snapshots:
 
   thunky@1.1.0: {}
 
-  timeout-refresh@1.0.3: {}
+  timeout-refresh@1.0.3:
+    optional: true
 
   tiny-async-pool@1.3.0:
     dependencies:
@@ -9188,7 +9186,8 @@ snapshots:
 
   unordered-array-remove@1.0.2: {}
 
-  unordered-set@2.0.1: {}
+  unordered-set@2.0.1:
+    optional: true
 
   unzipper@0.12.3:
     dependencies:
@@ -9239,6 +9238,7 @@ snapshots:
       readable-stream: 3.6.2
       timeout-refresh: 1.0.3
       unordered-set: 2.0.1
+    optional: true
 
   verror@1.10.1:
     dependencies:
@@ -9363,7 +9363,8 @@ snapshots:
       is-weakmap: 2.0.2
       is-weakset: 2.0.4
 
-  which-runtime@1.3.2: {}
+  which-runtime@1.3.2:
+    optional: true
 
   which-typed-array@1.1.20:
     dependencies:
