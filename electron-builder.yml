@@ -65,7 +65,7 @@ mac:
     - out/main/native-assets/**/*.node
     - out/main/native-modules/**/prebuilds/darwin-x64/*.node
     - out/main/native-modules/**/prebuilds/darwin-arm64/*.node
-  x64ArchFiles: "{out/main/native-assets/**/*.node,out/main/native-modules/**/prebuilds/*/*.node}"
+  x64ArchFiles: "**/*.node"
   artifactName: ${os}-${name}-${version}-mac.${ext}
   entitlementsInherit: build/entitlements.mac.plist
   defaultArch: universal
