@@ -123,11 +123,20 @@ const compileNativeModulesPlugin = ({ dependencies: NATIVE_PACKAGES }: { depende
             copyFileSync(pkgJson, join(moduleDir, 'package.json'))
           }
 
-          // Copy all platform prebuilds (electron-builder filters at package time)
+          // Copy only this platform's prebuilds
           const prebuildsSrc = join(pkgDir, 'prebuilds')
           if (existsSync(prebuildsSrc)) {
             const prebuildsDst = join(moduleDir, 'prebuilds')
-            copyDirRecursive(prebuildsSrc, prebuildsDst)
+            const platformDirs: string[] = process.platform === 'win32'
+              ? ['win32-x64']
+              : process.platform === 'darwin'
+                ? ['darwin-x64', 'darwin-arm64']
+                : ['linux-x64']
+            for (const dir of readdirSync(prebuildsSrc, { withFileTypes: true })) {
+              if (dir.isDirectory() && platformDirs.includes(dir.name)) {
+                copyDirRecursive(join(prebuildsSrc, dir.name), join(prebuildsDst, dir.name))
+              }
+            }
             console.log(`[native-modules] Copied prebuilds for ${basename(moduleDir)}`)
           }
         } catch (err) {
