@@ -3250,8 +3250,8 @@ packages:
     resolution: {integrity: sha512-Q6878fmvItA1mE7H9Il46lONgFgTzX2f98zkS0c2YlkCACzNjwvum/8Kq693IQpxe9zy+w+Zm/4p0wQreLEtZw==}
     hasBin: true
 
-  nntp-js@1.0.4:
-    resolution: {integrity: sha512-EqtWNHyRhaV9q+sWm/EKe67Zc3MZ006HSFnn2zFs+SltspH/41IM5czFKCqvVozy9LfH238wo2i8i+cyRHoHxA==}
+  nntp-js@1.0.5:
+    resolution: {integrity: sha512-TPveprMEedWtAUPSbCBkJWajbIVUaxRRrIKIqfsNCuSl0P456G1Yn8GnZscEvb+hAeFP9ry+W4EDwXPviysErQ==}
 
   node-abi@3.89.0:
     resolution: {integrity: sha512-6u9UwL0HlAl21+agMN3YAMXcKByMqwGx+pq+P76vii5f7hTPtKDp08/H9py6DY+cfDw7kQNTGEj/rly3IgbNQA==}
@@ -7976,7 +7976,7 @@ snapshots:
 
   network-address@1.1.2: {}
 
-  nntp-js@1.0.4: {}
+  nntp-js@1.0.5: {}
 
   node-abi@3.89.0:
     dependencies:
@@ -8079,7 +8079,7 @@ snapshots:
     dependencies:
       '@thaunknown/yencode': 1.5.5
       mime: 4.1.0
-      nntp-js: 1.0.4
+      nntp-js: 1.0.5
       nzb-parser: 1.0.3
 
   nzb-parser@1.0.3:

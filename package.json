@@ -1,11 +1,11 @@
 {
   "name": "hayase",
-  "version": "6.4.74",
+  "version": "6.4.75",
   "description": "Hayase - Torrent streaming made simple",
   "main": "./out/main/index.js",
   "repository": "github:hayase-app/ui",
   "author": "ThaUnknown_",
-  "homepage": "https://hayase.app",
+  "homepage": "https://hayase.watch",
   "packageManager": "pnpm@10.28.1",
   "scripts": {
     "lint": "eslint --cache .",
@@ -16,7 +16,6 @@
     "dev": "electron-vite dev --watch",
     "rebuild": "electron-rebuild -f -w yencode",
     "build": "electron-vite build",
-    "postinstall": "electron-builder install-app-deps",
     "build:publish": "npm run build && electron-builder -p always",
     "build:unpack": "npm run build && electron-builder --dir",
     "build:win": "npm run build && electron-builder --win",
