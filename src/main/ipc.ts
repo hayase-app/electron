@@ -191,7 +191,7 @@ export default class IPC {
   }
 
   accentColor () {
-    return systemPreferences.getAccentColor()
+    return '#' + systemPreferences.getAccentColor().slice(0, 6)
   }
 
   async checkUpdate () {
