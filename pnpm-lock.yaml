@@ -73,7 +73,7 @@ importers:
         version: 13.0.6
       native:
         specifier: github:hayase-app/native
-        version: https://codeload.github.com/hayase-app/native/tar.gz/de8461642d749b4fa29482564fe5039cd934b487
+        version: https://codeload.github.com/hayase-app/native/tar.gz/09ec3876f2a9122c9c59dfc1a1b14becbd2cd1b3
       rollup-plugin-license:
         specifier: ^3.7.1
         version: 3.7.1(picomatch@4.0.4)(rollup@4.53.5)
@@ -3227,8 +3227,8 @@ packages:
   napi-macros@2.2.2:
     resolution: {integrity: sha512-hmEVtAGYzVQpCKdbQea4skABsdXW4RUh5t5mJ2zzqowJS2OyXZTU1KhDVFhx+NlWZ4ap9mqR9TcDO3LTTttd+g==}
 
-  native@https://codeload.github.com/hayase-app/native/tar.gz/de8461642d749b4fa29482564fe5039cd934b487:
-    resolution: {tarball: https://codeload.github.com/hayase-app/native/tar.gz/de8461642d749b4fa29482564fe5039cd934b487}
+  native@https://codeload.github.com/hayase-app/native/tar.gz/09ec3876f2a9122c9c59dfc1a1b14becbd2cd1b3:
+    resolution: {tarball: https://codeload.github.com/hayase-app/native/tar.gz/09ec3876f2a9122c9c59dfc1a1b14becbd2cd1b3}
     version: 1.0.0
 
   natural-compare@1.4.0:
@@ -7962,7 +7962,7 @@ snapshots:
   napi-macros@2.2.2:
     optional: true
 
-  native@https://codeload.github.com/hayase-app/native/tar.gz/de8461642d749b4fa29482564fe5039cd934b487:
+  native@https://codeload.github.com/hayase-app/native/tar.gz/09ec3876f2a9122c9c59dfc1a1b14becbd2cd1b3:
     dependencies:
       '@types/chromecast-caf-receiver': 6.0.26
 
@@ -9020,7 +9020,7 @@ snapshots:
       fast-xml-parser: 5.8.0
       matroska-metadata: 1.0.12
       multicast-dns: 7.2.5
-      native: https://codeload.github.com/hayase-app/native/tar.gz/de8461642d749b4fa29482564fe5039cd934b487
+      native: https://codeload.github.com/hayase-app/native/tar.gz/09ec3876f2a9122c9c59dfc1a1b14becbd2cd1b3
       network-address: 1.1.2
       nzb-file: 1.1.16
       nzb-parser: 1.0.3

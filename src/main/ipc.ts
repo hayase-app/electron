@@ -3,7 +3,7 @@ import { readFile } from 'node:fs/promises'
 import os from 'node:os'
 import { basename, dirname, extname } from 'node:path'
 
-import { app, dialog, shell, type UtilityProcess, ipcMain } from 'electron'
+import { app, dialog, shell, type UtilityProcess, ipcMain, systemPreferences } from 'electron'
 import log from 'electron-log/main'
 import { autoUpdater } from 'electron-updater'
 
@@ -188,6 +188,10 @@ export default class IPC {
     autoUpdater.on('update-downloaded', () => {
       this.app.mainWindow.webContents.send('update-progress', 100)
     })
+  }
+
+  accentColor () {
+    return systemPreferences.getAccentColor()
   }
 
   async checkUpdate () {
