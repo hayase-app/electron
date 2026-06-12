@@ -10,14 +10,6 @@ if (process.defaultApp) {
   app.setAsDefaultProtocolClient('hayase')
 }
 
-const NAVIGATE_TARGETS = {
-  schedule: 'schedule',
-  anime: 'anime',
-  w2g: 'w2g',
-  debug: 'debug',
-  extensions: 'extensions'
-} as const
-
 export default class Protocol {
   protocolRx = /hayase:\/\/([a-z0-9]+)\/(.*)/i
 
@@ -35,25 +27,14 @@ export default class Protocol {
       event.preventDefault()
       this.handleProtocol(url)
     })
+  }
 
+  navigateTarget () {
     if (process.argv.length >= 2 && !process.defaultApp) {
       for (const line of process.argv) {
         this.handleProtocol(line)
       }
     }
-  }
-
-  navigateTarget () {
-    if (process.argv.length < 2 || process.defaultApp) return ''
-
-    for (const line of process.argv) {
-      const parsed = this._parseProtocol(line)
-      if (parsed && parsed.target in NAVIGATE_TARGETS) {
-        const targetValue = NAVIGATE_TARGETS[parsed.target as keyof typeof NAVIGATE_TARGETS]
-        return `app/${targetValue}/${parsed.value ?? ''}`
-      }
-    }
-    return ''
   }
 
   _parseProtocol (text: string) {

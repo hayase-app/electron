@@ -287,11 +287,11 @@ export default class App {
     }
 
     if (is.dev) this.mainWindow.webContents.openDevTools()
-    this.mainWindow.loadURL(BASE_URL + this.protocol.navigateTarget()).catch(err => {
+    this.mainWindow.loadURL(BASE_URL).catch(err => {
       log.error(err)
       if (this.hasDOH) return
       this.setDOH('https://cloudflare-dns.com/dns-query')
-      queueMicrotask(() => this.mainWindow.loadURL(BASE_URL + this.protocol.navigateTarget()))
+      queueMicrotask(() => this.mainWindow.loadURL(BASE_URL))
     })
     this.mainWindow.webContents.on('will-navigate', (e, url) => {
       const parsedUrl = new URL(url)

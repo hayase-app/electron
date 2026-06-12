@@ -97,6 +97,7 @@ const native: Partial<Native> = {
   version: () => version,
   navigate: async (cb) => {
     ipcRenderer.on('navigate', (_e, data) => cb(data))
+    await main.navigate()
   },
   share: async (data) => {
     if (!data) return
