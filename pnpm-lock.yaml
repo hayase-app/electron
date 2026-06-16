@@ -79,7 +79,7 @@ importers:
         version: 3.7.1(picomatch@4.0.4)(rollup@4.53.5)
       torrent-client:
         specifier: github:hayase-app/torrent-client
-        version: https://codeload.github.com/hayase-app/torrent-client/tar.gz/6868e5109d63a1608a9a67574bb27539965872f2(bare-url@2.4.3)
+        version: https://codeload.github.com/hayase-app/torrent-client/tar.gz/de5f57346f60b4755d9d783dca3b4f0afa60c059(bare-url@2.4.3)
       typescript:
         specifier: ^6.0.3
         version: 6.0.3
@@ -3571,8 +3571,8 @@ packages:
   proper-lockfile@4.1.2:
     resolution: {integrity: sha512-TjNPblN4BwAWMXU8s9AEz4JmQxnD1NNL7bNOY/AKUzyamc379FWASUhc/K1pL2noVb+XmZKLL68cjzLsiOAMaA==}
 
-  protobufjs@8.6.3:
-    resolution: {integrity: sha512-alQyzT0j401LGBtwsqu6uprjR6pfNH1UJf9N6GBFMjIcd+HzTe0/HrjAbFCqun+zvnfLarrxAtMM2xvZ+kFZ5A==}
+  protobufjs@8.6.2:
+    resolution: {integrity: sha512-CCERJxzRvKMeEdJSLwdQf40TXWNPc8M4RkN7j/lxY6FQB+4do8rETWqj60AqxP9n0XIsxnSefZ8uhAaGKg2njw==}
     engines: {node: '>=12.0.0'}
 
   pump@3.0.4:
@@ -4053,8 +4053,8 @@ packages:
     resolution: {integrity: sha512-65P7iz6X5yEr1cwcgvQxbbIw7Uk3gOy5dIdtZ4rDveLqhrdJP+Li/Hx6tyK0NEb+2GCyneCMJiGqrADCSNk8sQ==}
     engines: {node: '>=8.0'}
 
-  torrent-client@https://codeload.github.com/hayase-app/torrent-client/tar.gz/6868e5109d63a1608a9a67574bb27539965872f2:
-    resolution: {tarball: https://codeload.github.com/hayase-app/torrent-client/tar.gz/6868e5109d63a1608a9a67574bb27539965872f2}
+  torrent-client@https://codeload.github.com/hayase-app/torrent-client/tar.gz/de5f57346f60b4755d9d783dca3b4f0afa60c059:
+    resolution: {tarball: https://codeload.github.com/hayase-app/torrent-client/tar.gz/de5f57346f60b4755d9d783dca3b4f0afa60c059}
     version: 1.0.0
 
   torrent-discovery@11.0.21:
@@ -8345,7 +8345,7 @@ snapshots:
       retry: 0.12.0
       signal-exit: 3.0.7
 
-  protobufjs@8.6.3:
+  protobufjs@8.6.2:
     dependencies:
       long: 5.3.2
 
@@ -8989,7 +8989,7 @@ snapshots:
     dependencies:
       is-number: 7.0.0
 
-  torrent-client@https://codeload.github.com/hayase-app/torrent-client/tar.gz/6868e5109d63a1608a9a67574bb27539965872f2(bare-url@2.4.3):
+  torrent-client@https://codeload.github.com/hayase-app/torrent-client/tar.gz/de5f57346f60b4755d9d783dca3b4f0afa60c059(bare-url@2.4.3):
     dependencies:
       '@silentbot1/nat-api': 0.4.9
       '@types/chromecast-caf-receiver': 6.0.26
@@ -9004,7 +9004,7 @@ snapshots:
       network-address: 1.1.2
       nzb-file: 1.1.18
       nzb-parser: 1.0.4
-      protobufjs: 8.6.3
+      protobufjs: 8.6.2
       webtorrent: 3.0.16(bare-url@2.4.3)
     transitivePeerDependencies:
       - bare-abort-controller
