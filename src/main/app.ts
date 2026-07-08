@@ -192,7 +192,7 @@ export default class App {
       // enable CORS for any extensions that want it, but only for specific urls
       if (details.url.startsWith('https://myanimelist.net/v1/oauth2') || details.url.startsWith('https://api.myanimelist.net/v2/') || this.ipc.corsURLS.some(corsUrl => details.url.startsWith(corsUrl))) {
         setCors(details.responseHeaders, true)
-        if (details.method === 'OPTIONS' && details.statusCode === 405) {
+        if (details.method === 'OPTIONS' && (details.statusCode / 100 | 0) !== 2) {
           details.statusLine = '200 OK'
           details.statusCode = 200
         }
