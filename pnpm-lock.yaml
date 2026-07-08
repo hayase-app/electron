@@ -73,13 +73,13 @@ importers:
         version: 13.0.6
       native:
         specifier: github:hayase-app/native
-        version: https://codeload.github.com/hayase-app/native/tar.gz/09ec3876f2a9122c9c59dfc1a1b14becbd2cd1b3
+        version: https://codeload.github.com/hayase-app/native/tar.gz/ae65ffe317098ae1682857cfc99abd87f4bc7c72
       rollup-plugin-license:
         specifier: ^3.7.1
         version: 3.7.1(picomatch@4.0.4)(rollup@4.53.5)
       torrent-client:
         specifier: github:hayase-app/torrent-client
-        version: https://codeload.github.com/hayase-app/torrent-client/tar.gz/f953c72d851073d00a1d4c665bad531ce6d7170e(bare-url@2.4.3)
+        version: https://codeload.github.com/hayase-app/torrent-client/tar.gz/667b67e948cd40a1c3dc7ce9b48a3d25b8fe02dd(bare-url@2.4.3)
       typescript:
         specifier: ^6.0.3
         version: 6.0.3
@@ -3212,8 +3212,8 @@ packages:
   napi-macros@2.2.2:
     resolution: {integrity: sha512-hmEVtAGYzVQpCKdbQea4skABsdXW4RUh5t5mJ2zzqowJS2OyXZTU1KhDVFhx+NlWZ4ap9mqR9TcDO3LTTttd+g==}
 
-  native@https://codeload.github.com/hayase-app/native/tar.gz/09ec3876f2a9122c9c59dfc1a1b14becbd2cd1b3:
-    resolution: {tarball: https://codeload.github.com/hayase-app/native/tar.gz/09ec3876f2a9122c9c59dfc1a1b14becbd2cd1b3}
+  native@https://codeload.github.com/hayase-app/native/tar.gz/ae65ffe317098ae1682857cfc99abd87f4bc7c72:
+    resolution: {tarball: https://codeload.github.com/hayase-app/native/tar.gz/ae65ffe317098ae1682857cfc99abd87f4bc7c72}
     version: 1.0.0
 
   natural-compare@1.4.0:
@@ -4053,8 +4053,8 @@ packages:
     resolution: {integrity: sha512-65P7iz6X5yEr1cwcgvQxbbIw7Uk3gOy5dIdtZ4rDveLqhrdJP+Li/Hx6tyK0NEb+2GCyneCMJiGqrADCSNk8sQ==}
     engines: {node: '>=8.0'}
 
-  torrent-client@https://codeload.github.com/hayase-app/torrent-client/tar.gz/f953c72d851073d00a1d4c665bad531ce6d7170e:
-    resolution: {tarball: https://codeload.github.com/hayase-app/torrent-client/tar.gz/f953c72d851073d00a1d4c665bad531ce6d7170e}
+  torrent-client@https://codeload.github.com/hayase-app/torrent-client/tar.gz/667b67e948cd40a1c3dc7ce9b48a3d25b8fe02dd:
+    resolution: {tarball: https://codeload.github.com/hayase-app/torrent-client/tar.gz/667b67e948cd40a1c3dc7ce9b48a3d25b8fe02dd}
     version: 1.0.0
 
   torrent-discovery@11.0.21:
@@ -7947,7 +7947,7 @@ snapshots:
   napi-macros@2.2.2:
     optional: true
 
-  native@https://codeload.github.com/hayase-app/native/tar.gz/09ec3876f2a9122c9c59dfc1a1b14becbd2cd1b3:
+  native@https://codeload.github.com/hayase-app/native/tar.gz/ae65ffe317098ae1682857cfc99abd87f4bc7c72:
     dependencies:
       '@types/chromecast-caf-receiver': 6.0.26
 
@@ -8989,7 +8989,7 @@ snapshots:
     dependencies:
       is-number: 7.0.0
 
-  torrent-client@https://codeload.github.com/hayase-app/torrent-client/tar.gz/f953c72d851073d00a1d4c665bad531ce6d7170e(bare-url@2.4.3):
+  torrent-client@https://codeload.github.com/hayase-app/torrent-client/tar.gz/667b67e948cd40a1c3dc7ce9b48a3d25b8fe02dd(bare-url@2.4.3):
     dependencies:
       '@silentbot1/nat-api': 0.4.9
       '@types/chromecast-caf-receiver': 6.0.26
@@ -9000,7 +9000,7 @@ snapshots:
       fast-xml-parser: 5.9.0
       matroska-metadata: 1.0.12
       multicast-dns: 7.2.5
-      native: https://codeload.github.com/hayase-app/native/tar.gz/09ec3876f2a9122c9c59dfc1a1b14becbd2cd1b3
+      native: https://codeload.github.com/hayase-app/native/tar.gz/ae65ffe317098ae1682857cfc99abd87f4bc7c72
       network-address: 1.1.2
       nzb-file: 1.1.18
       nzb-parser: 1.0.4

@@ -80,6 +80,7 @@ const native: Partial<Native> = {
   updateSettings: (settings) => main.updateSettings(settings),
   cachedTorrents: async () => await (await torrent).cached(),
   createNZB: async (id, url) => await (await torrent).createNZBWebSeed(id, url),
+  createHTTPWebSeed: async (id, url, authorization, fileIndex) => await (await torrent).createHTTPWebSeed(id, url, authorization, fileIndex),
   getDisplays: async cb => await (await torrent).listenDisplay(proxy(cb)),
   castPlay: async (host, hash, id, media) => await (await torrent).playDisplay(host, hash, id, media),
   castClose: async (host) => await (await torrent).closeDisplay(host),
