@@ -79,7 +79,7 @@ importers:
         version: 3.7.1(picomatch@4.0.4)(rollup@4.53.5)
       torrent-client:
         specifier: github:hayase-app/torrent-client
-        version: https://codeload.github.com/hayase-app/torrent-client/tar.gz/667b67e948cd40a1c3dc7ce9b48a3d25b8fe02dd(bare-url@2.4.3)
+        version: https://codeload.github.com/hayase-app/torrent-client/tar.gz/05e0d59e5f422396574eb364f9b16ee6eb8db9e3(bare-url@2.4.3)
       typescript:
         specifier: ^6.0.3
         version: 6.0.3
@@ -4053,8 +4053,8 @@ packages:
     resolution: {integrity: sha512-65P7iz6X5yEr1cwcgvQxbbIw7Uk3gOy5dIdtZ4rDveLqhrdJP+Li/Hx6tyK0NEb+2GCyneCMJiGqrADCSNk8sQ==}
     engines: {node: '>=8.0'}
 
-  torrent-client@https://codeload.github.com/hayase-app/torrent-client/tar.gz/667b67e948cd40a1c3dc7ce9b48a3d25b8fe02dd:
-    resolution: {tarball: https://codeload.github.com/hayase-app/torrent-client/tar.gz/667b67e948cd40a1c3dc7ce9b48a3d25b8fe02dd}
+  torrent-client@https://codeload.github.com/hayase-app/torrent-client/tar.gz/05e0d59e5f422396574eb364f9b16ee6eb8db9e3:
+    resolution: {tarball: https://codeload.github.com/hayase-app/torrent-client/tar.gz/05e0d59e5f422396574eb364f9b16ee6eb8db9e3}
     version: 1.0.0
 
   torrent-discovery@11.0.21:
@@ -8989,7 +8989,7 @@ snapshots:
     dependencies:
       is-number: 7.0.0
 
-  torrent-client@https://codeload.github.com/hayase-app/torrent-client/tar.gz/667b67e948cd40a1c3dc7ce9b48a3d25b8fe02dd(bare-url@2.4.3):
+  torrent-client@https://codeload.github.com/hayase-app/torrent-client/tar.gz/05e0d59e5f422396574eb364f9b16ee6eb8db9e3(bare-url@2.4.3):
     dependencies:
       '@silentbot1/nat-api': 0.4.9
       '@types/chromecast-caf-receiver': 6.0.26
