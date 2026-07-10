@@ -300,6 +300,20 @@ export default class App {
       }
     })
 
+    const history = this.mainWindow.webContents.navigationHistory
+    const back = () => history.canGoBack() && history.goBack()
+    const forward = () => history.canGoForward() && history.goForward()
+
+    this.mainWindow.on('app-command', (_e, command) => {
+      if (command === 'browser-backward') back()
+      else if (command === 'browser-forward') forward()
+    })
+
+    this.mainWindow.on('swipe', (_e, direction) => {
+      if (direction === 'left') back()
+      else if (direction === 'right') forward()
+    })
+
     let crashcount = 0
     this.mainWindow.webContents.on('render-process-gone', async (_e, { reason }) => {
       if (reason === 'crashed') {
