@@ -3,6 +3,7 @@ import { writeFile } from 'node:fs/promises'
 import { join } from 'node:path'
 
 import { app } from 'electron'
+import log from 'electron-log/main'
 
 const DEFAULTS = {
   angle: 'default',
@@ -50,7 +51,7 @@ function parseDataFile (filePath: string) {
   try {
     return { ...DEFAULTS, ...(JSON.parse(readFileSync(filePath).toString()) as typeof DEFAULTS) }
   } catch (error) {
-    console.error('Failed to load native settings: ', error)
+    log.error('Failed to load native settings: ', error)
     return DEFAULTS
   }
 }

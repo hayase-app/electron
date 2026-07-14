@@ -8,7 +8,8 @@ import {
 } from 'node:fs/promises'
 import { basename, dirname, extname, join, relative, resolve } from 'node:path'
 
-import { app, BrowserWindow, dialog } from 'electron'
+import { BrowserWindow, dialog } from 'electron'
+import log from 'electron-log/main'
 import read from 'zip-go/lib/read.js'
 
 import type { PluginInfo } from 'native'
@@ -19,17 +20,14 @@ function joinSafe (base: string, ...paths: string[]): string {
   return resolved
 }
 
-function pluginsDir (): string {
-  return join(app.isPackaged ? app.getAppPath() : process.resourcesPath, 'plugins')
-}
+const plugins = join(process.resourcesPath, 'plugins')
 
 async function * pluginPaths () {
-  const dir = pluginsDir()
-  if (!existsSync(dir)) return
-  for (const entry of await readdir(dir, { withFileTypes: true })) {
+  if (!existsSync(plugins)) return
+  for (const entry of await readdir(plugins, { withFileTypes: true })) {
     if (entry.isDirectory()) {
-      if (existsSync(join(dir, entry.name, 'manifest.json'))) {
-        yield join(dir, entry.name)
+      if (existsSync(join(plugins, entry.name, 'manifest.json'))) {
+        yield join(plugins, entry.name)
       }
     }
   }
@@ -98,9 +96,9 @@ export default class Plugins {
     for await (const dir of pluginPaths()) {
       try {
         const { id, manifest } = await this.sesh.extensions.loadExtension(dir, { allowFileAccess: false })
-        console.info(`[Plugins] Loaded: ${manifest.name} (${id})`)
+        log.info(`[Plugins] Loaded: ${manifest.name} (${id})`)
       } catch (err) {
-        console.error(`[Plugins] Failed to load plugin from ${dir}:`, err)
+        log.error(`[Plugins] Failed to load plugin from ${dir}:`, err)
       }
     }
   }
@@ -145,7 +143,7 @@ export default class Plugins {
     if (!pending) throw new Error('No pending import found for this plugin')
     this.pendingImports.delete(id)
 
-    const destDir = joinSafe(pluginsDir(), id)
+    const destDir = joinSafe(plugins, id)
     if (existsSync(destDir)) throw new Error(`Plugin "${id}" already exists`)
 
     if (typeof pending === 'string') {
@@ -156,7 +154,7 @@ export default class Plugins {
 
     try {
       const { id: extId, manifest } = await this.sesh.extensions.loadExtension(destDir, { allowFileAccess: false })
-      console.info(`[Plugins] Imported: ${manifest.name} (${extId})`)
+      log.info(`[Plugins] Imported: ${manifest.name} (${extId})`)
       return { id: extId, ...toPluginMeta(manifest as Record<string, unknown>) }
     } catch (err) {
       await rm(destDir, { recursive: true, force: true }).catch(() => {})
@@ -213,12 +211,11 @@ export default class Plugins {
     try {
       this.sesh.extensions.removeExtension(ext.id)
     } catch (err) {
-      console.error(`[Plugins] Failed to unload extension ${id} from session:`, err)
+      log.error(`[Plugins] Failed to unload extension ${id} from session:`, err)
     }
 
-    const dir = joinSafe(pluginsDir(), ext.name)
-    await rm(dir, { recursive: true, force: true })
-    console.info(`[Plugins] Deleted: ${id}`)
+    await rm(joinSafe(plugins, ext.name), { recursive: true, force: true })
+    log.info(`[Plugins] Deleted: ${id}`)
   }
 
   list () {

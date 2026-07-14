@@ -94,7 +94,7 @@ const native: Partial<Native> = {
   downloadProgress: (percent: number) => main.app.mainWindow.setProgressBar((percent === 1 || percent === 0) ? -1 : percent),
   restart: () => main.restart(),
   focus: () => main.focus(),
-  setZoom: (scale: number) => main.app.mainWindow.webContents.setZoomFactor(Math.min(2.5, Math.max(Number(scale) || 1, 0.3))),
+  setZoom: (scale: number) => main.setZoom(scale),
   version: () => version,
   navigate: async (cb) => {
     ipcRenderer.on('navigate', (_e, data) => cb(data))

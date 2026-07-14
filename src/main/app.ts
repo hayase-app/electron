@@ -291,7 +291,7 @@ export default class App {
 
     if (is.dev) this.mainWindow.webContents.openDevTools()
     this.mainWindow.loadURL(BASE_URL).catch(err => {
-      console.error(err)
+      log.error(err)
       if (this.hasDOH) return
       this.setDOH('https://cloudflare-dns.com/dns-query')
       queueMicrotask(() => this.mainWindow.loadURL(BASE_URL))
