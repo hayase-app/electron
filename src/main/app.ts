@@ -1,3 +1,4 @@
+import { once } from 'node:events'
 import { join } from 'node:path'
 import process from 'node:process'
 
@@ -420,12 +421,14 @@ export default class App {
   async destroy (forceRunAfter = false) {
     if (this.destroyed) return
     this.destroyed = true
-    this.mainWindow.hide()
-    this.torrentProcess.postMessage({ id: 'destroy' })
-    await new Promise(resolve => {
-      this.torrentProcess.once('exit', resolve)
-      setTimeout(resolve, 5000).unref()
-    })
+    try {
+      this.mainWindow.hide()
+    } catch {}
+    try {
+      this.torrentProcess.postMessage({ id: 'destroy' })
+      await once(this.torrentProcess, 'exit', { signal: AbortSignal.timeout(5000) })
+      this.torrentProcess.kill()
+    } catch {}
     if (!this.updater.install(forceRunAfter)) app.quit()
   }
 }
