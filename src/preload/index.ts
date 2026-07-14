@@ -33,12 +33,12 @@ const native: Partial<Native> = {
   setAngle: (angle: string) => main.setAngle(angle),
   getLogs: () => main.getLogs(),
   getDeviceInfo: () => main.getDeviceInfo(),
-  openUIDevtools: () => main.openUIDevtools(),
-  minimise: () => main.minimise(),
+  openUIDevtools: () => main.app.mainWindow.webContents.openDevTools({ mode: 'detach' }),
+  minimise: () => main.app.mainWindow.minimize(),
   maximise: () => main.maximise(),
   close: () => main.close(),
   checkUpdate: () => main.checkUpdate(),
-  updateAndRestart: () => main.updateAndRestart(),
+  updateAndRestart: () => main.app.destroy(true),
   updateReady: () => main.updateReady(),
   enableCORS: (urls) => main.enableCORS(urls),
   unsafeUseInternalALAPI: () => main.unsafeUseInternalALAPI(),
@@ -91,14 +91,14 @@ const native: Partial<Native> = {
     await main.setDOH(dns)
     await (await torrent).setDOH(dns as `https://${keyof typeof PROVIDERS}`)
   },
-  downloadProgress: (percent: number) => main.downloadProgress(percent),
+  downloadProgress: (percent: number) => main.app.mainWindow.setProgressBar((percent === 1 || percent === 0) ? -1 : percent),
   restart: () => main.restart(),
   focus: () => main.focus(),
-  setZoom: (scale: number) => main.setZoom(scale),
+  setZoom: (scale: number) => main.app.mainWindow.webContents.setZoomFactor(Math.min(2.5, Math.max(Number(scale) || 1, 0.3))),
   version: () => version,
   navigate: async (cb) => {
     ipcRenderer.on('navigate', (_e, data) => cb(data))
-    await main.navigate()
+    await main.app.protocol.navigateTarget()
   },
   share: async (data) => {
     if (!data) return
@@ -106,7 +106,11 @@ const native: Partial<Native> = {
   },
   defaultTransparency: () => false,
   debug: async (levels) => await (await torrent).debug(levels),
-  accentColor: () => main.accentColor()
+  accentColor: () => main.accentColor(),
+  pluginList: () => main.app.plugins.list(),
+  pluginPopup: (pluginId: string) => main.app.plugins.popup(pluginId),
+  pluginImport: (id?: string) => main.app.plugins.import(id),
+  pluginDelete: (id: string) => main.app.plugins.delete(id)
 }
 
 try {

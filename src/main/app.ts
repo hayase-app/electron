@@ -17,6 +17,7 @@ import forkPath from './background/background.ts?modulePath'
 import Discord from './discord.ts'
 // import Protocol from './protocol.ts'
 import IPC from './ipc.ts'
+import Plugins from './plugins.ts'
 import Protocol from './protocol.ts'
 import store from './store.ts'
 import Updater from './updater.ts'
@@ -86,6 +87,7 @@ export default class App {
   })
 
   protocol = new Protocol(this.mainWindow)
+  plugins = new Plugins(this.mainWindow)
   updater = new Updater()
   discord = new Discord()
   ipc = new IPC(this, this.torrentProcess, this.discord)
@@ -122,8 +124,8 @@ export default class App {
       }
       return { action: 'deny' }
     })
-    this.torrentProcess.stderr?.on('data', d => log.error('' + d))
-    this.torrentProcess.stdout?.on('data', d => log.log('' + d))
+    this.torrentProcess.stderr?.on('data', d => console.error('' + d))
+    this.torrentProcess.stdout?.on('data', d => console.log('' + d))
     // if (TRANSPARENCY) {
     // // Transparency fixes, window is resizable when fullscreen/maximized
     //   this.mainWindow.on('enter-html-full-screen', () => {
@@ -288,7 +290,7 @@ export default class App {
 
     if (is.dev) this.mainWindow.webContents.openDevTools()
     this.mainWindow.loadURL(BASE_URL).catch(err => {
-      log.error(err)
+      console.error(err)
       if (this.hasDOH) return
       this.setDOH('https://cloudflare-dns.com/dns-query')
       queueMicrotask(() => this.mainWindow.loadURL(BASE_URL))
@@ -402,7 +404,7 @@ export default class App {
       this.hasDOH = true
     } catch (e) {
       const err = e as Error
-      log.error('Failed to set DOH: ', err.stack)
+      console.error('Failed to set DOH: ', err.stack)
       this.hasDOH = false
     }
   }

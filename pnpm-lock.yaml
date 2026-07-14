@@ -73,7 +73,7 @@ importers:
         version: 13.0.6
       native:
         specifier: github:hayase-app/native
-        version: https://codeload.github.com/hayase-app/native/tar.gz/e166ef06ea2ad3434345aebbff81facf9381d484
+        version: https://codeload.github.com/hayase-app/native/tar.gz/fb71ee56bcaf47c1823c412b47e7c94be5e8a2d9
       rollup-plugin-license:
         specifier: ^3.7.1
         version: 3.7.1(picomatch@4.0.4)(rollup@4.53.5)
@@ -89,6 +89,9 @@ importers:
       vite-plugin-cjs-interop:
         specifier: ^2.4.4
         version: 2.4.4(@emnapi/core@1.9.1)(@emnapi/runtime@1.9.1)(vite@7.3.2(@types/node@25.9.3)(jiti@2.7.0)(lightningcss@1.32.0))
+      zip-go:
+        specifier: ^1.1.1
+        version: 1.1.1
 
 packages:
 
@@ -3212,8 +3215,8 @@ packages:
   napi-macros@2.2.2:
     resolution: {integrity: sha512-hmEVtAGYzVQpCKdbQea4skABsdXW4RUh5t5mJ2zzqowJS2OyXZTU1KhDVFhx+NlWZ4ap9mqR9TcDO3LTTttd+g==}
 
-  native@https://codeload.github.com/hayase-app/native/tar.gz/e166ef06ea2ad3434345aebbff81facf9381d484:
-    resolution: {tarball: https://codeload.github.com/hayase-app/native/tar.gz/e166ef06ea2ad3434345aebbff81facf9381d484}
+  native@https://codeload.github.com/hayase-app/native/tar.gz/fb71ee56bcaf47c1823c412b47e7c94be5e8a2d9:
+    resolution: {tarball: https://codeload.github.com/hayase-app/native/tar.gz/fb71ee56bcaf47c1823c412b47e7c94be5e8a2d9}
     version: 1.0.0
 
   natural-compare@1.4.0:
@@ -4399,6 +4402,10 @@ packages:
   yocto-queue@0.1.0:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
+
+  zip-go@1.1.1:
+    resolution: {integrity: sha512-Cluy78VKTwlGH/KtlnzKv5X90s+EjWnsp+78vKHjZeY9Jqx+hfug9yO8g/BpevPn+C9Anjvjml3sIO4zQzJAqQ==}
+    engines: {node: '>=22.3'}
 
   zip-stream@4.1.1:
     resolution: {integrity: sha512-9qv4rlDiopXg4E69k+vMHjNN63YFMe9sZMrdlvKnCjlCRWeCBswPPMPUfx+ipsAWq1LXHe70RcbaHdJJpS6hyQ==}
@@ -7947,7 +7954,7 @@ snapshots:
   napi-macros@2.2.2:
     optional: true
 
-  native@https://codeload.github.com/hayase-app/native/tar.gz/e166ef06ea2ad3434345aebbff81facf9381d484:
+  native@https://codeload.github.com/hayase-app/native/tar.gz/fb71ee56bcaf47c1823c412b47e7c94be5e8a2d9:
     dependencies:
       '@types/chromecast-caf-receiver': 6.0.26
 
@@ -9000,7 +9007,7 @@ snapshots:
       fast-xml-parser: 5.9.0
       matroska-metadata: 1.0.12
       multicast-dns: 7.2.5
-      native: https://codeload.github.com/hayase-app/native/tar.gz/e166ef06ea2ad3434345aebbff81facf9381d484
+      native: https://codeload.github.com/hayase-app/native/tar.gz/fb71ee56bcaf47c1823c412b47e7c94be5e8a2d9
       network-address: 1.1.2
       nzb-file: 1.1.18
       nzb-parser: 1.0.4
@@ -9428,6 +9435,8 @@ snapshots:
       fd-slicer: 1.1.0
 
   yocto-queue@0.1.0: {}
+
+  zip-go@1.1.1: {}
 
   zip-stream@4.1.1:
     dependencies:

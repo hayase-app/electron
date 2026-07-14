@@ -1,6 +1,6 @@
 {
   "name": "hayase",
-  "version": "6.4.82",
+  "version": "6.4.83",
   "description": "Hayase - Torrent streaming made simple",
   "main": "./out/main/index.js",
   "repository": "github:hayase-app/ui",
@@ -46,7 +46,8 @@
     "torrent-client": "github:hayase-app/torrent-client",
     "typescript": "^6.0.3",
     "vite": "^7.3.2",
-    "vite-plugin-cjs-interop": "^2.4.4"
+    "vite-plugin-cjs-interop": "^2.4.4",
+    "zip-go": "^1.1.1"
   },
   "pnpm": {
     "overrides": {

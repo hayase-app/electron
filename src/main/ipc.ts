@@ -35,10 +35,6 @@ export default class IPC {
     shell.openExternal(url)
   }
 
-  minimise () {
-    this.app.mainWindow.minimize()
-  }
-
   maximise () {
     this.app.mainWindow.isMaximized() ? this.app.mainWindow.unmaximize() : this.app.mainWindow.maximize()
   }
@@ -64,27 +60,15 @@ export default class IPC {
     this.corsURLS = urls.filter(url => !WHITELISTED_URLS.some(whitelisted => url.startsWith(whitelisted)))
   }
 
-  downloadProgress (percent: number) {
-    this.app.mainWindow.setProgressBar((percent === 1 || percent === 0) ? -1 : percent)
-  }
-
   focus () {
     this.app.mainWindow.show()
     if (this.app.mainWindow.isMinimized()) this.app.mainWindow.restore()
     this.app.mainWindow.focus()
   }
 
-  setZoom (scale: number) {
-    this.app.mainWindow.webContents.setZoomFactor(Math.min(2.5, Math.max(Number(scale) || 1, 0.3)))
-  }
-
   unsafeUseInternalALAPI () {
     app.relaunch({ args: ['--use-internal-al-api'] })
     this.app.destroy()
-  }
-
-  navigate () {
-    this.app.protocol.navigateTarget()
   }
 
   async selectPlayer () {
@@ -150,10 +134,6 @@ export default class IPC {
     }
   }
 
-  openUIDevtools () {
-    this.app.mainWindow.webContents.openDevTools({ mode: 'detach' })
-  }
-
   toggleDiscordDetails (enabled: boolean) {
     this.discord.allowDiscordDetails = enabled
     this.discord.debouncedDiscordRPC()
@@ -181,10 +161,6 @@ export default class IPC {
     // this.updateSettings()
   }
 
-  version () {
-    app.getVersion()
-  }
-
   updateProgress () {
     autoUpdater.on('download-progress', (progress) => {
       this.app.mainWindow.webContents.send('update-progress', progress.percent)
@@ -200,10 +176,6 @@ export default class IPC {
 
   async checkUpdate () {
     await autoUpdater.checkForUpdates()
-  }
-
-  updateAndRestart () {
-    this.app.destroy(true)
   }
 
   async updateReady () {
