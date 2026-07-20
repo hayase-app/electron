@@ -100,31 +100,32 @@ export default class App {
     if (store.data.doh) this.setDOH(store.data.doh)
     nativeTheme.themeSource = 'dark'
     expose(this.ipc, ipcMain, this.mainWindow.webContents as Messageable)
+
+    const userAgent = session.defaultSession.getUserAgent().replace(/\s+(Electron|hayase)\/[\d.]+/gi, '')
+    session.defaultSession.setUserAgent(userAgent)
+    this.mainWindow.webContents.session.setUserAgent(userAgent)
+    this.mainWindow.webContents.setUserAgent(userAgent)
     this.mainWindow.setMenuBarVisibility(false)
+
     this.mainWindow.webContents.setWindowOpenHandler(({ url }) => {
-      if (url.startsWith('https://anilist.co/api/v2/oauth/authorize')) {
-        return {
-          action: 'allow',
-          createWindow (options) {
-            const win = new BrowserWindow({ ...options, resizable: false, fullscreenable: false, title: 'AniList', titleBarOverlay: { color: '#0b1622' }, titleBarStyle: 'hidden', backgroundColor: '#0b1622' })
-            win.setMenuBarVisibility(false)
-            win.webContents.setWindowOpenHandler(() => ({ action: 'deny' }))
-            return win.webContents
-          }
-        }
-      } else if (url.startsWith('https://myanimelist.net/v1/oauth2/authorize')) {
-        return {
-          action: 'allow',
-          createWindow (options) {
-            const win = new BrowserWindow({ ...options, resizable: false, fullscreenable: false, title: 'MyAnimeList', titleBarOverlay: { color: '#ffffff' }, titleBarStyle: 'hidden', backgroundColor: '#ffffff' })
-            win.setMenuBarVisibility(false)
-            win.webContents.setWindowOpenHandler(() => ({ action: 'deny' }))
-            return win.webContents
-          }
+      if (!url.startsWith('https://anilist.co/api/v2/oauth/authorize') && !url.startsWith('https://myanimelist.net/v1/oauth2/authorize')) return { action: 'deny' }
+      return {
+        action: 'allow',
+        createWindow (options) {
+          const win = new BrowserWindow(
+            url.startsWith('https://anilist.co/api/v2/oauth/authorize')
+              ? { ...options, resizable: false, fullscreenable: false, title: 'AniList', titleBarOverlay: { color: '#0b1622' }, titleBarStyle: 'hidden', backgroundColor: '#0b1622' }
+              : { ...options, resizable: false, fullscreenable: false, title: 'MyAnimeList', titleBarOverlay: { color: '#ffffff' }, titleBarStyle: 'hidden', backgroundColor: '#ffffff' }
+          )
+          win.setMenuBarVisibility(false)
+          win.webContents.setWindowOpenHandler(() => ({ action: 'deny' }))
+          win.webContents.session.setUserAgent(userAgent)
+          win.webContents.setUserAgent(userAgent)
+          return win.webContents
         }
       }
-      return { action: 'deny' }
     })
+
     this.torrentProcess.stderr?.on('data', d => console.error('' + d))
     this.torrentProcess.stdout?.on('data', d => console.log('' + d))
     // if (TRANSPARENCY) {
