@@ -1,6 +1,6 @@
 import { once } from 'node:events'
 import { join } from 'node:path'
-import process from 'node:process'
+import process, { platform } from 'node:process'
 
 import { electronApp, is } from '@electron-toolkit/utils'
 import electronShutdownHandler from '@paymoapp/electron-shutdown-handler'
@@ -308,10 +308,12 @@ export default class App {
     const back = () => history.canGoBack() && history.goBack()
     const forward = () => history.canGoForward() && history.goForward()
 
-    this.mainWindow.on('app-command', (_e, command) => {
-      if (command === 'browser-backward') back()
-      else if (command === 'browser-forward') forward()
-    })
+    if (platform === 'win32' || platform === 'darwin') {
+      this.mainWindow.on('app-command', (_e, command) => {
+        if (command === 'browser-backward') back()
+        else if (command === 'browser-forward') forward()
+      })
+    }
 
     this.mainWindow.on('swipe', (_e, direction) => {
       if (direction === 'left') back()
