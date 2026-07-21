@@ -103,6 +103,7 @@ export default class App {
 
     const userAgent = session.defaultSession.getUserAgent().replace(/\s+(Electron|hayase)\/[\d.]+/gi, '')
     session.defaultSession.setUserAgent(userAgent)
+    app.userAgentFallback = userAgent
     this.mainWindow.webContents.session.setUserAgent(userAgent)
     this.mainWindow.webContents.setUserAgent(userAgent)
     this.mainWindow.setMenuBarVisibility(false)
@@ -125,6 +126,9 @@ export default class App {
         }
       }
     })
+
+    // not insanely safe, but fixes VPNs breaking w2g
+    this.mainWindow.webContents.setWebRTCIPHandlingPolicy('default_public_and_private_interfaces')
 
     this.torrentProcess.stderr?.on('data', d => console.error('' + d))
     this.torrentProcess.stdout?.on('data', d => console.log('' + d))
@@ -291,11 +295,11 @@ export default class App {
     }
 
     if (is.dev) this.mainWindow.webContents.openDevTools()
-    this.mainWindow.loadURL(BASE_URL).catch(err => {
+    this.mainWindow.loadURL(BASE_URL, { userAgent }).catch(err => {
       log.error(err)
       if (this.hasDOH) return
       this.setDOH('https://cloudflare-dns.com/dns-query')
-      queueMicrotask(() => this.mainWindow.loadURL(BASE_URL))
+      queueMicrotask(() => this.mainWindow.loadURL(BASE_URL, { userAgent }))
     })
     this.mainWindow.webContents.on('will-navigate', (e, url) => {
       const parsedUrl = new URL(url)
