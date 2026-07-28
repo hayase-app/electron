@@ -1,4 +1,4 @@
-import cookie, { type SetCookie } from 'cookie'
+import { parseSetCookie, type SetCookie } from 'cookie'
 import { session } from 'electron'
 
 import type { OnBeforeSendHeadersListenerDetails } from 'electron'
@@ -11,7 +11,7 @@ async function getCookie () {
 
   const res = await fetch('https://anilist.co/')
 
-  const cookieObj = cookie.parseSetCookie(res.headers.get('set-cookie') ?? '')
+  const cookieObj = parseSetCookie(res.headers.get('set-cookie') ?? '')
 
   const body = await res.text()
 
