@@ -2,6 +2,7 @@ import { spawn } from 'node:child_process'
 import { readFile } from 'node:fs/promises'
 import os from 'node:os'
 import { basename, dirname, extname } from 'node:path'
+import { env } from 'node:process'
 
 import { app, dialog, shell, type UtilityProcess, ipcMain, systemPreferences } from 'electron'
 import log from 'electron-log/main'
@@ -202,7 +203,9 @@ export default class IPC {
     player?.kill()
 
     await new Promise((resolve, reject) => {
-      const playerProcess = spawn(path, [new URL(url).toString()], { stdio: 'ignore' })
+      const playerProcess = env.FLATPAK_ID
+        ? spawn('flatpak-spawn', ['--host', path, new URL(url).toString()], { stdio: 'ignore' })
+        : spawn(path, [new URL(url).toString()], { stdio: 'ignore' })
       player = playerProcess
       this.app.mainWindow.focus()
       playerProcess.once('close', resolve)
