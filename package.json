@@ -1,6 +1,6 @@
 {
   "name": "hayase",
-  "version": "6.5.1",
+  "version": "6.5.3",
   "description": "Hayase - Torrent streaming made simple",
   "main": "./out/main/index.js",
   "repository": "github:hayase-app/ui",
@@ -35,7 +35,7 @@
     "abslink": "^1.2.2",
     "cookie": "^2.0.1",
     "electron": "44.3.0",
-    "electron-builder": "^26.11.1",
+    "electron-builder": "^26.16.1",
     "electron-log": "^5.4.4",
     "electron-updater": "^6.8.9",
     "electron-vite": "^5.0.0",
@@ -54,9 +54,6 @@
       "@vladfrangu/async_event_emitter": "npm:@vladfrangu/async_event_emitter@2.4.6",
       "@electron/fuses": "npm:@thaunknown/fuses"
     },
-    "patchedDependencies": {
-      "app-builder-lib@26.11.1": "patches/app-builder-lib@26.11.1.patch"
-    },
     "ignoredBuiltDependencies": [
       "@thaunknown/utp-native",
       "@thaunknown/yencode",
@@ -67,6 +64,9 @@
       "protobufjs",
       "utf-8-validate",
       "utp-native"
-    ]
+    ],
+    "patchedDependencies": {
+      "app-builder-lib@26.16.1": "patches/app-builder-lib@26.16.1.patch"
+    }
   }
 }

@@ -1,28 +1,28 @@
 diff --git a/out/platformPackager.js b/out/platformPackager.js
-index d7cdb8dfbb80da562a64a18a5041af0699162895..fc6c5c7fa1d5ca92bf852b6790a40351699ba531 100644
+index 26a1cb8717d9c1162c11d2aeada8f903617e5e8b..7b12f8083e6abd3864ca6cd54d6b4ccdaa2f79e9 100644
 --- a/out/platformPackager.js
 +++ b/out/platformPackager.js
-@@ -291,6 +291,15 @@ class PlatformPackager {
+@@ -297,6 +297,15 @@ class PlatformPackager {
          if (fuses.grantFileProtocolExtraPrivileges != null) {
-             config[fuses_1.FuseV1Options.GrantFileProtocolExtraPrivileges] = fuses.grantFileProtocolExtraPrivileges;
+             config[FuseV1Options.GrantFileProtocolExtraPrivileges] = fuses.grantFileProtocolExtraPrivileges;
          }
 +        if (fuses.disallowCodeGenerationFromStrings != null) {
-+            config[fuses_1.FuseV1Options.DisallowCodeGenerationFromStrings] = fuses.disallowCodeGenerationFromStrings;
++            config[FuseV1Options.DisallowCodeGenerationFromStrings] = fuses.disallowCodeGenerationFromStrings;
 +        }
 +        if (fuses.disableProtoThrow != null) {
-+            config[fuses_1.FuseV1Options.DisableProtoThrow] = fuses.disableProtoThrow;
++            config[FuseV1Options.DisableProtoThrow] = fuses.disableProtoThrow;
 +        }
 +        if (fuses.frozenIntrinsics != null) {
-+            config[fuses_1.FuseV1Options.FrozenIntrinsics] = fuses.frozenIntrinsics;
++            config[FuseV1Options.FrozenIntrinsics] = fuses.frozenIntrinsics;
 +        }
          return config;
      }
      /**
 diff --git a/scheme.json b/scheme.json
-index f4ea4fbbc5f19a5b6cad17f0c8d3cc8e7776fead..395c61fb59291c8eddba7f4a0fb57441f69232a1 100644
+index bc95a5acc49ce81e19ddea7d342ecfb42373a464..36c8f9d467596a525a624ed8284050765dce9461 100644
 --- a/scheme.json
 +++ b/scheme.json
-@@ -1499,6 +1499,18 @@
+@@ -1567,6 +1567,18 @@
          "runAsNode": {
            "description": "The runAsNode fuse toggles whether the `ELECTRON_RUN_AS_NODE` environment variable is respected or not.  Please note that if this fuse is disabled then `process.fork` in the main process will not function as expected as it depends on this environment variable to function. Instead, we recommend that you use [Utility Processes](https://github.com/electron/electron/blob/main/docs/api/utility-process.md), which work for many use cases where you need a standalone Node.js process (like a Sqlite server process or similar scenarios).",
            "type": "boolean"
