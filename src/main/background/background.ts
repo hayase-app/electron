@@ -8,7 +8,7 @@ import { expose } from 'abslink/w3c'
 import TorrentClient from 'torrent-client'
 
 import type { ClientSettings } from 'native'
-import type { PROVIDERS } from 'torrent-client/doh'
+import type { PROVIDERS } from 'torrent-client/network/doh'
 
 interface Message {
   id: string

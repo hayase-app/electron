@@ -7,7 +7,7 @@ import type IPC from '../main/ipc.ts'
 import type { Remote } from 'abslink'
 import type { Native } from 'native'
 import type TorrentClient from 'torrent-client'
-import type { PROVIDERS } from 'torrent-client/doh'
+import type { PROVIDERS } from 'torrent-client/network/doh'
 
 ipcRenderer.send('preload-done')
 
@@ -68,6 +68,7 @@ const native: Partial<Native> = {
   addTorrent: async (id, mediaID, episode, background) => await (await torrent).playTorrent(id, mediaID, episode, sID, background),
   rescanTorrents: async (hashes) => await (await torrent).rescanTorrents(hashes),
   deleteTorrents: async (hashes) => await (await torrent).deleteTorrents(hashes),
+  removeBackgroundTorrents: async (hashes) => await (await torrent).removeBackgroundTorrents(hashes),
   library: async () => await (await torrent).library(),
   attachments: async (hash, id) => await (await torrent).attachments.attachments(hash, id),
   tracks: async (hash, id) => await (await torrent).attachments.tracks(hash, id),
