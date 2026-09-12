@@ -22,6 +22,8 @@ const version = ipcRenderer.invoke('version')
 
 const main = wrap<typeof IPC.prototype>(ipcRenderer)
 
+const sID = '1'
+
 const native: Partial<Native> = {
   openURL: (url: string) => main.openURL(url),
   selectPlayer: () => main.selectPlayer(),
@@ -63,7 +65,7 @@ const native: Partial<Native> = {
   checkAvailableSpace: async () => await (await torrent).checkAvailableSpace(),
   checkIncomingConnections: async (port) => await (await torrent).checkIncomingConnections(port),
   updatePeerCounts: async (hashes) => await (await torrent).scrape(hashes),
-  playTorrent: async (id, mediaID, episode) => await (await torrent).playTorrent(id, mediaID, episode),
+  addTorrent: async (id, mediaID, episode, background) => await (await torrent).playTorrent(id, mediaID, episode, sID, background),
   rescanTorrents: async (hashes) => await (await torrent).rescanTorrents(hashes),
   deleteTorrents: async (hashes) => await (await torrent).deleteTorrents(hashes),
   library: async () => await (await torrent).library(),
@@ -79,6 +81,7 @@ const native: Partial<Native> = {
   protocolStatus: async (hash) => await (await torrent).protocolStatus(hash),
   updateSettings: (settings) => main.updateSettings(settings),
   cachedTorrents: async () => await (await torrent).cached(),
+  activeTorrents: async () => await (await torrent).activeTorrents(),
   createNZB: async (id, url) => await (await torrent).createNZBWebSeed(id, url),
   createHTTPWebSeed: async (id, url, authorization, fileIndex, rateLimit) => await (await torrent).createHTTPWebSeed(id, url, authorization, fileIndex, rateLimit),
   getDisplays: async cb => await (await torrent).listenDisplay(proxy(cb)),

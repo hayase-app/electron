@@ -41,8 +41,8 @@ autoUpdater.logger = log
 
 // const TRANSPARENCY = store.get('transparency')
 
-// const BASE_URL = is.dev ? 'http://localhost:7344/' : 'https://hayase.app/'
-const BASE_URL = 'https://hayase.app/'
+// const BASE_URL = is.dev ? 'http://localhost:7344/' : 'https://ui-staging.hayase.app/'
+const BASE_URL = 'https://ui-staging.hayase.app/'
 
 protocol.registerSchemesAsPrivileged([
   { scheme: 'https', privileges: { standard: true, bypassCSP: true, allowServiceWorkers: true, supportFetchAPI: true, corsEnabled: false, stream: true, codeCache: true, secure: true } }
@@ -128,10 +128,11 @@ export default class App {
     })
 
     // not insanely safe, but fixes VPNs breaking w2g
-    this.mainWindow.webContents.setWebRTCIPHandlingPolicy('default_public_and_private_interfaces')
+    // this breaks a lot of shit dont use it
+    // this.mainWindow.webContents.setWebRTCIPHandlingPolicy('default_public_and_private_interfaces')
 
-    this.torrentProcess.stderr?.on('data', d => console.error('' + d))
-    this.torrentProcess.stdout?.on('data', d => console.log('' + d))
+    this.torrentProcess.stderr?.on('data', d => log.error('' + d))
+    this.torrentProcess.stdout?.on('data', d => log.log('' + d))
     // if (TRANSPARENCY) {
     // // Transparency fixes, window is resizable when fullscreen/maximized
     //   this.mainWindow.on('enter-html-full-screen', () => {

@@ -2,6 +2,8 @@ import { statSync } from 'node:fs'
 import os from 'node:os'
 import { join } from 'node:path'
 
+// stupid import required because of vite dep resolution
+import '@thaunknown/yencode/y.cjs'
 import { expose } from 'abslink/w3c'
 import TorrentClient from 'torrent-client'
 

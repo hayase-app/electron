@@ -233,8 +233,8 @@ export default defineConfig({
         dependencies: [
           '@paymoapp/electron-shutdown-handler',
           '@thaunknown/yencode',
-          'fs-native-extensions',
-          'utp-native'
+          '@thaunknown/utp-native',
+          'fs-native-extensions'
         ]
       })
     ],
