@@ -18,6 +18,7 @@ const DEFAULTS = {
     torrentSpeed: 40,
     maxConns: 50,
     torrentPort: 0,
+    connectionBudget: 500,
     dhtPort: 0,
     torrentPeX: false,
     nzbDomain: '',
