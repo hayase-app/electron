@@ -5,12 +5,15 @@ import { join } from 'node:path'
 import { app } from 'electron'
 import log from 'electron-log/main'
 
+import type { ClientSettings } from 'native'
+
 const DEFAULTS = {
   angle: 'default',
   player: '',
   torrentPath: '',
   doh: '',
   // transparency: false,
+  // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
   torrentSettings: {
     torrentPersist: false,
     torrentDHT: false,
@@ -25,8 +28,9 @@ const DEFAULTS = {
     nzbLogin: '',
     nzbPassword: '',
     nzbPort: 119,
-    nzbPoolSize: 5
-  }
+    nzbPoolSize: 5,
+    remoteAccess: 'off'
+  } as ClientSettings
 }
 
 class Store {

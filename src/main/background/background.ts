@@ -5,7 +5,7 @@ import { join } from 'node:path'
 // stupid import required because of vite dep resolution
 import '@thaunknown/yencode/y.cjs'
 import { expose } from 'abslink/w3c'
-import TorrentClient from 'torrent-client'
+import TorrentClient, { destroy, updateSettings } from 'torrent-client'
 
 import type { ClientSettings } from 'native'
 import type { PROVIDERS } from 'torrent-client/network/doh'
@@ -26,8 +26,7 @@ process.parentPort.on('message', ({ ports, data: _data }) => {
   let settings: ClientSettings & { path: string, doh?: `https://${keyof typeof PROVIDERS}` } | undefined
   const { id, data } = _data as Message
   if (id === 'settings') settings = data as ClientSettings & { path: string }
-  if (id === 'destroy') tclient?.destroy()
-
+  if (id === 'destroy') tclient?.[destroy]()
   if (ports[0]) {
     ports[0].start()
     tclient ??= new TorrentClient(settings!, TMP)
@@ -35,7 +34,7 @@ process.parentPort.on('message', ({ ports, data: _data }) => {
     // re-exposing leaks memory, but not that much, so it's fine
     expose(tclient, ports[0] as unknown as MessagePort)
   } else if (settings) {
-    tclient?.updateSettings(settings)
+    tclient?.[updateSettings](settings)
   }
 })
 
