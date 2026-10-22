@@ -8,7 +8,7 @@ import store from './store.ts'
 
 const flags: Array<[string, string | undefined] | [string]> = [
   // not sure if safe?
-  ['disable-gpu-sandbox'], ['disable-direct-composition-video-overlays'], ['double-buffer-compositing'], ['enable-zero-copy'], ['ignore-gpu-blocklist'],
+  ['disable-gpu-sandbox'], ['double-buffer-compositing'], ['enable-zero-copy'], ['ignore-gpu-blocklist'],
   ['force_high_performance_gpu'],
   // ['force-gpu-mem-available-mb=2048'],
   // should be safe
@@ -37,8 +37,8 @@ for (const [flag, value] of flags) {
   app.commandLine.appendSwitch(flag, value)
 }
 
-// Wayland cannot import GMB video frames into ANGLE Vulkan. Use system memory for video frames.
-if (platform === 'linux' && env.WAYLAND_DISPLAY && app.commandLine.getSwitchValue('ozone-platform') !== 'x11') {
+// Wayland cannot import GMB video frames into ANGLE GL. Use system memory for video frames, unless ANGLE runs on Vulkan.
+if (platform === 'linux' && env.WAYLAND_DISPLAY && app.commandLine.getSwitchValue('ozone-platform') !== 'x11' && store.get('angle') !== 'vulkan') {
   app.commandLine.appendSwitch('disable-gpu-memory-buffer-video-frames')
 }
 

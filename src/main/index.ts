@@ -1,3 +1,5 @@
+import './stdio.ts'
+
 import { optimizer } from '@electron-toolkit/utils'
 import { app } from 'electron'
 

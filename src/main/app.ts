@@ -28,6 +28,8 @@ import type { Messageable } from 'abslink'
 log.initialize({ spyRendererConsole: true, preload: false })
 log.transports.file.level = 'debug'
 log.transports.file.maxSize = 10 * 1024 * 1024 // 10MB
+// A packaged app has no terminal. Write only to the log file.
+if (!is.dev) log.transports.console.level = false
 
 log.hooks.push(message => {
   const hasMatch = message.data.some(part => typeof part === 'string' && (part.includes('Mixed Content:') || part.includes('was loaded over HTTPS, but requested an insecure')))
@@ -413,7 +415,7 @@ export default class App {
       this.hasDOH = true
     } catch (e) {
       const err = e as Error
-      console.error('Failed to set DOH: ', err.stack)
+      log.error('Failed to set DOH: ', err.stack)
       this.hasDOH = false
     }
   }
