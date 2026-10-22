@@ -1,4 +1,4 @@
-// import { platform, arch } from 'node:process'
+import { env, platform } from 'node:process'
 
 import { app } from 'electron'
 
@@ -35,6 +35,11 @@ const flags: Array<[string, string | undefined] | [string]> = [
 
 for (const [flag, value] of flags) {
   app.commandLine.appendSwitch(flag, value)
+}
+
+// Wayland cannot import GMB video frames into ANGLE Vulkan. Use system memory for video frames.
+if (platform === 'linux' && env.WAYLAND_DISPLAY && app.commandLine.getSwitchValue('ozone-platform') !== 'x11') {
+  app.commandLine.appendSwitch('disable-gpu-memory-buffer-video-frames')
 }
 
 // mainWindow.setThumbarButtons([
