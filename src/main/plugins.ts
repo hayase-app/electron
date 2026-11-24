@@ -194,7 +194,7 @@ export default class Plugins {
       skipTaskbar: true,
       hiddenInMissionControl: true,
       title,
-      webPreferences: { sandbox: true, webSecurity: true }
+      webPreferences: { sandbox: true, spellcheck: false, webSecurity: true }
     })
 
     popup.webContents.setWindowOpenHandler(() => ({ action: 'deny' }))

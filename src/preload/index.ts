@@ -89,7 +89,7 @@ const native: Partial<Native> = {
   castPlay: async (host, hash, id, media) => await (await torrent).playDisplay(host, hash, id, media),
   castClose: async (host) => await (await torrent).closeDisplay(host),
   setHideToTray: (enabled: boolean) => main.setHideToTray(enabled),
-  isApp: true,
+  isApp: 'electron',
   spawnPlayer: (url) => main.spawnPlayer(url),
   setDOH: async (dns) => {
     await main.setDOH(dns)

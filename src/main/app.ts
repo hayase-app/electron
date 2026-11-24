@@ -82,6 +82,7 @@ export default class App {
     webPreferences: {
       preload: join(__dirname, '../preload/index.js'),
       sandbox: true,
+      spellcheck: false,
       webSecurity: true,
       allowRunningInsecureContent: true,
       enableBlinkFeatures: 'FluentOverlayScrollbars,FluentOverlayScrollbar',
