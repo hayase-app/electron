@@ -1,4 +1,5 @@
 ignoredBuiltDependencies:
+  - '@paymoapp/electron-shutdown-handler'
   - '@thaunknown/yencode'
   - bufferutil
   - electron
@@ -8,5 +9,4 @@ ignoredBuiltDependencies:
   - utp-native
 
 onlyBuiltDependencies:
-  - '@paymoapp/electron-shutdown-handler'
   - esbuild

@@ -1,0 +1,29 @@
+diff --git a/dist/chunks/lib-DoUt4oMD.js b/dist/chunks/lib-DoUt4oMD.js
+index b1b4d046c5ec7df1b955577a24a1b980674ea15f..778eb2d87cb08e9ae897f05f0c4811c87370b6ab 100644
+--- a/dist/chunks/lib-DoUt4oMD.js
++++ b/dist/chunks/lib-DoUt4oMD.js
+@@ -1238,6 +1238,8 @@ const bytecodeModuleLoaderCode = [
+     'v8.setFlagsFromString("--no-lazy");',
+     'v8.setFlagsFromString("--no-flush-bytecode");',
+     'const params = ["exports", "require", "module", "__filename", "__dirname"];',
++    'const FLAG_HASH_OFFSET = 12;',
++    'let flagHash;',
+     'Module._extensions[".jsc"] = Module._extensions[".cjsc"] = function (module, filename) {',
+     '  const data = fs.readFileSync(filename);',
+     '  if (data.length <= 28 || data.toString("ascii", 0, 8) !== "EVBC0001") {',
+@@ -1249,9 +1251,14 @@ const bytecodeModuleLoaderCode = [
+     '    throw new Error("Invalid bytecode source length: " + filename);',
+     '  }',
+     '  const placeholder = tag + " ".repeat(length - tag.length);',
++    // V8 rejects a cache that was compiled with other V8 flags. Electron fuses (for example
++    // DisallowCodeGenerationFromStrings) add V8 flags at runtime only, so copy the runtime flag hash into the cache.
++    '  const cachedData = data.subarray(28);',
++    '  if (!flagHash) flagHash = new vm.Script("", { produceCachedData: true }).createCachedData().subarray(FLAG_HASH_OFFSET, FLAG_HASH_OFFSET + 4);',
++    '  flagHash.copy(cachedData, FLAG_HASH_OFFSET);',
+     '  const compiledWrapper = vm.compileFunction(placeholder, params, {',
+     '    filename,',
+-    '    cachedData: data.subarray(28)',
++    '    cachedData',
+     '  });',
+     '  if (compiledWrapper.cachedDataRejected) {',
+     '    throw new Error("Invalid or incompatible cached data (cachedDataRejected): " + filename);',

@@ -15,8 +15,7 @@ directories:
   buildResources: build
 asarUnpack:
   - resources/**
-  - out/main/native-assets/**/*.node
-  - out/main/native-modules/**/prebuilds/*/*.node
+  - out/main/**/*.node
 files:
   - "!**/.vscode/*"
   - "!src/*"

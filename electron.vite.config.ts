@@ -1,236 +1,131 @@
 import { execSync } from 'node:child_process'
-import { copyFileSync, existsSync, mkdirSync, readdirSync } from 'node:fs'
-import { basename, dirname, join, resolve } from 'node:path'
+import { existsSync, mkdirSync, readdirSync } from 'node:fs'
+import { join, resolve } from 'node:path'
 
 import { defineConfig } from 'electron-vite'
 import { glob } from 'glob'
 import license from 'rollup-plugin-license'
-import { cjsInterop } from 'vite-plugin-cjs-interop'
 
 import type { Plugin } from 'vite'
 
-const pkgName = (pkg: string) => pkg.replace(/@/g, '').replace(/\//g, '-')
+const NATIVE_ADDON_PREFIX = '\0native-addon:'
 
-const nativeModuleDir = (pkg: string) => `native-modules/${pkgName(pkg)}`
+// Bundle all JS of the packages. Replace their addon loader (node-gyp-build or require-addon) with a module
+// that requires the prebuilt .node file. electron-vite emits each .node file as an asset next to the chunks.
+const nativeAddonPlugin = ({ dependencies }: { dependencies: string[] }): Plugin => {
+  // The mac build is universal, so it must ship both architectures.
+  const arches = process.platform === 'darwin' ? ['x64', 'arm64'] : [process.arch]
 
-function copyDirRecursive (src: string, dst: string, fileFilter?: (name: string) => boolean) {
-  if (!existsSync(dst)) mkdirSync(dst, { recursive: true })
-  for (const entry of readdirSync(src, { withFileTypes: true })) {
-    if (!entry.isDirectory() && fileFilter && !fileFilter(entry.name)) continue
-    const srcPath = join(src, entry.name)
-    const dstPath = join(dst, entry.name)
-    if (entry.isDirectory()) {
-      copyDirRecursive(srcPath, dstPath, fileFilter)
-    } else {
-      copyFileSync(srcPath, dstPath)
+  const findPackageDir = (id: string) => {
+    for (const pkg of dependencies) {
+      const marker = `/node_modules/${pkg}/`
+      const index = id.lastIndexOf(marker)
+      if (index !== -1) return id.slice(0, index + marker.length)
     }
+    return null
   }
-}
-
-const compileNativeModulesPlugin = ({ dependencies: NATIVE_PACKAGES }: { dependencies: string[] }): Plugin => {
-  let outDir: string
-  let projectRoot: string
-
-  // Static .node require to emit to native-assets/
-  const staticAssets = new Map<string, { src: string, dst: string }>()
-  let assetCounter = 0
-
-  // Dynamic packages (node-gyp-build / require-addon) to copy prebuilds + package.json to native-modules/
-  const pendingModules = new Map<string, { pkgDir: string, moduleDir: string }>()
 
   return {
-    name: 'vite:fix-native-module-dirs',
+    name: 'native-addon',
     enforce: 'pre',
-    configResolved (config) {
-      outDir = resolve(config.build.outDir)
-      projectRoot = config.root
-    },
     transform (code, id) {
-      const matchedPkg = NATIVE_PACKAGES.find(pkg => id.includes(`/node_modules/${pkg}/`))
-      if (!matchedPkg) return null
-
-      const hasDirRefs = code.includes('__dirname') || code.includes('__filename')
-      const hasNodeRequire = /require\s*\(\s*['"`]((?:\.\.?\/).*?\.node)['"`]\s*\)/.test(code)
-
-      if (!hasDirRefs && !hasNodeRequire) return null
-
-      // Find the package-relative part of the file path
-      const pkgMarker = `/node_modules/${matchedPkg}/`
-      const pkgIdx = id.lastIndexOf(pkgMarker)
-      const withinPkg = pkgIdx !== -1 ? id.substring(pkgIdx + pkgMarker.length) : basename(id)
-
-      let newCode = code
-
-      // Static require('../path/to/file.node') → emit to native-assets/
-      if (hasNodeRequire) {
-        newCode = newCode.replace(
-          /require\s*\(\s*(['"`])((?:\.\.?\/).*?\.node)\1\s*\)/g,
-          (_match, _quote, filePath) => {
-            const absolutePath = resolve(dirname(id), filePath)
-            const assetName = `${pkgName(matchedPkg)}-${basename(absolutePath)}`
-            const dstRel = `native-assets/${assetCounter++}-${assetName}`
-            const dst = resolve(outDir, dstRel)
-            staticAssets.set(dstRel, { src: absolutePath, dst })
-            return `require(__dirname + "/${dstRel}")`
-          }
-        )
-      }
-
-      // Dynamic loading (node-gyp-build / require-addon) to point __dirname/__filename to native-modules/
-      if (hasDirRefs) {
-        const modulesDir = nativeModuleDir(matchedPkg)
-        const withinDir = dirname(withinPkg)
-        const relModulePath = withinDir !== '.' ? `${modulesDir}/${withinDir}` : modulesDir
-
-        // Schedule prebuilds + package.json for this package (only once)
-        if (!pendingModules.has(matchedPkg)) {
-          pendingModules.set(matchedPkg, {
-            pkgDir: resolve(projectRoot, 'node_modules', matchedPkg),
-            moduleDir: resolve(outDir, modulesDir)
-          })
-        }
-
-        newCode = newCode
-          .replace(/\b__dirname\b(?!\s*:)/g, `__dirname + "/${relModulePath}"`)
-          .replace(/\b__filename\b(?!\s*:)/g, `__dirname + "/${relModulePath}/${basename(id)}"`)
-      }
-
-      if (newCode === code) return null
-
-      return { code: newCode, map: null }
+      if (!findPackageDir(id)) return null
+      // Rolldown does not follow createRequire(import.meta.url). Without this, the loader stays a runtime require.
+      const newCode = code.replace(/\bcreateRequire\(\s*import\.meta\.url\s*\)/g, 'require')
+      return newCode === code ? null : { code: newCode, map: null }
     },
-    writeBundle () {
-      // Copy static .node assets
-      for (const [, { src, dst }] of staticAssets) {
-        try {
-          const dstDir = dirname(dst)
-          if (!existsSync(dstDir)) mkdirSync(dstDir, { recursive: true })
-          copyFileSync(src, dst)
-          console.log(`[native-assets] Copied ${src} -> ${dst}`)
-        } catch (err) {
-          console.error(`[native-assets] Failed to copy ${src}: `, err)
-        }
-      }
-      staticAssets.clear()
-      assetCounter = 0
-
-      // Copy dynamic package support files (prebuilds + package.json) to native-modules/
-      for (const { pkgDir, moduleDir } of pendingModules.values()) {
-        try {
-          // Copy package.json (needed by require-addon / node-gyp-build for NAME_PREBUILD)
-          const pkgJson = join(pkgDir, 'package.json')
-          if (existsSync(pkgJson)) {
-            if (!existsSync(moduleDir)) mkdirSync(moduleDir, { recursive: true })
-            copyFileSync(pkgJson, join(moduleDir, 'package.json'))
-          }
-
-          // Copy only this platform's prebuilds
-          const prebuildsSrc = join(pkgDir, 'prebuilds')
-          if (existsSync(prebuildsSrc)) {
-            const prebuildsDst = join(moduleDir, 'prebuilds')
-            const platformDirs: string[] = process.platform === 'win32'
-              ? ['win32-x64']
-              : process.platform === 'darwin'
-                ? ['darwin-x64', 'darwin-arm64']
-                : ['linux-x64']
-            for (const dir of readdirSync(prebuildsSrc, { withFileTypes: true })) {
-              if (dir.isDirectory() && platformDirs.includes(dir.name)) {
-                copyDirRecursive(join(prebuildsSrc, dir.name), join(prebuildsDst, dir.name), (name) => name.endsWith('.node'))
-              }
-            }
-            console.log(`[native-modules] Copied prebuilds for ${basename(moduleDir)}`)
-          }
-        } catch (err) {
-          console.error(`[native-modules] Failed to setup ${pkgDir}: `, err)
-        }
-      }
-      pendingModules.clear()
+    resolveId (source, importer) {
+      if (source !== 'node-gyp-build' && source !== 'require-addon') return null
+      const packageDir = importer && findPackageDir(importer)
+      return packageDir ? NATIVE_ADDON_PREFIX + packageDir : null
+    },
+    load (id) {
+      if (!id.startsWith(NATIVE_ADDON_PREFIX)) return null
+      const packageDir = id.slice(NATIVE_ADDON_PREFIX.length)
+      const paths = arches.flatMap(arch => {
+        const prebuildDir = `${packageDir}prebuilds/${process.platform}-${arch}`
+        const file = existsSync(prebuildDir) && readdirSync(prebuildDir).find(name => name.endsWith('.node'))
+        return file ? [`${JSON.stringify(arch)}: require(${JSON.stringify(`${prebuildDir}/${file}?asset`)}).default`] : []
+      })
+      return `const paths = { ${paths.join(', ')} }\nmodule.exports = () => require(paths[process.arch])\n`
     }
   }
 }
 
-const electronUnzipPlugin = () => {
-  return {
-    name: 'electron-unzip',
-    buildStart () {
-      // skip on dev
-      // if (process.env.NODE_ENV === 'development') return
-      const electronDistPath = resolve(__dirname, 'electron-dist')
+// electron-vite starts the bytecode compiler before any plugin hook runs
+const extractElectronDistribution = () => {
+  // skip on dev
+  // if (process.env.NODE_ENV === 'development') return
+  const electronDistPath = resolve(__dirname, 'electron-dist')
 
-      let zipPattern: string
-      switch (process.platform) {
-        case 'win32':
-          zipPattern = '*win32*.zip'
-          break
-        case 'freebsd':
-        case 'openbsd':
-        case 'linux':
-          zipPattern = '*linux*.zip'
-          break
-        default:
-          console.warn(`\nBytecode unsuppored platform: ${process.platform}`)
-          return
-      }
+  let zipPattern: string
+  switch (process.platform) {
+    case 'win32':
+      zipPattern = '*win32*.zip'
+      break
+    case 'freebsd':
+    case 'openbsd':
+    case 'linux':
+      zipPattern = '*linux*.zip'
+      break
+    default:
+      console.warn(`\nBytecode unsuppored platform: ${process.platform}`)
+      return
+  }
 
-      try {
-        const zipFile = glob.sync(zipPattern, { cwd: electronDistPath })[0]
+  try {
+    const zipFile = glob.sync(zipPattern, { cwd: electronDistPath })[0]
 
-        if (!zipFile) {
-          console.warn(`\nNo electron distribution zip file found for pattern: ${zipPattern}`)
-          return
-        }
-
-        const zipPath = resolve(electronDistPath, zipFile)
-        const extractDir = resolve(electronDistPath, zipFile.replace('.zip', ''))
-        const electronBinary = resolve(extractDir, process.platform === 'win32' ? 'electron.exe' : 'electron')
-
-        process.env.ELECTRON_EXEC_PATH = electronBinary
-
-        // Check the binary. An interrupted run can leave an empty directory.
-        if (existsSync(electronBinary)) {
-          console.log(`\nElectron distribution already extracted: ${extractDir}`)
-          return
-        }
-
-        console.log(`\nExtracting electron distribution: ${zipFile}`)
-
-        mkdirSync(extractDir, { recursive: true })
-
-        if (process.platform === 'win32') {
-          // Expand-Archive in PowerShell 7.6 fails on .NET 10 with
-          // "Cannot find an overload for ExtractToDirectory". Use the bsdtar that Windows ships.
-          const tar = join(process.env.SystemRoot ?? 'C:\\Windows', 'System32', 'tar.exe')
-          execSync(`"${tar}" -xf "${zipPath}" -C "${extractDir}"`)
-        } else {
-          execSync(`unzip -q "${zipPath}" -d "${extractDir}"`)
-          execSync(`chmod +x "${electronBinary}"`)
-        }
-
-        if (!existsSync(electronBinary)) {
-          throw new Error(`Extraction did not create ${electronBinary}`)
-        }
-
-        console.log(`\nSuccessfully extracted: ${zipFile}`)
-      } catch (error) {
-        console.error('\nFailed to extract electron distribution:', error)
-        throw error
-      }
+    if (!zipFile) {
+      console.warn(`\nNo electron distribution zip file found for pattern: ${zipPattern}`)
+      return
     }
+
+    const zipPath = resolve(electronDistPath, zipFile)
+    const extractDir = resolve(electronDistPath, zipFile.replace('.zip', ''))
+    const electronBinary = resolve(extractDir, process.platform === 'win32' ? 'electron.exe' : 'electron')
+
+    process.env.ELECTRON_EXEC_PATH = electronBinary
+
+    // Check the binary. An interrupted run can leave an empty directory.
+    if (existsSync(electronBinary)) {
+      console.log(`\nElectron distribution already extracted: ${extractDir}`)
+      return
+    }
+
+    console.log(`\nExtracting electron distribution: ${zipFile}`)
+
+    mkdirSync(extractDir, { recursive: true })
+
+    if (process.platform === 'win32') {
+      // Expand-Archive in PowerShell 7.6 fails on .NET 10 with
+      // "Cannot find an overload for ExtractToDirectory". Use the bsdtar that Windows ships.
+      const tar = join(process.env.SystemRoot ?? 'C:\\Windows', 'System32', 'tar.exe')
+      execSync(`"${tar}" -xf "${zipPath}" -C "${extractDir}"`)
+    } else {
+      execSync(`unzip -q "${zipPath}" -d "${extractDir}"`)
+      execSync(`chmod +x "${electronBinary}"`)
+    }
+
+    if (!existsSync(electronBinary)) {
+      throw new Error(`Extraction did not create ${electronBinary}`)
+    }
+
+    console.log(`\nSuccessfully extracted: ${zipFile}`)
+  } catch (error) {
+    console.error('\nFailed to extract electron distribution:', error)
+    throw error
   }
 }
+
+extractElectronDistribution()
 
 export default defineConfig({
   main: {
     build: {
-      bytecode: process.platform !== 'darwin' && { transformArrowFunctions: false },
-      commonjsOptions: {
-        ignore: (id: string) => id.endsWith('.node'),
-        ignoreDynamicRequires: true
-      }
+      bytecode: process.platform !== 'darwin' && { transformArrowFunctions: false }
     },
     plugins: [
-      electronUnzipPlugin(),
-      cjsInterop({ dependencies: ['@paymoapp/electron-shutdown-handler'] }),
       license({
         thirdParty: {
           allow: '(MIT OR Apache-2.0 OR ISC OR BSD-3-Clause OR BSD-2-Clause)',
@@ -238,7 +133,7 @@ export default defineConfig({
           includeSelf: true
         }
       }),
-      compileNativeModulesPlugin({
+      nativeAddonPlugin({
         dependencies: [
           '@paymoapp/electron-shutdown-handler',
           '@thaunknown/yencode',
