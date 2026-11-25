@@ -10,3 +10,10 @@ ignoredBuiltDependencies:
 
 onlyBuiltDependencies:
   - esbuild
+
+# app-builder-lib loads this peer only for squirrel targets. Without this, pnpm installs an old electron-builder 25 copy.
+packageExtensions:
+  app-builder-lib:
+    peerDependenciesMeta:
+      electron-builder-squirrel-windows:
+        optional: true
