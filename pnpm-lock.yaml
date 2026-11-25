@@ -13,7 +13,7 @@ patchedDependencies:
     hash: 0d6b3943ff92724b8f00adcf4514a4a5f57b03b89ea64581e1845442de75c741
     path: patches/app-builder-lib@26.18.1.patch
   electron-vite@6.0.0:
-    hash: 8360783ff80c65f41b3c729e48d7fe1daf43d5f3d23bf46a99f319c381ba641a
+    hash: 95dd8c0c74364587b7a19dddb7665daca3ddc779e408bc11eb534501ae72d319
     path: patches/electron-vite@6.0.0.patch
 
 importers:
@@ -58,7 +58,7 @@ importers:
         version: 6.8.12
       electron-vite:
         specifier: ^6.0.0
-        version: 6.0.0(patch_hash=8360783ff80c65f41b3c729e48d7fe1daf43d5f3d23bf46a99f319c381ba641a)(vite@8.3.8(@types/node@26.6.10)(esbuild@0.27.2)(jiti@2.7.0))
+        version: 6.0.0(patch_hash=95dd8c0c74364587b7a19dddb7665daca3ddc779e408bc11eb534501ae72d319)(vite@8.3.8(@types/node@26.6.10)(esbuild@0.27.2)(jiti@2.7.0))
       eslint-config-standard-universal:
         specifier: ^1.0.10
         version: 1.0.10(@typescript-eslint/parser@8.59.4(eslint@9.39.4(jiti@2.7.0))(typescript@6.0.3))(jiti@2.7.0)
@@ -5884,7 +5884,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  electron-vite@6.0.0(patch_hash=8360783ff80c65f41b3c729e48d7fe1daf43d5f3d23bf46a99f319c381ba641a)(vite@8.3.8(@types/node@26.6.10)(esbuild@0.27.2)(jiti@2.7.0)):
+  electron-vite@6.0.0(patch_hash=95dd8c0c74364587b7a19dddb7665daca3ddc779e408bc11eb534501ae72d319)(vite@8.3.8(@types/node@26.6.10)(esbuild@0.27.2)(jiti@2.7.0)):
     dependencies:
       '@babel/core': 7.29.13
       '@babel/plugin-transform-arrow-functions': 7.29.7(@babel/core@7.29.13)

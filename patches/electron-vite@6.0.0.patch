@@ -1,3 +1,19 @@
+diff --git a/dist/chunks/lib-DEbiQWuL.js b/dist/chunks/lib-DEbiQWuL.js
+index 510d8b5b9d53f803f6d70c63dd20a37a5c47df46..1aee1d5f9296ecb2ca0d81fd81a1e63e32a28178 100644
+--- a/dist/chunks/lib-DEbiQWuL.js
++++ b/dist/chunks/lib-DEbiQWuL.js
+@@ -41,7 +41,10 @@ class BytecodeCompiler {
+         delete env.ELECTRON_RUN_AS_NODE;
+         this.stderr = '';
+         const compilerPath = path.join(path.dirname(require$1.resolve('electron-vite/package.json')), 'bin', 'electron-bytecode-main.cjs');
+-        const ps = spawn(getElectronPath(), [compilerPath], {
++        // Linux CI runners have no display and no usable Chromium sandbox (AppArmor blocks user namespaces,
++        // and the extracted chrome-sandbox is not SUID root). The compiler only runs build code, so it needs neither.
++        const args = process.platform === 'linux' ? ['--no-sandbox', '--ozone-platform=headless', compilerPath] : [compilerPath];
++        const ps = spawn(getElectronPath(), args, {
+             stdio: ['ignore', 'ignore', 'pipe', 'ipc'],
+             windowsHide: true,
+             env
 diff --git a/dist/chunks/lib-DoUt4oMD.js b/dist/chunks/lib-DoUt4oMD.js
 index b1b4d046c5ec7df1b955577a24a1b980674ea15f..778eb2d87cb08e9ae897f05f0c4811c87370b6ab 100644
 --- a/dist/chunks/lib-DoUt4oMD.js
