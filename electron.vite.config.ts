@@ -182,10 +182,12 @@ const electronUnzipPlugin = () => {
 
         const zipPath = resolve(electronDistPath, zipFile)
         const extractDir = resolve(electronDistPath, zipFile.replace('.zip', ''))
+        const electronBinary = resolve(extractDir, process.platform === 'win32' ? 'electron.exe' : 'electron')
 
-        process.env.ELECTRON_EXEC_PATH = extractDir + (process.platform === 'win32' ? '/electron.exe' : '/electron')
+        process.env.ELECTRON_EXEC_PATH = electronBinary
 
-        if (existsSync(extractDir)) {
+        // Check the binary. An interrupted run can leave an empty directory.
+        if (existsSync(electronBinary)) {
           console.log(`\nElectron distribution already extracted: ${extractDir}`)
           return
         }
@@ -195,16 +197,23 @@ const electronUnzipPlugin = () => {
         mkdirSync(extractDir, { recursive: true })
 
         if (process.platform === 'win32') {
-          execSync(`powershell -command "Expand-Archive -Path '${zipPath}' -DestinationPath '${extractDir}' -Force"`)
+          // Expand-Archive in PowerShell 7.6 fails on .NET 10 with
+          // "Cannot find an overload for ExtractToDirectory". Use the bsdtar that Windows ships.
+          const tar = join(process.env.SystemRoot ?? 'C:\\Windows', 'System32', 'tar.exe')
+          execSync(`"${tar}" -xf "${zipPath}" -C "${extractDir}"`)
         } else {
           execSync(`unzip -q "${zipPath}" -d "${extractDir}"`)
-          const electronBinary = resolve(extractDir, 'electron')
           execSync(`chmod +x "${electronBinary}"`)
+        }
+
+        if (!existsSync(electronBinary)) {
+          throw new Error(`Extraction did not create ${electronBinary}`)
         }
 
         console.log(`\nSuccessfully extracted: ${zipFile}`)
       } catch (error) {
         console.error('\nFailed to extract electron distribution:', error)
+        throw error
       }
     }
   }
