@@ -75,7 +75,7 @@ importers:
         version: 3.7.2(picomatch@4.0.7)(rollup@4.53.5)
       torrent-client:
         specifier: github:hayase-app/torrent-client
-        version: https://codeload.github.com/hayase-app/torrent-client/tar.gz/e8fdebf94c639d3f2609890657af819668e153c4(bare-buffer@3.7.3)(bare-url@2.5.8)
+        version: https://codeload.github.com/hayase-app/torrent-client/tar.gz/f6d0e38c4c07d4d3ee8cb968196e109be9ab174b(bare-buffer@3.7.3)(bare-url@2.5.8)
       typescript:
         specifier: ^6.0.3
         version: 6.0.3
@@ -1046,14 +1046,6 @@ packages:
   axobject-query@4.1.0:
     resolution: {integrity: sha512-qIj0G9wZbMGNLjLmg1PT6v2mE9AH2zlnADJD/2tC6E00hgmhUOfEB6greHPAfLRSufHqROIUTkw6E+M3lH0PTQ==}
     engines: {node: '>= 0.4'}
-
-  b4a@1.8.1:
-    resolution: {integrity: sha512-aiqre1Nr0B/6DgE2N5vwTc+2/oQZ4Wh1t4NznYY4E00y8LCt6NqdRv81so00oo27D8MVKTpUa/MwUUtBLXCoDw==}
-    peerDependencies:
-      react-native-b4a: '*'
-    peerDependenciesMeta:
-      react-native-b4a:
-        optional: true
 
   b4a@1.9.0:
     resolution: {integrity: sha512-dpfcF9fDNR6++cthXR67iyhgqWy9CBouAvIWhIntzBG6cvK/cnIPiZQjBwi/ZqjjBEDGfoNDtmB0kTjroOJ3pQ==}
@@ -2568,8 +2560,8 @@ packages:
     resolution: {integrity: sha512-In/qjEgPWP3EEKRBrATKSHRCcempKN/gUl97rrB1mTreVQfvPGthTJVwNXwbQHtIzzLf1bYyh8M50xpeYk0r6Q==}
     engines: {node: '>= 0.4.0'}
 
-  nntp-js@1.0.8:
-    resolution: {integrity: sha512-usOxmlLACjkH+NcQRJeMW/ZiCTeQLM3ly6O/fkPVIOlsu9OfUfrDmA5VfAIPQ4tVK8DXRIdIudwJG9PFIq+QEA==}
+  nntp-js@1.0.9:
+    resolution: {integrity: sha512-HDxHQUjgJ55olSgL68OZCb0N21+ch9RNjX8WwtwnnrISrpukvdFpZNGIf/6FEvQVFXpek1r0CDFMedIF7VUOhQ==}
 
   node-abi@3.104.0:
     resolution: {integrity: sha512-J2lVAHTQ8v1J7hl2k1eX70d/Fm+HE1EyUes2dOew59JgBlAW6NB7DABI8kdrgRPehhepJd18p1ivekA8BF7AOg==}
@@ -2627,8 +2619,8 @@ packages:
     resolution: {integrity: sha512-ppwTtiJZq0O/ai0z7yfudtBpWIoxM8yE6nHi1X47eFR2EWORqfbu6CnPlNsjeN683eT0qG6H/Pyf9fCcvjnnnQ==}
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
 
-  nzb-file@1.1.21:
-    resolution: {integrity: sha512-/gKRnVWWLY2TaOifqzxpF+/NligJ9n1B/6Q8zQn1oKjcAKqvMmx1UFoosJqsqBciyXrsHGC5vDboh4WZazS+Jw==}
+  nzb-file@1.1.22:
+    resolution: {integrity: sha512-gdMALSsLpnoFLx5dLsFaX+QkJgOuLz4bxz7BKNwX/j8heo5Y8A570JnhN3hlnFlWpeU9bHybYmlowvHzOkr+WQ==}
 
   nzb-parser@1.0.4:
     resolution: {integrity: sha512-MyN/NP+DUu6CUBzvUNbS2EDmpykyEoCRbnfOUZ7xR7SgHimGAZ9rh0fEyVGbbhzSQfv6wSVXSuYxtqe0x5QMnw==}
@@ -3270,8 +3262,8 @@ packages:
     resolution: {integrity: sha512-e0votIpp4Uo2AJYSzVHV6xCcawuiez3DzqDAbrTc3YxBkplN6e+dM13ZeIcZnDg/QpSuU2zfZ3rzwY8ukEnaXw==}
     engines: {node: '>=14.14'}
 
-  torrent-client@https://codeload.github.com/hayase-app/torrent-client/tar.gz/e8fdebf94c639d3f2609890657af819668e153c4:
-    resolution: {tarball: https://codeload.github.com/hayase-app/torrent-client/tar.gz/e8fdebf94c639d3f2609890657af819668e153c4}
+  torrent-client@https://codeload.github.com/hayase-app/torrent-client/tar.gz/f6d0e38c4c07d4d3ee8cb968196e109be9ab174b:
+    resolution: {tarball: https://codeload.github.com/hayase-app/torrent-client/tar.gz/f6d0e38c4c07d4d3ee8cb968196e109be9ab174b}
     version: 1.0.0
 
   torrent-discovery@11.0.21:
@@ -3464,8 +3456,8 @@ packages:
     resolution: {integrity: sha512-t/H2OySa7lZSq2f5j4whmr+IWCl5TqF4daGotE8VhPP7U+E4x5x8MK1wqOkqlb4xxRlag4kBB9enU4oxNk//+g==}
     engines: {node: '>=16.0.0'}
 
-  webtorrent@https://codeload.github.com/thaunknown/webtorrent/tar.gz/3cbc0c425fcf885a1818092e9f9fe9c4b874ef9d:
-    resolution: {tarball: https://codeload.github.com/thaunknown/webtorrent/tar.gz/3cbc0c425fcf885a1818092e9f9fe9c4b874ef9d}
+  webtorrent@https://codeload.github.com/thaunknown/webtorrent/tar.gz/2469ae3cc85fafb9f84b64a1f716668c1cee2f5b:
+    resolution: {tarball: https://codeload.github.com/thaunknown/webtorrent/tar.gz/2469ae3cc85fafb9f84b64a1f716668c1cee2f5b}
     version: 3.0.21
     engines: {node: '>=22'}
 
@@ -4583,8 +4575,6 @@ snapshots:
   aws4@1.13.2: {}
 
   axobject-query@4.1.0: {}
-
-  b4a@1.8.1: {}
 
   b4a@1.9.0: {}
 
@@ -6303,7 +6293,7 @@ snapshots:
 
   netmask@2.1.2: {}
 
-  nntp-js@1.0.8: {}
+  nntp-js@1.0.9: {}
 
   node-abi@3.104.0:
     dependencies:
@@ -6365,11 +6355,11 @@ snapshots:
     dependencies:
       path-key: 4.0.0
 
-  nzb-file@1.1.21:
+  nzb-file@1.1.22:
     dependencies:
       '@thaunknown/yencode': 1.5.5
       mime: 4.1.2
-      nntp-js: 1.0.8
+      nntp-js: 1.0.9
       nzb-parser: 1.0.4
 
   nzb-parser@1.0.4:
@@ -6680,7 +6670,7 @@ snapshots:
 
   record-cache@1.2.0:
     dependencies:
-      b4a: 1.8.1
+      b4a: 1.9.0
     transitivePeerDependencies:
       - react-native-b4a
 
@@ -7187,7 +7177,7 @@ snapshots:
 
   tmp@0.2.7: {}
 
-  torrent-client@https://codeload.github.com/hayase-app/torrent-client/tar.gz/e8fdebf94c639d3f2609890657af819668e153c4(bare-buffer@3.7.3)(bare-url@2.5.8):
+  torrent-client@https://codeload.github.com/hayase-app/torrent-client/tar.gz/f6d0e38c4c07d4d3ee8cb968196e109be9ab174b(bare-buffer@3.7.3)(bare-url@2.5.8):
     dependencies:
       '@silentbot1/nat-api': 0.4.9
       '@stacksjs/tlsx': 0.13.19
@@ -7200,12 +7190,12 @@ snapshots:
       ebml-stream: 1.0.3
       fast-xml-parser: 5.9.0
       multicast-dns: 7.2.5
-      nzb-file: 1.1.21
+      nzb-file: 1.1.22
       nzb-parser: 1.0.4
       protobufjs: 8.6.2
       pump: 3.0.4
       uint8-util: 2.3.2
-      webtorrent: https://codeload.github.com/thaunknown/webtorrent/tar.gz/3cbc0c425fcf885a1818092e9f9fe9c4b874ef9d(bare-buffer@3.7.3)(bare-url@2.5.8)
+      webtorrent: https://codeload.github.com/thaunknown/webtorrent/tar.gz/2469ae3cc85fafb9f84b64a1f716668c1cee2f5b(bare-buffer@3.7.3)(bare-url@2.5.8)
     transitivePeerDependencies:
       - bare-abort-controller
       - bare-buffer
@@ -7405,7 +7395,7 @@ snapshots:
     dependencies:
       node-datachannel: 0.32.3
 
-  webtorrent@https://codeload.github.com/thaunknown/webtorrent/tar.gz/3cbc0c425fcf885a1818092e9f9fe9c4b874ef9d(bare-buffer@3.7.3)(bare-url@2.5.8):
+  webtorrent@https://codeload.github.com/thaunknown/webtorrent/tar.gz/2469ae3cc85fafb9f84b64a1f716668c1cee2f5b(bare-buffer@3.7.3)(bare-url@2.5.8):
     dependencies:
       '@silentbot1/nat-api': 0.4.9
       '@thaunknown/simple-peer': 10.1.2
