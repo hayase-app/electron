@@ -6,7 +6,6 @@ import { env } from 'node:process'
 
 import { app, dialog, shell, type UtilityProcess, ipcMain, systemPreferences } from 'electron'
 import log from 'electron-log/main'
-import { autoUpdater } from 'electron-updater'
 
 import store from './store'
 
@@ -167,11 +166,8 @@ export default class IPC {
   }
 
   updateProgress () {
-    autoUpdater.on('download-progress', (progress) => {
-      this.app.mainWindow.webContents.send('update-progress', progress.percent)
-    })
-    autoUpdater.on('update-downloaded', () => {
-      this.app.mainWindow.webContents.send('update-progress', 100)
+    this.app.updater.onProgress(percent => {
+      this.app.mainWindow.webContents.send('update-progress', percent)
     })
   }
 
@@ -180,13 +176,16 @@ export default class IPC {
   }
 
   async checkUpdate () {
-    await autoUpdater.checkForUpdates()
+    await this.app.updater.checkForUpdates()
   }
 
   async updateReady () {
-    const update = await autoUpdater.checkForUpdates()
-    if (!update) throw new Error('No update available')
-    await update.downloadPromise
+    await this.app.updater.updateReady()
+  }
+
+  async updateAndRestart () {
+    await this.app.updater.flatpak?.update()
+    this.app.destroy(true)
   }
 
   async spawnPlayer (url: string) {
