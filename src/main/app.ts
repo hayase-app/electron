@@ -46,6 +46,10 @@ autoUpdater.logger = log
 // const BASE_URL = is.dev ? 'http://localhost:7344/' : 'https://hayase.app/'
 const BASE_URL = 'https://hayase.app/'
 
+// A DNS block can also return 0.0.0.0 or 127.0.0.1, which fail with ERR_ADDRESS_INVALID or ERR_CONNECTION_REFUSED.
+const DNS_FAILURE = /^(net::)?ERR_(NAME_NOT_RESOLVED|NAME_RESOLUTION_FAILED|DNS_\w+|ADDRESS_INVALID|CONNECTION_REFUSED)$/
+const FALLBACK_DOH = 'https://1.1.1.1/dns-query'
+
 protocol.registerSchemesAsPrivileged([
   { scheme: 'https', privileges: { standard: true, bypassCSP: true, allowServiceWorkers: true, supportFetchAPI: true, corsEnabled: false, stream: true, codeCache: true, secure: true } }
 ])
@@ -299,15 +303,16 @@ export default class App {
     }
 
     if (is.dev) this.mainWindow.webContents.openDevTools()
-    this.mainWindow.loadURL(BASE_URL, { userAgent }).catch(err => {
-      log.error(err)
-      if (this.hasDOH) return
-      this.setDOH('https://cloudflare-dns.com/dns-query')
-      queueMicrotask(() => this.mainWindow.loadURL(BASE_URL, { userAgent }))
+    this.mainWindow.loadURL(BASE_URL, { userAgent }).catch(err => log.error('Failed to load app: ', err))
+
+    session.defaultSession.webRequest.onErrorOccurred({ urls: [BASE_URL + '*'] }, ({ error, resourceType, url, webContents }) => {
+      if (!DNS_FAILURE.test(error) || !this.useFallbackDOH() || resourceType !== 'mainFrame') return
+
+      webContents?.loadURL(url).catch(err => log.error('Failed to load app with fallback DOH: ', err))
     })
     this.mainWindow.webContents.on('will-navigate', (e, url) => {
       const parsedUrl = new URL(url)
-      if (parsedUrl.origin !== BASE_URL) {
+      if (parsedUrl.origin !== new URL(BASE_URL).origin) {
         e.preventDefault()
       }
     })
@@ -351,7 +356,7 @@ export default class App {
     }
 
     const { port1, port2 } = new MessageChannelMain()
-    this.torrentProcess.once('spawn', () => this.torrentProcess.postMessage({ id: 'settings', data: { ...store.data.torrentSettings, path: store.data.torrentPath, doh: this.hasDOH && store.data.doh } }, [port1]))
+    this.torrentProcess.once('spawn', () => this.torrentProcess.postMessage({ id: 'settings', data: { ...store.data.torrentSettings, path: store.data.torrentPath, doh: store.data.doh || undefined } }, [port1]))
     ipcMain.once('preload-done', () => {
       this.mainWindow.webContents.postMessage('port', null, [port2])
       ipcMain.on('preload-done', () => reloadPorts())
@@ -406,19 +411,23 @@ export default class App {
     ])
   }
 
-  hasDOH = false
   setDOH (dns: string) {
     try {
-      app.configureHostResolver({
-        secureDnsMode: 'secure',
-        secureDnsServers: [dns]
-      })
-      this.hasDOH = true
-    } catch (e) {
-      const err = e as Error
-      log.error('Failed to set DOH: ', err.stack)
-      this.hasDOH = false
+      app.configureHostResolver(dns ? { secureDnsMode: 'secure', secureDnsServers: [dns] } : { secureDnsMode: 'automatic' })
+      return true
+    } catch (err) {
+      log.error('Failed to set DOH: ', err)
+      return false
     }
+  }
+
+  usesFallbackDOH = false
+  useFallbackDOH () {
+    if (this.usesFallbackDOH) return false
+    this.usesFallbackDOH = true
+    log.warn('DNS failure, switching to fallback DOH: ', FALLBACK_DOH)
+    this.setDOH(FALLBACK_DOH)
+    return true
   }
 
   destroyed = false

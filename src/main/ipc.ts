@@ -161,8 +161,8 @@ export default class IPC {
   }
 
   setDOH (dns: string) {
-    this.app.setDOH(dns)
-    store.set('doh', dns)
+    if (dns === store.data.doh) return
+    if (this.app.setDOH(dns)) store.set('doh', dns)
     // this.updateSettings()
   }
 
